@@ -18,6 +18,14 @@
   html{accent-color:var(--accent);caret-color:var(--accent);-webkit-tap-highlight-color:color-mix(in srgb,#6d4fd6 14%,transparent)}
   ::selection{background:color-mix(in srgb,#6d4fd6 26%,transparent)}
   input,textarea{caret-color:var(--accent)}
+  .mbox.inst{max-width:360px;text-align:center}
+  .inst-ic{width:64px;height:64px;border-radius:15px;display:block;margin:2px auto 12px;box-shadow:0 6px 18px rgba(109,79,214,.25)}
+  .mbox.inst h3{margin-bottom:6px}
+  .inst-steps{list-style:none;counter-reset:st;padding:0;margin:14px 0 16px;text-align:left;display:grid;gap:8px}
+  .inst-steps li{counter-increment:st;display:flex;gap:10px;align-items:flex-start;background:var(--soft);border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.4}
+  .inst-steps li::before{content:counter(st);flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;margin-top:-1px}
+  .inst-steps b{font-weight:600}
+  .mbox.inst .mact .btn{width:100%;justify-content:center}
   .touchglow{position:fixed;left:0;top:0;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;pointer-events:none;z-index:999;opacity:0;
     background:radial-gradient(circle,rgba(109,79,214,.38) 0%,rgba(109,79,214,.18) 40%,rgba(109,79,214,0) 70%);transition:opacity .35s ease;will-change:transform,opacity}
   .touchglow.on{opacity:1;transition:opacity .08s ease}
@@ -466,10 +474,20 @@
     <div class="pfoot" id="pFoot" hidden><button type="button" class="btn primary" id="pAdd">Добавить</button></div>
   </div>
 </div>
+<div class="modal" id="installModal" hidden>
+  <div class="mbox inst">
+    <svg class="inst-ic" viewBox="0 0 100 100" width="64" height="64" aria-hidden="true"><defs><linearGradient id="igr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cf0"/><stop offset="1" stop-color="#3fa9f5"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#igr)"/><g transform="translate(20.6 20.6) scale(.588)"><rect x="6" y="6" width="40" height="40" rx="10" fill="#fff"/><rect x="54" y="6" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="6" y="54" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="54" y="54" width="40" height="40" rx="10" fill="#fff"/><path d="M26 33s-10-6-11.4-12.6A5.6 5.6 0 0 1 26 18a5.6 5.6 0 0 1 11.4 2.4C36 27 26 33 26 33z" fill="#7b5cf0"/><path d="M74 61l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L74 74.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="#3fa9f5"/></g></svg>
+    <h3>Добавь доску на экран</h3>
+    <p class="muted" id="iLead">Она будет открываться как приложение: со своей иконкой, на весь экран и даже без интернета.</p>
+    <ol class="inst-steps" id="iSteps"></ol>
+    <div class="mact" style="flex-direction:column;gap:8px"><button type="button" class="btn primary" id="iInstall" hidden>Установить</button><button type="button" class="btn" id="iClose">Понятно</button></div>
+  </div>
+</div>
 <div class="modal" id="helpModal" hidden>
   <div class="mbox wide help">
     <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3>Как пользоваться доской</h3><button type="button" class="btn small" id="hClose">Закрыть</button></div>
     <div class="htext">
+      <button type="button" class="btn small" id="instHelp" style="margin:4px 0 6px" hidden>Как добавить доску на экран</button>
       <h4>1. Профиль и норма</h4>
       <p>Нажми на имя слева вверху. Там: имя, для кого считать порции (женщина или мужчина), калории и БЖУ на день — в граммах или процентах. Мужская порция считается примерно в 1,3 раза больше женской. На список покупок это не влияет: он всегда на двоих.</p>
       <h4>2. Блюда</h4>
@@ -1407,7 +1425,7 @@ let openDishEditor, openNewDish;
   });
 })();
 let pickerSlot=null;
-let pickSel=[];
+let pickSel=[], openInstallHelp=()=>{};
 function openPicker(di,s){
   pickerSlot=[di,s];
   const m=document.getElementById('pickModal'); const lab=SLOTS.find(x=>x[0]===s)[1];
@@ -1448,6 +1466,37 @@ function renderAll(){ renderNorm(); renderWeekTabs(); renderStats(); renderPalet
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(); renderAll(); } });
 save(); renderAll();
 if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+// Первое открытие в браузере: подсказка, как добавить доску на экран «Домой» / рабочий стол
+(function(){
+  if(!document.querySelector('link[rel=manifest]')) return;           // только в версии-приложении
+  const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  const m=document.getElementById('installModal'), steps=document.getElementById('iSteps'), inst=document.getElementById('iInstall');
+  const ua=navigator.userAgent, iOS=/iPhone|iPad|iPod/.test(ua) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+  const android=/Android/.test(ua), safari=/Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|YaBrowser|OPiOS|Chrome|Android/.test(ua);
+  const SH='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>', PL='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" style="vertical-align:-3px"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
+  let deferred=null;
+  addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; if(!m.hidden) fill(); });
+  function fill(){
+    let s;
+    if(iOS && !safari) s=['Открой эту страницу в <b>Safari</b> — добавить на экран можно оттуда', `Нажми «Поделиться» ${SH} внизу экрана`, `Выбери <b>«На экран „Домой“»</b> ${PL} и нажми «Добавить»`];
+    else if(iOS) s=[`Нажми «Поделиться» ${SH} внизу экрана`, `Пролистай вниз и выбери <b>«На экран „Домой“»</b> ${PL}`, 'Нажми <b>«Добавить»</b> — иконка «Меню» появится на экране'];
+    else if(deferred) s=['Нажми <b>«Установить»</b> ниже', 'Подтверди установку — иконка «Меню» появится на экране / в программах'];
+    else if(android) s=['Открой меню браузера <b>⋮</b> справа вверху', 'Выбери <b>«Добавить на главный экран»</b> или «Установить приложение»', 'Подтверди — иконка «Меню» появится на экране'];
+    else if(safari) s=['В строке меню открой <b>Файл</b>', 'Выбери <b>«Добавить в Dock»</b>', 'Доска появится в Dock и в Программах'];
+    else s=['Справа в адресной строке нажми значок <b>установки</b> (монитор со стрелкой) или открой меню браузера', 'Выбери <b>«Установить приложение»</b> / «Создать ярлык»', 'Доска откроется отдельным окном со своей иконкой'];
+    steps.innerHTML=s.map(x=>`<li><span>${x}</span></li>`).join('');
+    inst.hidden=!deferred;
+  }
+  openInstallHelp=()=>{ fill(); m.hidden=false; };
+  const close=()=>{ m.hidden=true; try{ localStorage.setItem('meal-board-install-seen','1'); }catch(e){} };
+  document.getElementById('iClose').addEventListener('click',close);
+  m.addEventListener('click',e=>{ if(e.target===m) close(); });
+  inst.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch(e){} deferred=null; close(); });
+  addEventListener('appinstalled',close);
+  const hb=document.getElementById('instHelp'); if(hb){ hb.hidden=standalone; hb.addEventListener('click',()=>{ document.getElementById('helpModal').hidden=true; openInstallHelp(); }); }
+  let seen=false; try{ seen=!!localStorage.getItem('meal-board-install-seen'); }catch(e){}
+  if(!standalone && !seen) setTimeout(()=>{ if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
+})();
 // Подсветка под пальцем (телефон) и под курсором (компьютер): мягкое фиолетовое свечение
 (function(){
   const g=document.createElement('div'); g.className='touchglow'; document.body.appendChild(g);
