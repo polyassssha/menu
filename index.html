@@ -286,6 +286,8 @@
   .fgrid4 .fld{flex-wrap:wrap;gap:2px}
   .fgrid4 .fld span{flex-basis:100%}
   .fgrid4 .fld input{width:100%;text-align:left}
+  .mob-only{display:none}
+  @media (max-width:760px){ .desk-only{display:none!important} .mob-only{display:inline} }
   .ingrow{display:grid;grid-template-columns:minmax(0,2.2fr) 70px 70px minmax(0,1.6fr) 28px;gap:5px;margin-bottom:5px}
   .ingrow input,.ingrow select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font:400 12.5px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ingrow input:focus,.ingrow select:focus{border-color:var(--accent);background:#fff}
@@ -767,7 +769,7 @@ function fmtQty(v,u){
 /* ---------- palette ---------- */
 function renderPalette(){
   const el = document.getElementById('palette');
-  let h='<div class="section-title">Блюда</div><div class="section-sub">Перетащи в нужный день недели</div>';
+  let h='<div class="section-title"><span class="desk-only">Блюда</span><span class="mob-only">Редактировать блюда</span></div><div class="section-sub desk-only">Перетащи в нужный день недели</div>';
   for(const k of catOrderKeys()){ const c=CATS[k];
     const list=DISHES.filter(x=>x.cat===k && BY[x.id]);
     const col=!!state.collapsed[k];
