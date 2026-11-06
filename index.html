@@ -21,8 +21,6 @@
   .touchglow{position:fixed;left:0;top:0;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;pointer-events:none;z-index:999;opacity:0;
     background:radial-gradient(circle,rgba(109,79,214,.38) 0%,rgba(109,79,214,.18) 40%,rgba(109,79,214,0) 70%);transition:opacity .35s ease;will-change:transform,opacity}
   .touchglow.on{opacity:1;transition:opacity .08s ease}
-  .touchtrail{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;pointer-events:none;z-index:998;background:rgba(109,79,214,.22);animation:trailfade .45s ease-out forwards}
-  @keyframes trailfade{to{opacity:0;transform:var(--t) scale(.3)}}
   :root{
     --outer:#d8dce1; --frame:#eceef1; --card:#ffffff; --dark:#0b0c0e; --dark2:#16181b;
     --ink:#111214; --muted:#7d8189; --faint:#a9adb4; --line:#e6e8ec; --soft:#f6f7f9;
@@ -1450,19 +1448,20 @@ function renderAll(){ renderNorm(); renderWeekTabs(); renderStats(); renderPalet
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(); renderAll(); } });
 save(); renderAll();
 if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
-// Подсветка пальца на телефоне: мягкое фиолетовое свечение и тающий след
+// Подсветка под пальцем (телефон) и под курсором (компьютер): мягкое фиолетовое свечение
 (function(){
-  if(!matchMedia('(hover: none)').matches) return;
   const g=document.createElement('div'); g.className='touchglow'; document.body.appendChild(g);
-  let last=0;
-  const at=(x,y)=>{ g.style.transform=`translate(${x}px,${y}px)`; };
-  const trail=(x,y)=>{ const now=performance.now(); if(now-last<28) return; last=now;
-    const t=document.createElement('div'); t.className='touchtrail'; const tr=`translate(${x}px,${y}px)`; t.style.transform=tr; t.style.setProperty('--t',tr);
-    document.body.appendChild(t); t.addEventListener('animationend',()=>t.remove()); };
-  addEventListener('touchstart',e=>{ const p=e.touches[0]; at(p.clientX,p.clientY); g.classList.add('on'); },{passive:true});
-  addEventListener('touchmove',e=>{ const p=e.touches[0]; at(p.clientX,p.clientY); trail(p.clientX,p.clientY); },{passive:true});
-  const off=()=>g.classList.remove('on');
-  addEventListener('touchend',off,{passive:true}); addEventListener('touchcancel',off,{passive:true});
+  const at=e=>{ g.style.transform=`translate(${e.clientX}px,${e.clientY}px)`; };
+  let idle;
+  addEventListener('pointerdown',e=>{ at(e); g.classList.add('on'); },{passive:true});
+  addEventListener('pointermove',e=>{ at(e);
+    if(e.pointerType==='mouse'){ g.classList.add('on'); clearTimeout(idle); idle=setTimeout(()=>g.classList.remove('on'),1200); } },{passive:true});
+  const off=e=>{ if(!e || e.pointerType!=='mouse') g.classList.remove('on'); };
+  addEventListener('pointerup',off,{passive:true}); addEventListener('pointercancel',()=>g.classList.remove('on'),{passive:true});
+  document.addEventListener('mouseleave',()=>g.classList.remove('on'));
+  // при прокрутке пальцем браузер прерывает касание — держим свечение под пальцем по touch-событиям
+  addEventListener('touchmove',e=>{ const t=e.touches[0]; at(t); g.classList.add('on'); },{passive:true});
+  addEventListener('touchend',()=>g.classList.remove('on'),{passive:true});
 })();
 </script>
 </body>
