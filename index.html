@@ -36,8 +36,6 @@
 
   /* top bar */
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--dark);color:#fff;border-radius:16px;padding:9px 12px 9px 16px;flex-wrap:wrap}
-  .logo{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500}
-  .logo svg{width:20px;height:20px}
   .weekbar{margin-bottom:8px}
   .daychips{display:none}
   .weektabs{display:flex;gap:4px;background:var(--card);border-radius:16px;padding:4px;width:max-content;max-width:100%}
@@ -76,22 +74,6 @@
   .ngauge svg{display:block;width:100%;height:auto}
   .ngauge .gv{text-align:center;font-size:24px;margin-top:-4px;letter-spacing:-.02em}
   .ngauge .gv small{font-size:12px;color:#8a8e96}
-  .wc-head{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-  .wc-head p{margin:6px 0 0;color:#8a8e96;font-size:12px}
-  .metrics{display:flex;gap:10px 22px;flex-wrap:wrap}
-  .metric .k{display:flex;align-items:center;gap:6px;color:#9a9ea6;font-size:11.5px}
-  .metric .k i{width:14px;height:8px;border-radius:2px;background:var(--mc)}
-  .metric .v{font-size:22px;margin-top:5px;letter-spacing:-.02em}
-  .metric .v small{font-size:12px;color:#7d8189;margin-left:2px}
-  .stripes{display:flex;gap:6px;margin-top:auto;padding-top:26px;position:relative}
-  .seg{flex:1;min-width:0;position:relative}
-  .bars{display:flex;gap:2px;height:46px;overflow:hidden;align-items:stretch;border-top:1px solid #1f2226;padding-top:6px}
-  .bars span{flex:1;border-radius:1px}
-  .seg .dn{font-size:10.5px;color:#6c7078;margin-top:6px;display:flex;justify-content:space-between}
-  .seg .dn b{font-weight:500;color:#a7abb3}
-  .seg.today .dn b{color:#fff}
-  .seg .mark{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:11px;color:#fff;text-align:center}
-  .seg .mark::after{content:"";display:block;width:1px;height:8px;background:#fff;margin:3px auto 0}
   .tripcard{display:flex;flex-direction:column;justify-content:center;min-height:200px;padding:14px 18px}
   .tripcard .ngauge{width:100%;max-width:340px;margin:0 auto}
 
@@ -137,14 +119,12 @@
   .kinds label{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;font-size:12.5px}
   .kinds label small{display:block;color:var(--muted);font-size:11.5px;margin-top:1px}
   .kinds input{accent-color:var(--accent);margin-top:2px}
-  .cat-inp{flex:1;min-width:0;border:1px solid var(--accent);border-radius:6px;padding:3px 6px;font:500 12px Inter,sans-serif;background:#fff;outline:none}
   .mh .chev{flex:none;color:var(--muted);font-size:14px;line-height:1;transition:transform .15s;transform:translateY(-2px)}
   .mod.col{padding-bottom:2px}
   .mod.col .chev{transform:rotate(-90deg)}
   .dish-tools{position:absolute;right:4px;top:4px;display:flex;gap:1px;opacity:0;transition:opacity .12s;background:#fff;border-radius:7px}
   .dish:hover .dish-tools,.dish.sel .dish-tools{opacity:1}
-  .dish .n{padding-right:22px}
-  .card-d,.card{}
+  .dish .n{padding-right:22px}.card{}
   .dish{position:relative;border-radius:10px;padding:9px 11px;margin-bottom:5px;background:#fff;border:1px solid var(--line);cursor:grab;user-select:none;transition:box-shadow .15s,border-color .15s}
   .dish:hover{box-shadow:0 4px 14px rgba(17,18,20,.07)}
   .dish.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
@@ -153,9 +133,6 @@
   .dish .ing{display:none;color:var(--faint);font-size:11px;margin-top:5px}
   .dish:hover .ing,.dish.sel .ing{display:block}
   .palette-drop{outline:2px dashed var(--warn);outline-offset:-6px}
-
-  /* week */
-  .weekhead{display:flex;justify-content:space-between;align-items:baseline;padding:16px 18px 14px}
   .week{display:flex;flex-direction:column;gap:8px}
   .day{display:grid;grid-template-columns:96px repeat(4,minmax(0,1fr));gap:8px;background:var(--card);border-radius:16px;padding:8px;border:1px solid transparent}
   .day.shopday{border-color:#d6cdf6;box-shadow:inset 3px 0 0 var(--accent)}
@@ -174,7 +151,6 @@
   .slot.over{background:var(--accent-soft);border-color:var(--accent)}
   .slot .lab{font-size:11px;color:var(--muted)}
   .hint{font-size:11.5px;color:#c3c6cc}
-  .left-note{font-size:11px;color:var(--muted)}
   .chip{position:relative;display:flex;align-items:flex-start;gap:4px;background:#fff;border:1px solid color-mix(in srgb,var(--c) 38%,#fff);border-radius:9px;padding:6px 44px 6px 9px;min-height:30px;font-size:12px;font-weight:500;cursor:grab}
   .chip .t{flex:1;min-width:0;overflow-wrap:break-word;hyphens:manual;line-height:1.3}
   .ctools{position:absolute;top:3px;right:3px;display:flex;gap:1px}
@@ -185,13 +161,6 @@
   .ib{border:0;background:transparent;cursor:pointer;font-size:11.5px;padding:2px 5px;border-radius:6px;color:var(--faint)}
   .ib:hover{background:var(--soft);color:var(--ink)}
   .ib.on{color:var(--accent);background:var(--accent-soft)}
-
-  /* gauge */
-  .gsub{font-size:11.5px;color:var(--muted);margin-top:4px}
-  .gauge .stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
-  .gauge .stats3 .k{font-size:11.5px;color:var(--muted)}
-  .gauge .stats3 .v{font-size:22px;margin-top:4px;letter-spacing:-.02em}
-  .gauge .stats3 .v small{font-size:11.5px;color:var(--muted)}
   .gauge svg{display:block;width:100%;height:auto;margin-top:10px}
   .gauge .gv{text-align:center;font-size:22px;margin-top:-6px;letter-spacing:-.02em}
   .gauge .gv small{font-size:12px;color:var(--muted)}
@@ -233,8 +202,6 @@
   .btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 14px;font:500 12.5px Inter,sans-serif;cursor:pointer}
   .btn:hover{border-color:#b9bcc2}
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-  .btn.grey{background:var(--soft);border-color:var(--line);color:var(--muted)}
-  .btn.grey:hover{color:var(--ink)}
   .btn.primary:hover{background:#5a3cc4;border-color:#5a3cc4}
   .empty{color:var(--muted);padding:8px 0;font-size:12.5px}
   .shop-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
@@ -287,7 +254,7 @@
   .fgrid4 .fld span{flex-basis:100%}
   .fgrid4 .fld input{width:100%;text-align:left}
   .mob-only{display:none}
-  @media (max-width:760px){ .desk-only{display:none!important} .mob-only{display:inline} }
+  @media (max-width:760px){ .desk-only{display:none!important} .mob-only{display:inline} #palette .section-title{margin:6px 6px 12px} }
   .ingrow{display:grid;grid-template-columns:minmax(0,2.2fr) 70px 70px minmax(0,1.6fr) 28px;gap:5px;margin-bottom:5px}
   .ingrow input,.ingrow select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font:400 12.5px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ingrow input:focus,.ingrow select:focus{border-color:var(--accent);background:#fff}
@@ -323,7 +290,7 @@
   .pcat h5{display:flex;align-items:center;gap:7px;margin:0 2px 6px;font-size:12px;font-weight:500}
   .pcat h5::before{content:"";width:14px;height:8px;border-radius:2px;background:var(--mc)}
   .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .pdish{text-align:left;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;font:500 12.5px Inter,sans-serif;color:var(--ink);cursor:pointer;box-shadow:inset 3px 0 0 var(--mc)}
+  .pdish{text-align:left;border:1px solid color-mix(in srgb,var(--mc) 38%,#fff);background:#fff;border-radius:10px;padding:9px 10px;font:500 12.5px Inter,sans-serif;color:var(--ink);cursor:pointer}
   .pdish small{display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:2px}
   .help .htext{margin-top:8px;font-size:13px;line-height:1.5}
   .help h4{margin:16px 0 4px;font-size:13.5px;font-weight:600}
@@ -351,7 +318,7 @@
   }
   @media (max-width:860px){
     .day{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .dlabel{grid-column:1/-1;flex-direction:row;gap:10px;align-items:baseline;flex-wrap:wrap}
+    .dlabel{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:10px;align-items:baseline;flex-wrap:wrap}
     .dlabel .shoptg,.dlabel .kcal{margin-top:0}
   }
   @media (max-width:760px){
@@ -383,9 +350,6 @@
     .wtab{flex:1}
     .sticky{position:static;max-height:none}
     #palette .mbody{display:grid;grid-template-columns:1fr 1fr;gap:0 5px}
-    .bars{height:30px;gap:1px}
-    .bars span:nth-child(2n){display:none}
-    .seg .dn span{display:none}
     .weekcard{min-height:0}
     .nstats{grid-template-columns:repeat(3,minmax(0,1fr))}
   }
@@ -453,10 +417,10 @@
     <button type="button" class="btn small" id="dAddIng">＋ продукт</button>
     <div class="mrow"><span class="mlabel" style="margin:0">КБЖУ</span><div class="seg2" id="dMode"><button type="button" data-m="tot">на всё блюдо</button><button type="button" data-m="one">на 1 порцию</button></div></div>
     <div class="fgrid4">
-      <label class="fld"><span>Ккал</span><input type="number" id="dK" min="0" max="20000" required></label>
-      <label class="fld"><span>Белки, г</span><input type="number" id="dP" min="0" max="2000"></label>
-      <label class="fld"><span>Жиры, г</span><input type="number" id="dF" min="0" max="2000"></label>
-      <label class="fld"><span>Углев., г</span><input type="number" id="dC" min="0" max="4000"></label>
+      <label class="fld"><span>Ккал</span><input type="number" id="dK" min="0" required></label>
+      <label class="fld"><span>Белки, г</span><input type="number" id="dP" min="0"></label>
+      <label class="fld"><span>Жиры, г</span><input type="number" id="dF" min="0"></label>
+      <label class="fld"><span>Углев., г</span><input type="number" id="dC" min="0"></label>
     </div>
     <div class="nsum auto" id="dAuto"></div>
     <label class="eqrow"><input type="checkbox" id="dEqual"><span><b>Равные порции</b><small>женщине и мужчине поровну — например, по стаканчику йогурта</small></span></label>
@@ -959,8 +923,8 @@ function needFor(refs){
   return {agg,filled,days:refs.length};
 }
 // Походы считаются по порядку: что осталось в упаковках с прошлой закупки, идёт в зачёт следующей
-function computeTrips(trips){
-  const carry={}; const out={};
+function computeTrips(trips,carry0,prev0){
+  const carry=Object.assign({},carry0||{}); const out={};
   trips.forEach((tr,ti)=>{
     const {agg,filled,days}=needFor(tr.refs);
     const items=[], covered=[];
@@ -975,8 +939,9 @@ function computeTrips(trips){
         items.push({key,...v,pack:pk,n,have});
       } else items.push({key,...v});
     }
-    out[tr.id]={items,covered,filled,days,prev:ti>0?trips[ti-1]:null};
+    out[tr.id]={items,covered,filled,days,prev:ti>0?trips[ti-1]:(prev0||null)};
   });
+  out._carry=carry;
   return out;
 }
 function soupNote(i){
@@ -1002,7 +967,10 @@ function renderShop(){
   let h=`<div class="shead"><span class="section-title">Покупки</span><span class="muted">${rangeLabel(activeWeek)} · на ${state.persons} ${plural(state.persons,'персону','персоны','персон')}</span></div>`;
   if(!trips.length){ el.innerHTML=h+`<div class="empty">Нажми «🛒 +» у дня недели, чтобы сделать его днём закупки.</div>`; bindPersons(el); return; }
   if(!trips.some(t=>t.id===activeTrip)) pickTrip();
-  const all=computeTrips(trips);
+  // Следующая неделя: учитываем, что останется в упаковках после закупок этой недели
+  let carry0=null, prev0=null;
+  if(activeWeek===nextKey){ const ct=getTrips(curKey); if(ct.length){ carry0=computeTrips(ct)._carry; prev0=ct[ct.length-1]; } }
+  const all=computeTrips(trips,carry0,prev0);
   const tr=trips.find(t=>t.id===activeTrip);
   const {items,covered,filled,days,prev}=all[activeTrip];
   h+=`<div class="tabs">${trips.map(t=>`<button class="tab${t.id===activeTrip?' on':''}" data-t="${t.id}">${CART_SVG}${t.t} <small title="${t.range.replace('на ','')}">${t.cnt}</small></button>`).join('')}</div>`;
@@ -1030,7 +998,7 @@ function renderShop(){
   }
   h+=`</div>`;
   if(covered.length){
-    h+=`<div class="leftover"><div class="lo-h"><b>Хватит остатков</b><span>с закупки в ${DAYS_ACC[prev.day]} — проверь на полке</span></div>`;
+    h+=`<div class="leftover"><div class="lo-h"><b>Хватит остатков</b><span>${prev?`с закупки в ${DAYS_ACC[prev.day]}${prev0&&prev===prev0?' (эта неделя)':''} — `:''}проверь на полке</span></div>`;
     for(const v of covered.sort((a,b)=>a.name.localeCompare(b.name,'ru'))) h+=`<div class="lo-i"><span>${esc(v.name)}<em>${esc(v.note?` (${v.note})`:soupNote(v))}</em></span><span class="q">нужно ~${fmtQty(v.q,v.u)}</span></div>`;
     h+=`</div>`;
   }
@@ -1308,7 +1276,7 @@ let openDishEditor, openNewDish;
   let cat='meat', mode='tot', editId=null, auto=true;
   const short=k=>CATS[k].t.split(' · ')[0];
   function catBtns(){
-    dCat.innerHTML=catOrderKeys().map(k=>[k,CATS[k]]).map(([k,c])=>`<button type="button" data-c="${k}" class="${k===cat?'on':''}" style="--mc:${c.c}"><i></i>${short(k)}</button>`).join('');
+    dCat.innerHTML=catOrderKeys().map(k=>[k,CATS[k]]).map(([k,c])=>`<button type="button" data-c="${k}" class="${k===cat?'on':''}" style="--mc:${c.c}"><i></i>${esc(short(k))}</button>`).join('');
     dCat.innerHTML+=`<button type="button" class="addcat-pill" id="dAddCat">＋ Добавить категорию</button>`;
     m.querySelectorAll('#dCat button[data-c]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.c;catBtns();calc();}));
     document.getElementById('dAddCat').addEventListener('click',()=>openCatModal(k=>{ cat=k; catBtns(); calc(); }));
@@ -1318,6 +1286,7 @@ let openDishEditor, openNewDish;
     const sv=Math.max(1,+dServ.value||1), f=mode==='tot'?1/sv:1;
     const v=x=>Math.round((+x.value||0)*f);
     dPortion.textContent = dEqual.checked ? `1 порция: ${v(dK)} ккал · Б ${v(dP)} · Ж ${v(dF)} · У ${v(dC)} — женщине и мужчине одинаково` : `1 порция: женщине ≈ ${Math.round(v(dK)*WF)} ккал · Б ${Math.round(v(dP)*WF)}, мужчине ≈ ${Math.round(v(dK)*WF*MANK)} ккал · Б ${Math.round(v(dP)*WF*MANK)} (в среднем ${v(dK)} ккал). На карточке и в днях — порция для выбранного в профиле.`;
+    if(v(dK)>2500) dPortion.textContent='⚠︎ Порция больше 2500 ккал — проверь количество и единицы (г / шт) в составе. '+dPortion.textContent;
     const ps=placeServ(cat,sv);
     dPlace.textContent = `В плане: блюдо = весь состав выше, он целиком идёт в список покупок. Если ешь его ещё раз (например, на ужин или на следующий день) — поставь снова и отметь как остатки.`;
   }
