@@ -15,6 +15,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+  html{accent-color:var(--accent);caret-color:var(--accent);-webkit-tap-highlight-color:color-mix(in srgb,#6d4fd6 14%,transparent)}
+  ::selection{background:color-mix(in srgb,#6d4fd6 26%,transparent)}
+  input,textarea{caret-color:var(--accent)}
+  .touchglow{position:fixed;left:0;top:0;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;pointer-events:none;z-index:999;opacity:0;
+    background:radial-gradient(circle,rgba(109,79,214,.38) 0%,rgba(109,79,214,.18) 40%,rgba(109,79,214,0) 70%);transition:opacity .35s ease;will-change:transform,opacity}
+  .touchglow.on{opacity:1;transition:opacity .08s ease}
+  .touchtrail{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;pointer-events:none;z-index:998;background:rgba(109,79,214,.22);animation:trailfade .45s ease-out forwards}
+  @keyframes trailfade{to{opacity:0;transform:var(--t) scale(.3)}}
   :root{
     --outer:#d8dce1; --frame:#eceef1; --card:#ffffff; --dark:#0b0c0e; --dark2:#16181b;
     --ink:#111214; --muted:#7d8189; --faint:#a9adb4; --line:#e6e8ec; --soft:#f6f7f9;
@@ -143,8 +151,8 @@
   .kcal{font-size:11.5px;color:var(--muted);margin-top:6px}
   .kcal.ok{color:var(--ok)} .kcal.hi{color:var(--warn)}
   .shoptg{margin-top:7px;width:max-content;border:1px solid var(--line);background:#fff;color:var(--faint);border-radius:8px;padding:3px 8px;font:500 11px Inter,sans-serif;cursor:pointer}
-  .shoptg:hover{border-color:var(--accent);color:var(--accent)}
-  .shoptg.on{background:var(--soft);border-color:var(--line);color:var(--muted)}
+  @media (hover:hover){ .shoptg:not(.on):hover{border-color:#c9ccd3;color:var(--muted)} }
+  .shoptg.on{background:#fff;border-color:var(--accent);color:var(--accent)}
   svg.cart{width:13px;height:13px;vertical-align:-2px;margin-right:4px}
   .slot{min-height:80px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:5px;transition:background .12s,border-color .12s}
   .slot.can{cursor:copy;border-color:#c9bdf8}
@@ -290,6 +298,12 @@
   .pcat h5{display:flex;align-items:center;gap:7px;margin:0 2px 6px;font-size:12px;font-weight:500}
   .pcat h5::before{content:"";width:14px;height:8px;border-radius:2px;background:var(--mc)}
   .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .pdish{position:relative;padding-right:30px!important;display:flex;flex-direction:column;justify-content:flex-start}
+  .pdish::after{content:"";position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;border:1.5px solid #d3d6dc;box-sizing:border-box}
+  .pdish.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .pdish.sel::after{border-color:var(--accent);background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+  .pfoot{position:sticky;bottom:calc(-16px - env(safe-area-inset-bottom));margin:10px -22px calc(-16px - env(safe-area-inset-bottom));padding:10px 22px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
+  .pfoot .btn{width:100%;padding:12px;font-size:14px}
   .pdish{text-align:left;border:1px solid color-mix(in srgb,var(--mc) 38%,#fff);background:#fff;border-radius:10px;padding:9px 10px;font:500 12.5px Inter,sans-serif;color:var(--ink);cursor:pointer}
   .pdish small{display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:2px}
   .help .htext{margin-top:8px;font-size:13px;line-height:1.5}
@@ -332,9 +346,10 @@
     .week::-webkit-scrollbar{display:none}
     .day{flex:0 0 100%;scroll-snap-align:start;grid-template-columns:repeat(2,minmax(0,1fr));padding:8px;gap:6px;align-content:start}
     .daychips{display:flex;gap:4px;margin-top:8px;background:var(--card);border-radius:14px;padding:4px}
-    .dchip{flex:1;border:0;background:transparent;border-radius:10px;padding:7px 0;font:500 12.5px Inter,sans-serif;color:var(--muted);cursor:pointer;position:relative}
+    .dchip{flex:1;border:0;background:transparent;border-radius:10px;padding:8px 0 7px;font:500 12.5px/1 Inter,sans-serif;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+    .dchip::after{content:"";width:4px;height:4px;border-radius:50%;background:transparent}
     .dchip.on{background:var(--accent);color:#fff}
-    .dchip.has::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--accent);transform:translateX(-50%)}
+    .dchip.has::after{background:var(--accent)}
     .dchip.on.has::after{background:#fff}
     .dlabel{grid-column:1/-1;flex-direction:row;align-items:center;gap:10px;padding:2px 4px 4px}
     .dlabel b{font-size:20px}
@@ -447,8 +462,10 @@
 <div class="modal sheet" id="pickModal" hidden>
   <div class="mbox wide" id="pBox"><div class="grabber" id="pGrab"><span></span></div>
     <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3 id="pTitle">Выбери блюдо</h3><button type="button" class="btn small" id="pClose">Закрыть</button></div>
-    <div id="pList" style="margin-top:12px"></div>
-    <div class="pactions"><button type="button" class="btn small addcat adddish" id="pNewDish">＋ Новое блюдо</button><button type="button" class="btn small addcat" id="pNewCat">＋ Новая категория</button></div>
+    <div class="muted" id="pHint" style="margin:6px 2px 0;font-size:12px">Отметь одно или несколько блюд</div>
+    <div id="pList" style="margin-top:10px"></div>
+    <div class="pactions"><button type="button" class="btn small addcat" id="pNewDish">＋ Новое блюдо</button><button type="button" class="btn small addcat" id="pNewCat">＋ Новая категория</button></div>
+    <div class="pfoot" id="pFoot" hidden><button type="button" class="btn primary" id="pAdd">Добавить</button></div>
   </div>
 </div>
 <div class="modal" id="helpModal" hidden>
@@ -617,7 +634,7 @@ function initWeeks(){
   for(const w of Object.values(state.weeks)) if(!Array.isArray(w.shopDays)) w.shopDays=[0,3];
   // Открываем ближайшую закупку: сегодня или позже на этой неделе, иначе — на следующей
   const wd=(today.getDay()+6)%7;
-  activeWeek = state.weeks[curKey].shopDays.some(d=>d>=wd) ? curKey : nextKey;
+  activeWeek = curKey; // открываем текущую неделю и сегодняшний день
 }
 const W = ()=>state.weeks[activeWeek];
 // Походы недели: каждый покрывает дни от своего дня до следующей закупки.
@@ -824,7 +841,7 @@ let curDay=null;
 function renderDayChips(){
   const el=document.getElementById('daychips'); if(!el) return;
   if(curDay==null){ const wd=(new Date().getDay()+6)%7; curDay = activeWeek===curKey ? wd : 0; }
-  el.innerHTML=DAYS.map((d,i)=>`<button type="button" class="dchip${i===curDay?' on':''}${isEmptyDay(W().plan[i])?'':' has'}" data-i="${i}">${d}</button>`).join('');
+  el.innerHTML=DAYS.map((d,i)=>`<button type="button" class="dchip${i===curDay?' on':''}${W().shopDays.includes(i)?' has':''}" data-i="${i}" title="${W().shopDays.includes(i)?'День закупки':''}">${d}</button>`).join('');
   el.querySelectorAll('.dchip').forEach(b=>b.addEventListener('click',()=>{ curDay=+b.dataset.i; scrollToDay(true); renderDayChips(); }));
 }
 function scrollToDay(smooth){
@@ -1392,13 +1409,18 @@ let openDishEditor, openNewDish;
   });
 })();
 let pickerSlot=null;
+let pickSel=[];
 function openPicker(di,s){
   pickerSlot=[di,s];
   const m=document.getElementById('pickModal'); const lab=SLOTS.find(x=>x[0]===s)[1];
   document.getElementById('pTitle').textContent=`${DAYS[di]} · ${lab}`;
   document.getElementById('pList').innerHTML=catOrderKeys().map(k=>{ const c=CATS[k], list=DISHES.filter(d=>d.cat===k&&BY[d.id]); if(!list.length) return '';
     return `<div class="pcat" style="--mc:${c.c}"><h5>${esc(c.t)}</h5><div class="pgrid">${list.map(d=>`<button type="button" class="pdish" data-id="${d.id}">${esc(d.name)}<small>~${Math.round(pv(d,'kcal'))} ккал</small></button>`).join('')}</div></div>`; }).join('');
-  m.querySelectorAll('.pdish').forEach(b=>b.addEventListener('click',()=>{ const name=BY[b.dataset.id].name; addItem(di,s,b.dataset.id); m.hidden=true; toast(`${name} → ${DAYS[di]}, ${lab.toLowerCase()}`); }));
+  pickSel=[]; const foot=document.getElementById('pFoot'), addB=document.getElementById('pAdd');
+  const sync=()=>{ foot.hidden=!pickSel.length; addB.textContent = pickSel.length===1 ? 'Добавить блюдо' : `Добавить ${pickSel.length} ${plural(pickSel.length,'блюдо','блюда','блюд')}`; };
+  m.querySelectorAll('.pdish').forEach(b=>b.addEventListener('click',()=>{ const id=b.dataset.id, i=pickSel.indexOf(id);
+    if(i>-1) pickSel.splice(i,1); else pickSel.push(id); b.classList.toggle('sel',i<0); sync(); }));
+  sync();
   document.getElementById('pBox').classList.remove('full'); document.getElementById('pBox').style.transform='';
   m.hidden=false; document.body.classList.add('lock');
 }
@@ -1412,6 +1434,9 @@ function openPicker(di,s){
   grab.addEventListener('touchend',()=>{ box.style.transition=''; box.style.transform=''; if(dy>90) pm.hidden=true; else if(dy<-40) box.classList.add('full'); else if(dy>30) box.classList.remove('full'); y0=null; });
   grab.addEventListener('click',()=>box.classList.toggle('full'));
   document.getElementById('pClose').addEventListener('click',()=>pm.hidden=true);
+  document.getElementById('pAdd').addEventListener('click',()=>{ if(!pickSel.length) return; const [di,s]=pickerSlot, lab=SLOTS.find(x=>x[0]===s)[1];
+    const ids=[...pickSel]; for(const id of ids) W().plan[di][s].push({id,u:uid(),left:false}); pickSel=[]; pm.hidden=true; update();
+    toast(ids.length===1 ? `${BY[ids[0]].name} → ${DAYS[di]}, ${lab.toLowerCase()}` : `${ids.length} ${plural(ids.length,'блюдо','блюда','блюд')} → ${DAYS[di]}, ${lab.toLowerCase()}`); });
   document.getElementById('pNewDish').addEventListener('click',()=>{ const [di,s]=pickerSlot; pm.hidden=true; openNewDish(id=>{ addItem(di,s,id); }, s==='b'?'breakfast':s==='s'?'drink':'meat'); });
   document.getElementById('pNewCat').addEventListener('click',()=>{ const [di,s]=pickerSlot; pm.hidden=true; openCatModal(()=>openPicker(di,s)); });
   pm.addEventListener('click',e=>{ if(e.target===pm) pm.hidden=true; });
@@ -1425,6 +1450,20 @@ function renderAll(){ renderNorm(); renderWeekTabs(); renderStats(); renderPalet
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(); renderAll(); } });
 save(); renderAll();
 if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+// Подсветка пальца на телефоне: мягкое фиолетовое свечение и тающий след
+(function(){
+  if(!matchMedia('(hover: none)').matches) return;
+  const g=document.createElement('div'); g.className='touchglow'; document.body.appendChild(g);
+  let last=0;
+  const at=(x,y)=>{ g.style.transform=`translate(${x}px,${y}px)`; };
+  const trail=(x,y)=>{ const now=performance.now(); if(now-last<28) return; last=now;
+    const t=document.createElement('div'); t.className='touchtrail'; const tr=`translate(${x}px,${y}px)`; t.style.transform=tr; t.style.setProperty('--t',tr);
+    document.body.appendChild(t); t.addEventListener('animationend',()=>t.remove()); };
+  addEventListener('touchstart',e=>{ const p=e.touches[0]; at(p.clientX,p.clientY); g.classList.add('on'); },{passive:true});
+  addEventListener('touchmove',e=>{ const p=e.touches[0]; at(p.clientX,p.clientY); trail(p.clientX,p.clientY); },{passive:true});
+  const off=()=>g.classList.remove('on');
+  addEventListener('touchend',off,{passive:true}); addEventListener('touchcancel',off,{passive:true});
+})();
 </script>
 </body>
 </html>
