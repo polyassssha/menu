@@ -1512,7 +1512,8 @@ if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=
   addEventListener('appinstalled',close);
   const hb=document.getElementById('instHelp'); if(hb){ hb.hidden=standalone; hb.addEventListener('click',()=>{ document.getElementById('helpModal').hidden=true; openInstallHelp(); }); }
   let seen=false; try{ seen=!!localStorage.getItem('meal-board-install-seen'); }catch(e){}
-  if(!standalone && !seen) setTimeout(()=>{ if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
+  // на телефоне в браузере показываем при каждом открытии (пока доска не добавлена на экран), на компьютере — один раз
+  if(!standalone && (iOS || android || !seen)) setTimeout(()=>{ if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
 })();
 
 </script>
