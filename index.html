@@ -727,7 +727,21 @@ function applyDishes(){
   for(const w of Object.values(state.weeks)) for(const p of w.plan){ if(!p.s) p.s=[]; for(const s of SK) p[s]=p[s].filter(x=>BY[x.id]); }
 }
 initWeeks(); ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip();
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+let saveFailed=false;
+// Запасная копия в IndexedDB: на iPhone она надёжнее записывается на диск, если приложение сразу смахнули
+let idbP=null;
+function idb(){ if(!idbP) idbP=new Promise((res,rej)=>{ try{ const r=indexedDB.open('meal-board',1); r.onupgradeneeded=()=>r.result.createObjectStore('kv'); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); }catch(e){ rej(e); } }); return idbP; }
+function idbPut(json){ idb().then(db=>{ const tx=db.transaction('kv','readwrite'); tx.objectStore('kv').put(json,KEY); }).catch(()=>{}); }
+function idbGet(){ return idb().then(db=>new Promise(res=>{ const tx=db.transaction('kv','readonly'); const q=tx.objectStore('kv').get(KEY); q.onsuccess=()=>res(q.result||null); q.onerror=()=>res(null); })).catch(()=>null); }
+function save(){
+  state._ts=Date.now(); const json=JSON.stringify(state); idbPut(json);
+  try{ localStorage.setItem(KEY, json); if(localStorage.getItem(KEY)==null) throw 0; saveFailed=false; }
+  catch(e){ if(!saveFailed){ saveFailed=true; setTimeout(()=>toast('⚠︎ Телефон не даёт сохранить данные — проверь, не включён ли частный доступ в Safari'),300); } }
+}
+// просим браузер не стирать данные приложения и сохраняем при сворачивании
+try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
+addEventListener('pagehide',()=>save());
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') save(); });
 // Резервная копия данных: файл JSON, который можно сохранить в «Файлы» и загрузить обратно
 function exportData(){
   const d=new Date(), stamp=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -1364,7 +1378,7 @@ let openDishEditor, openNewDish;
     dName.value=rec?rec.name:''; dNote.value=rec&&rec.note?rec.note:''; dEqual.checked=!!(rec&&rec.equal); dServ.value=rec?rec.servings:4;
     mode='tot';
     dK.value=rec?Math.round(rec.tot.kcal):''; dP.value=rec?Math.round(rec.tot.p):''; dF.value=rec?Math.round(rec.tot.f):''; dC.value=rec?Math.round(rec.tot.c):'';
-    dIng.innerHTML=''; (rec?rec.batch:[[],[],[]]).forEach(([n,q,u,c,fw]=[])=>row({n,q,u,c,fw}));
+    dIng.innerHTML=''; (rec?rec.batch:[]).forEach(([n,q,u,c,fw]=[])=>row({n,q,u,c,fw}));
     const isCustom=editId&&editId.startsWith('c'), isOver=editId&&state.overrides[editId];
     dDelete.hidden=!(isCustom||isOver);
     dDelete.textContent=isCustom?'Удалить блюдо':'Вернуть исходный рецепт';
@@ -1376,7 +1390,7 @@ let openDishEditor, openNewDish;
   openDishEditor=id=>{ afterSave=null; const d=BY[id]; if(d) open(toEditable(d)); };
   openNewDish=(cb,defCat)=>{ afterSave=cb||null; open(null); if(defCat&&CATS[defCat]){ cat=defCat; catBtns(); calc(); } };
   document.getElementById('addDishBtn').addEventListener('click',()=>{ afterSave=null; open(null); });
-  dAddIng.addEventListener('click',()=>row());
+  dAddIng.addEventListener('click',()=>{ row(); const r=dIng.lastElementChild; if(r) r.querySelector('.iN').focus(); });
   dServ.addEventListener('input',()=>{ if(auto&&mode==='one') autoCalc(); else calc(); });
   dEqual.addEventListener('change',()=>calc());
   [dK,dP,dF,dC].forEach(i=>i.addEventListener('input',()=>{ if(auto){ auto=false; autoCalc(); } calc(); }));
@@ -1461,7 +1475,13 @@ function openPicker(di,s){
 function renderAll(){ renderNorm(); renderWeekTabs(); renderStats(); renderPalette(); renderWeek(); renderShop(); }
 // если доска открыта при смене недели — перестроить
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(); renderAll(); } });
-save(); renderAll();
+const lsTs=(()=>{ try{ return (JSON.parse(localStorage.getItem(KEY)||'null')||{})._ts||0; }catch(e){ return 0; } })();
+renderAll();
+idbGet().then(json=>{
+  let d=null; try{ d=json?JSON.parse(json):null; }catch(e){}
+  if(d && (d._ts||0)>lsTs){ saved=d; initWeeks(); ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip(); curDay=null; renderAll(); }
+  save();
+});
 if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
 // Первое открытие в браузере: подсказка, как добавить доску на экран «Домой» / рабочий стол
 (function(){
