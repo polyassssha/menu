@@ -635,7 +635,7 @@ function initWeeks(){
     if(saved.names) state.names = Object.assign({f:'',m:''}, saved.names);
     if(Array.isArray(saved.customCats)) state.customCats = saved.customCats;
     state.persons = 2; // всегда двое
-    if(Array.isArray(saved.custom)) state.custom = saved.custom.filter(c=>CATS[c.cat]);
+    if(Array.isArray(saved.custom)) state.custom = saved.custom.filter(c=>CATS[c.cat] || state.customCats.some(cc=>cc.k===c.cat));
     if(Array.isArray(saved.removed)) state.removed = saved.removed;
     if(saved.overrides) state.overrides = saved.overrides;
     else if(saved.plan) state.weeks[curKey] = {plan:saved.plan, checked:saved.checked||{}}; // старый формат
