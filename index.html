@@ -26,9 +26,6 @@
   .inst-steps li::before{content:counter(st);flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;margin-top:-1px}
   .inst-steps b{font-weight:600}
   .mbox.inst .mact .btn{width:100%;justify-content:center}
-  .touchglow{position:fixed;left:0;top:0;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;pointer-events:none;z-index:999;opacity:0;
-    background:radial-gradient(circle,rgba(109,79,214,.38) 0%,rgba(109,79,214,.18) 40%,rgba(109,79,214,0) 70%);transition:opacity .35s ease;will-change:transform,opacity}
-  .touchglow.on{opacity:1;transition:opacity .08s ease}
   :root{
     --outer:#d8dce1; --frame:#eceef1; --card:#ffffff; --dark:#0b0c0e; --dark2:#16181b;
     --ink:#111214; --muted:#7d8189; --faint:#a9adb4; --line:#e6e8ec; --soft:#f6f7f9;
@@ -1497,21 +1494,7 @@ if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=
   let seen=false; try{ seen=!!localStorage.getItem('meal-board-install-seen'); }catch(e){}
   if(!standalone && !seen) setTimeout(()=>{ if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
 })();
-// Подсветка под пальцем (телефон) и под курсором (компьютер): мягкое фиолетовое свечение
-(function(){
-  const g=document.createElement('div'); g.className='touchglow'; document.body.appendChild(g);
-  const at=e=>{ g.style.transform=`translate(${e.clientX}px,${e.clientY}px)`; };
-  let idle;
-  addEventListener('pointerdown',e=>{ at(e); g.classList.add('on'); },{passive:true});
-  addEventListener('pointermove',e=>{ at(e);
-    if(e.pointerType==='mouse'){ g.classList.add('on'); clearTimeout(idle); idle=setTimeout(()=>g.classList.remove('on'),1200); } },{passive:true});
-  const off=e=>{ if(!e || e.pointerType!=='mouse') g.classList.remove('on'); };
-  addEventListener('pointerup',off,{passive:true}); addEventListener('pointercancel',()=>g.classList.remove('on'),{passive:true});
-  document.addEventListener('mouseleave',()=>g.classList.remove('on'));
-  // при прокрутке пальцем браузер прерывает касание — держим свечение под пальцем по touch-событиям
-  addEventListener('touchmove',e=>{ const t=e.touches[0]; at(t); g.classList.add('on'); },{passive:true});
-  addEventListener('touchend',()=>g.classList.remove('on'),{passive:true});
-})();
+
 </script>
 </body>
 </html>
