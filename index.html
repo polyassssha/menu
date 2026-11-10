@@ -18,6 +18,16 @@
   html{accent-color:var(--accent);caret-color:var(--accent);-webkit-tap-highlight-color:color-mix(in srgb,#6d4fd6 14%,transparent)}
   ::selection{background:color-mix(in srgb,#6d4fd6 26%,transparent)}
   input,textarea{caret-color:var(--accent)}
+  .mbox.intro{max-width:380px;text-align:center;position:relative;padding-top:30px}
+  .iskip{position:absolute;top:14px;right:16px;border:0;background:transparent;color:var(--muted);font:500 12.5px Inter,sans-serif;cursor:pointer}
+  .iic{width:64px;height:64px;border-radius:18px;margin:6px auto 16px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#7b5cf0,#3fa9f5);box-shadow:0 6px 18px rgba(109,79,214,.25)}
+  .isl h3{margin:0 0 8px}
+  .mbox.intro .isl p{margin:0 auto;color:var(--muted);font-size:13.5px;line-height:1.5;max-width:300px;min-height:82px}
+  .idots{display:flex;justify-content:center;gap:6px;margin:16px 0 6px}
+  .idots i{width:6px;height:6px;border-radius:3px;background:#d3d6dc;transition:width .2s,background .2s;cursor:pointer}
+  .idots i.on{width:18px;background:var(--accent)}
+  .hfoot{display:flex;flex-wrap:wrap;gap:8px}
+  .hfoot a.btn,.hintbar a.btn{text-decoration:none;color:var(--ink)}
   .mbox.inst{max-width:360px;text-align:center}
   .inst-ic{width:64px;height:64px;border-radius:15px;display:block;margin:2px auto 12px;box-shadow:0 6px 18px rgba(109,79,214,.25)}
   .mbox.inst h3{margin-bottom:6px}
@@ -167,8 +177,10 @@
   .ctools{position:absolute;top:3px;right:3px;display:flex;gap:1px}
   .ib.ci{width:20px;height:20px;padding:0;display:grid;place-items:center;border-radius:6px}
   .ib.ci svg{display:block}
-  .chip.left{opacity:.55}
-  .chip.left .t::after{content:" · остатки";font-weight:400;color:var(--muted)}
+  .chip.left{background:#fafafb}
+  .chip.left .t{color:#5b5f67}
+  .chip .lo{display:block;font-weight:400;font-size:10.5px;color:var(--muted);margin-top:1px}
+  .chip .lo.cook{color:color-mix(in srgb,var(--c) 70%,#555)}
   .ib{border:0;background:transparent;cursor:pointer;font-size:11.5px;padding:2px 5px;border-radius:6px;color:var(--faint)}
   .ib:hover{background:var(--soft);color:var(--ink)}
   .ib.on{color:var(--accent);background:var(--accent-soft)}
@@ -260,6 +272,9 @@
   .catpick .addcat-pill{border-style:dashed;color:var(--muted)}
   .catpick .addcat-pill:hover{color:var(--accent);border-color:var(--accent)}
   .catpick button.on{border-color:var(--accent);background:var(--accent);color:#fff}
+  .catpick button.on i{background:#fff}
+  .catpick.need button[data-c]{border-color:#e9a3a3}
+  .req{color:var(--warn);font-weight:400;margin-left:4px;font-size:11px}
   .fgrid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
   .fgrid4 .fld{flex-wrap:wrap;gap:2px}
   .fgrid4 .fld span{flex-basis:100%}
@@ -279,7 +294,7 @@
   .eqrow input:checked{background:var(--accent);border-color:var(--accent)}
   .eqrow input:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
   .mact{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
-  .pt-del{margin-left:auto;padding:0 4px}
+  .pt-del,.ex-del{margin-left:auto;padding:0 4px}
   .restore{border:0;background:transparent;color:var(--accent);font:500 11.5px Inter,sans-serif;cursor:pointer;padding:6px 0 0}
   @media (hover:none){
     .mh .cat-ren,.mh .cat-del{opacity:.55}
@@ -308,6 +323,43 @@
   .pfoot{position:sticky;bottom:calc(-16px - env(safe-area-inset-bottom));margin:10px -22px calc(-16px - env(safe-area-inset-bottom));padding:10px 22px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
   .pfoot .btn{width:100%;padding:12px;font-size:14px}
   .pdish{text-align:left;border:1px solid color-mix(in srgb,var(--mc) 38%,#fff);background:#fff;border-radius:10px;padding:9px 10px;font:500 12.5px Inter,sans-serif;color:var(--ink);cursor:pointer}
+  .autofill[hidden]{display:none}
+  .autofill{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin:-2px 0 10px;font-size:12.5px}
+  .autofill .af-btns{display:flex;gap:6px;margin-left:auto}
+  .autofill.busy .af-btns{display:none}
+  .photo-row{display:flex;align-items:center;gap:10px;margin:0 0 12px;flex-wrap:wrap}
+  .dphoto{position:relative;width:76px;height:76px;border-radius:10px;overflow:hidden;background:var(--soft);flex:none}
+  .dphoto img{width:100%;height:100%;object-fit:cover;display:block}
+  .dphoto .ib{position:absolute;top:4px;right:4px;background:rgba(255,255,255,.92);border-radius:50%;width:22px;height:22px;display:grid;place-items:center;padding:0}
+  .urlopen{font-size:12.5px;color:var(--accent);text-decoration:none;font-weight:500}
+  .inut{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:-1px 0 4px 2px;font-size:11px;color:var(--muted)}
+  .inut .nv{flex:1;min-width:140px}
+  .inut .nv.bad{color:var(--warn)}
+  .nbtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 8px;font:500 11px Inter,sans-serif;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+  .ned{display:flex;align-items:center;gap:4px;flex-basis:100%}
+  .ned[hidden]{display:none}
+  .ned em{font-style:normal;margin-right:2px;white-space:nowrap}
+  .ned input{width:58px;min-width:0;border:1px solid var(--line);border-radius:7px;padding:5px 6px;font:400 12px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
+  .ned input:focus{border-color:var(--accent);background:#fff}
+  .mbox.scan{max-width:420px}
+  .scanv{position:relative;border-radius:12px;overflow:hidden;background:#0d0e10;aspect-ratio:4/3;margin:10px 0}
+  .scanv video{width:100%;height:100%;object-fit:cover;display:block}
+  .scanv::after{content:"";position:absolute;left:12%;right:12%;top:42%;height:16%;border:2px solid rgba(255,255,255,.85);border-radius:10px;box-shadow:0 0 0 999px rgba(0,0,0,.25)}
+  .scanst{font-size:12.5px;color:var(--muted);min-height:18px}
+  .scanst.bad{color:var(--warn)}
+  .scanman{display:flex;gap:6px;margin-top:10px}
+  .scanman input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
+  .ingbtns{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .ingbtns .btn{display:inline-flex;align-items:center;gap:6px}
+  .fld.steps[hidden]{display:none!important}
+  .fld.steps,.fld.steps:focus-within{display:block;margin-top:12px;border:0!important;background:none!important;padding:0!important;box-shadow:none!important}
+  .fld.steps textarea:focus{outline:none;border-color:var(--accent);background:#fff}
+  .fld.steps span{display:block;margin-bottom:5px}
+  .fld.steps textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:10px 12px;font:13px/1.5 Inter,sans-serif;color:var(--ink);resize:vertical}
+  .dish.hasph{padding-left:56px;min-height:40px}
+  .dthumb{position:absolute;left:8px;top:8px;width:40px;height:40px;border-radius:7px;object-fit:cover;background:var(--soft)}
+  .dish .m .rc{color:var(--accent)}
+  .pph{width:100%;height:62px;object-fit:cover;border-radius:7px;margin-bottom:6px;display:block}
   .pdish small{display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:2px}
   .help .htext{margin-top:8px;font-size:13px;line-height:1.5}
   .help h4{margin:16px 0 4px;font-size:13.5px;font-weight:600}
@@ -397,7 +449,7 @@
       <div class="card shop" id="shop"></div>
     </section>
   </section>
-  <div class="hintbar"><button type="button" class="btn" id="helpBtn">Как пользоваться доской</button></div>
+  <div class="hintbar"><button type="button" class="btn" id="helpBtn">Как пользоваться доской</button><a class="btn" id="mailBtn" href="#">Написать отзыв</a></div>
 </div>
 <div class="modal" id="normModal" hidden>
   <form class="mbox" id="normForm">
@@ -424,15 +476,19 @@
   <form class="mbox wide" id="dishForm">
     <h3 id="dTitle">Новое блюдо</h3>
     <p class="muted">Внеси состав <b>всего блюда</b>, как готовишь его целиком, и сколько порций из него выходит. Порцию на одного человека доска посчитает сама.</p>
-    <div class="mlabel">Категория</div>
+    <div class="mlabel">Категория<span class="req">обязательно</span></div>
     <div class="catpick" id="dCat"></div>
     <label class="fld"><span>Название</span><input type="text" id="dName" class="plain" maxlength="50" required autocomplete="off" placeholder="Например, «Плов с курицей»"></label>
+    <label class="fld"><span>Ссылка на рецепт</span><input type="url" id="dUrl" class="plain" inputmode="url" autocomplete="off" placeholder="Необязательно — вставь ссылку, и я предложу заполнить блюдо"></label>
+    <div class="autofill" id="dFill" hidden><span id="dFillTxt">Заполнить блюдо по этой ссылке автоматически?</span><span class="af-btns"><button type="button" class="btn small primary" id="dFillYes">Заполнить</button><button type="button" class="btn small" id="dFillNo">Не надо</button></span></div>
+    <div class="photo-row"><div class="dphoto" id="dPhotoBox" hidden><img id="dPhotoImg" alt=""><button type="button" class="ib" id="dPhotoDel" title="Убрать фото">✕</button></div><button type="button" class="btn small" id="dPhotoBtn">＋ Фото блюда</button><a class="urlopen" id="dUrlOpen" target="_blank" rel="noopener" hidden>Открыть рецепт ↗</a><input type="file" id="dPhotoFile" accept="image/*" hidden></div>
     <label class="fld"><span>Подпись под названием</span><input type="text" id="dNote" class="plain" maxlength="50" autocomplete="off" placeholder="Необязательно, например «по 1 стаканчику 150 г»"></label>
     <label class="fld"><span>Порций из этого состава</span><input type="number" id="dServ" min="1" max="40" required style="width:70px"><em>порц.</em></label>
     <div class="mlabel">Состав всего блюда</div>
     <div id="dIng"></div>
     <datalist id="prodList"></datalist>
-    <button type="button" class="btn small" id="dAddIng">＋ продукт</button>
+    <div class="ingbtns"><button type="button" class="btn small" id="dAddIng">＋ продукт</button><button type="button" class="btn small" id="dScanBtn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2"/><path d="M8 8v8M11 8v8M14 8v8M17 8v8"/></svg> Сканировать штрихкод</button><button type="button" class="btn small" id="dStepsBtn">＋ Добавить шаги приготовления</button></div>
+    <label class="fld steps" id="dStepsBox" hidden><span>Шаги приготовления</span><textarea id="dSteps" rows="7" placeholder="1. Нарезать лук&#10;2. Обжарить фарш&#10;3. …"></textarea></label>
     <div class="mrow"><span class="mlabel" style="margin:0">КБЖУ</span><div class="seg2" id="dMode"><button type="button" data-m="tot">на всё блюдо</button><button type="button" data-m="one">на 1 порцию</button></div></div>
     <div class="fgrid4">
       <label class="fld"><span>Ккал</span><input type="number" id="dK" min="0" required></label>
@@ -471,6 +527,22 @@
     <div class="pfoot" id="pFoot" hidden><button type="button" class="btn primary" id="pAdd">Добавить</button></div>
   </div>
 </div>
+<div class="modal" id="scanModal" hidden>
+  <div class="mbox scan">
+    <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Штрихкод продукта</h3><button type="button" class="btn small" id="scanClose">Закрыть</button></div>
+    <div class="scanv" id="scanV"><video id="scanVideo" playsinline muted></video></div>
+    <div class="scanst" id="scanSt">Наведи камеру на штрихкод на упаковке</div>
+    <form class="scanman" id="scanMan"><input id="scanCode" inputmode="numeric" pattern="[0-9]*" placeholder="или введи цифры штрихкода" autocomplete="off"><button class="btn" type="submit">Найти</button></form>
+  </div>
+</div>
+<div class="modal" id="introModal" hidden>
+  <div class="mbox intro">
+    <button type="button" class="iskip" id="iSkip">Пропустить</button>
+    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><h3>Собери свои блюда</h3><p>Выбери готовые или добавь свои: состав, ссылку на рецепт, фото и шаги. Калории и БЖУ посчитаются по составу.</p></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и постоянными продуктами.</p></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — копия данных, чтобы ничего не потерять.</p></div>
+    <div class="idots" id="iDots"><i data-i="0" class=on></i><i data-i="1"></i><i data-i="2"></i><i data-i="3"></i></div>
+    <div class="mact" style="margin-top:6px"><button type="button" class="btn" id="iPrev" hidden>Назад</button><span style="flex:1"></span><button type="button" class="btn primary" id="iNext">Далее</button></div>
+  </div>
+</div>
 <div class="modal" id="installModal" hidden>
   <div class="mbox inst">
     <svg class="inst-ic" viewBox="0 0 100 100" width="64" height="64" aria-hidden="true"><defs><linearGradient id="igr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cf0"/><stop offset="1" stop-color="#3fa9f5"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#igr)"/><g transform="translate(20.6 20.6) scale(.588)"><rect x="6" y="6" width="40" height="40" rx="10" fill="#fff"/><rect x="54" y="6" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="6" y="54" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="54" y="54" width="40" height="40" rx="10" fill="#fff"/><path d="M26 33s-10-6-11.4-12.6A5.6 5.6 0 0 1 26 18a5.6 5.6 0 0 1 11.4 2.4C36 27 26 33 26 33z" fill="#7b5cf0"/><path d="M74 61l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L74 74.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="#3fa9f5"/></g></svg>
@@ -483,6 +555,7 @@
 <div class="modal" id="helpModal" hidden>
   <div class="mbox wide help">
     <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3>Как пользоваться доской</h3><button type="button" class="btn small" id="hClose">Закрыть</button></div>
+    <div class="hfoot" style="margin:2px 0 10px"><button type="button" class="btn small" id="hIntro">Показать обучение</button><a class="btn small" id="hMail" href="#">Написать отзыв</a></div>
     <div class="htext">
       <button type="button" class="btn small" id="instHelp" style="margin:4px 0 6px" hidden>Как добавить доску на экран</button>
       <h4>1. Профиль и норма</h4>
@@ -492,14 +565,16 @@
       <p>У блюда: ✎ — редактировать, ✕ — удалить (два нажатия). Удалённые стандартные блюда можно вернуть кнопкой внизу списка.</p>
       <h4>3. Новое блюдо</h4>
       <p>«＋ Новое блюдо»: категория, название, подпись, сколько порций выходит, состав <b>всего блюда</b>. КБЖУ считаются по составу автоматически (таблица доски + foodstruct.com), их можно поправить вручную. «Равные порции» — если мужчина и женщина едят одинаково, например по стаканчику йогурта.</p>
+      <p>В блюдо можно добавить ссылку на рецепт, фото и шаги приготовления. Если вставить ссылку, доска предложит заполнить блюдо автоматически: название, состав и шаги. Это работает на сайтах, где рецепт размечен стандартно (например, menunedeli.ru), — проверь количества после заполнения.</p>
       <h4>4. Планирование</h4>
       <p>Перетащи блюдо в ячейку дня: завтрак, обед, перекус, ужин. С телефона — нажми на ячейку и выбери блюдо из списка. Калории дня = сумма поставленных блюд (порция того, кто выбран в профиле).</p>
-      <p>Если ешь блюдо повторно (ужин из остатков, суп на второй день) — поставь его ещё раз и нажми круговые стрелки на нём: калории посчитаются, а продукты в список не попадут.</p>
+      <p>Если блюдо стоит в неделе несколько раз, доска сама считает повторы остатками, пока не закончатся порции: кастрюля супа на 8 порций — это 4 приёма на двоих. На карточке видно «готовим · 8 порц.» и «остатки · ещё 2 порц.», а продукты в список попадают только для дня, когда готовишь. Круговые стрелки на блюде меняют это вручную: «готовим заново» или «точно остатки»; повторное нажатие возвращает авто.</p>
       <p>Над днями — «Эта неделя / Следующая неделя». В понедельник прошедшая неделя исчезает, следующая становится текущей.</p>
       <h4>5. Закупки</h4>
       <p>Кнопка 🛒 у дня делает его днём закупки — такой день отмечен фиолетовой полосой слева. Каждая закупка покупает продукты на дни после неё до следующей закупки включительно: сам день закупки относится к прошлой закупке.</p>
       <h4>6. Покупки</h4>
       <p>Список на выбранную закупку собирается сам: весь состав поставленных блюд, округлённый до упаковок, с подписью, для чего продукт. Если с прошлой закупки осталась упаковка, повторно она не покупается. «Постоянные продукты» — то, что докупаешь по мере необходимости, этот список редактируется. «Обычно есть дома» можно скрыть ✕. Если продукта хватит с прошлой закупки, он попадёт в плашку «Хватит остатков» — перед магазином проверь его на полке.</p>
+      <p>«Разовые покупки» — то, что нужно купить только в эту закупку (губки, корм коту). Постоянные продукты не повторяются, если они уже есть в основном списке.</p>
       <p>«Скопировать список» — текст с категориями. В Заметках: вставь, выдели и нажми ⇧⌘L (Mac) или кнопку с галочкой (iPhone).</p>
       <h4>7. Питание</h4>
       <p>Чёрный блок — средние калории и БЖУ за запланированные дни выбранной недели в сравнении с нормой. Шкала справа — средние калории в день.</p>
@@ -510,6 +585,8 @@
 <div class="toast" id="toast"></div>
 
 <script>
+let pickSel=[], openInstallHelp=()=>{}, afterIntro=null, scanFill=null;
+const SCAN_ICON='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2"/><path d="M8 8v8M11 8v8M14 8v8M17 8v8"/></svg>';
 const CART_SVG='<svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>';
 const CATS = {
   breakfast:{t:'Завтраки', c:'var(--breakfast)', bg:'var(--breakfast-bg)'},
@@ -631,6 +708,8 @@ function initWeeks(){
     if(saved.collapsed) state.collapsed = saved.collapsed;
     if(saved.catNames) state.catNames = saved.catNames;
     if(saved.catColors) state.catColors = saved.catColors;
+    if(saved.myFoods) state.myFoods = saved.myFoods;
+    if(saved.leftMigr) state.leftMigr = saved.leftMigr;
     if(Array.isArray(saved.catOrder)) state.catOrder = saved.catOrder;
     if(saved.names) state.names = Object.assign({f:'',m:''}, saved.names);
     if(Array.isArray(saved.customCats)) state.customCats = saved.customCats;
@@ -748,6 +827,11 @@ function exportData(){
   const name=`menu-board-${stamp}.json`;
   const blob=new Blob([JSON.stringify({app:'meal-board',v:1,saved:d.toISOString(),state},null,1)],{type:'application/json'});
   const file=new File([blob],name,{type:'application/json'});
+  if(window.claude && claude.use){
+    claude.use('downloads').then(dl=>{ if(!dl){ toast('Сохранение здесь недоступно'); return; }
+      return dl.save({filename:name,data:blob}).then(()=>toast('Копия сохранена'),err=>{ if(!err||err.code!=='declined') toast('Не получилось сохранить'); }); });
+    return;
+  }
   if(navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file],title:'Доска меню — копия'}).catch(()=>{}); return; }
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
   toast('Копия сохранена');
@@ -785,10 +869,11 @@ function renderPalette(){
     if(!col){ h+=`<div class="mbody">`;
       for(const d of list){
         const ing = d.ing.filter(i=>i[1]!=null).map(i=>i[0].toLowerCase()).join(', ');
-        h+=`<div class="dish${selected===d.id?' sel':''}" draggable="true" data-id="${d.id}" style="--c:${c.c}">
+        const ph=d.src&&d.src.photo, hasRc=d.src&&(d.src.steps||d.src.url);
+        h+=`<div class="dish${selected===d.id?' sel':''}${ph?' hasph':''}" draggable="true" data-id="${d.id}" style="--c:${c.c}">${ph?`<img class="dthumb" src="${esc(ph)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('hasph');this.remove()">`:''}
           <span class="dish-tools"><button class="ib dish-edit" data-id="${d.id}" title="Редактировать">✎</button><button class="ib dish-del" data-id="${d.id}" title="Удалить блюдо">✕</button></span>
           <div class="n">${esc(d.name)}</div>
-          <div class="m">~${Math.round(pv(d,'kcal'))} ккал${d.p?' · Б '+Math.round(pv(d,'p')):''}${d.note?' · '+esc(d.note):''}</div>
+          <div class="m">~${Math.round(pv(d,'kcal'))} ккал${d.p?' · Б '+Math.round(pv(d,'p')):''}${d.note?' · '+esc(d.note):''}${hasRc?' · <span class="rc">рецепт</span>':''}</div>
           ${ing?`<div class="ing">${esc(ing)}</div>`:''}</div>`;
       }
     }
@@ -889,8 +974,8 @@ function renderWeek(){
       for(const it of items){
         const d = BY[it.id];
         h+=`<div class="chip${it.left?' left':''}" draggable="true" data-d="${di}" data-s="${s}" data-u="${it.u}" style="--c:${CATS[d.cat].c}">
-          <span class="t">${esc(d.name)}</span>
-          <span class="ctools"><button class="ib ci${it.left?' on':''}" data-act="left" title="Остатки: не добавлять продукты в список"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci" data-act="del" title="Убрать"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div>`;
+          <span class="t">${esc(d.name)}${it.left?`<span class="lo">остатки${it.rem>0?` · ещё ${it.rem} порц.`:' · последние'}</span>`:(it.sv>Math.max(1,state.persons||2)?`<span class="lo cook">готовим · ${it.sv} порц.${it.rem>0?`, останется ${it.rem}`:''}</span>`:'')}</span>
+          <span class="ctools"><button class="ib ci${it.left?' on':''}" data-act="left" title="${it.mode?'Вручную: '+(it.left?'остатки':'готовим')+' — нажми, чтобы вернуть авто':'Авто: '+(it.left?'остатки':'готовим')+' — нажми, чтобы поменять'}"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci" data-act="del" title="Убрать"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div>`;
       }
       if(!items.length) h+=`<div class="hint">${selected||isTouchUI()?'＋ нажми, чтобы добавить':(s==='s'?'перетащи перекус':'перетащи блюдо')}</div>`;
       h+=`</div>`;
@@ -934,13 +1019,106 @@ function renderWeek(){
       e.stopPropagation();
       const {d,s,u}=ch.dataset;
       if(b.dataset.act==='del') removeItem(+d,s,u);
-      else { const it=W().plan[+d][s].find(x=>x.u===u); if(it){it.left=!it.left; update();} }
+      else { const it=W().plan[+d][s].find(x=>x.u===u); if(it){ if(it.mode) delete it.mode; else it.mode = it.left?'cook':'left'; update(); } }
     }));
   });
 }
 const isTouchUI=()=>matchMedia('(hover: none), (max-width: 760px)').matches;
+// Повтор блюда = остатки, пока не закончатся порции из кастрюли/противня.
+// it.mode: нет — авто, 'cook' — готовим заново, 'left' — точно остатки.
+function markLeftovers(){
+  if(!state.leftMigr){ for(const w of Object.values(state.weeks)) for(const p of w.plan) for(const s of SK) for(const it of p[s]) if(it.left===true && !it.mode && it.rem===undefined) it.mode='left'; state.leftMigr=1; }
+  const need=Math.max(1,state.persons||2), rem={};
+  for(const wk of Object.keys(state.weeks).sort()) for(const p of state.weeks[wk].plan) for(const s of SK) for(const it of p[s]){
+    const d=BY[it.id]; if(!d) continue;
+    const sv=Math.max(1,(d.src&&d.src.servings)||need), r=rem[it.id]||0;
+    const isLeft = it.mode==='left' ? true : it.mode==='cook' ? false : (sv>need && r>=need);
+    const after = isLeft ? Math.max(0,r-need) : Math.max(0,sv-need);
+    it.left=isLeft; it.rem=after; it.sv=sv; rem[it.id]=after;
+  }
+}
 function addItem(di,s,id){ if(!BY[id]) return; W().plan[di][s].push({id,u:uid(),left:false}); update(); }
 function removeItem(di,s,u){ const arr=W().plan[di][s]; const i=arr.findIndex(x=>x.u===u); if(i>-1){arr.splice(i,1); update();} }
+
+/* ---------- автозаполнение блюда по ссылке ---------- */
+// Страницу рецепта читаем через бесплатные сервисы-посредники (браузер сам не может открыть чужой сайт)
+const PROXIES=[[u=>'https://r.jina.ai/'+u,{headers:{'X-Return-Format':'html'}},20000],[u=>'https://api.allorigins.win/raw?url='+encodeURIComponent(u),{},9000]];
+async function fetchText(url){
+  for(const [mk,opt,ms] of PROXIES){
+    try{ const ctl=new AbortController(); const t=setTimeout(()=>ctl.abort(),ms);
+      const r=await fetch(mk(url),Object.assign({signal:ctl.signal},opt)); clearTimeout(t); if(!r.ok) continue; const txt=await r.text(); if(txt && txt.length>500) return txt; }catch(e){}
+  }
+  return null;
+}
+async function fetchRecipe(url){ const html=await fetchText(url); if(!html) return null; try{ return parseRecipeHtml(html,url); }catch(e){ return null; } }
+function parseRecipeHtml(html,base){
+  const doc=new DOMParser().parseFromString(html,'text/html');
+  let rec=null;
+  const isRecipe=n=>n && (n['@type']==='Recipe' || (Array.isArray(n['@type']) && n['@type'].includes('Recipe')));
+  const walk=n=>{ if(!n||rec||typeof n!=='object') return; if(Array.isArray(n)){ n.forEach(walk); return; } if(isRecipe(n)){ rec=n; return; } if(n['@graph']) walk(n['@graph']); if(n.mainEntity) walk(n.mainEntity); };
+  for(const sc of doc.querySelectorAll('script[type="application/ld+json"]')){ try{ walk(JSON.parse(sc.textContent.replace(/^\s*<!\[CDATA\[|\]\]>\s*$/g,''))); }catch(e){} if(rec) break; }
+  const txt=x=>(x==null?'':String(x)).replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+  let name='', ings=[], steps=[], image='', yld=0;
+  if(rec){
+    name=txt(rec.name);
+    ings=(Array.isArray(rec.recipeIngredient)?rec.recipeIngredient:(rec.ingredients||[])).map(txt).filter(Boolean);
+    const addStep=x=>{ if(!x) return; if(typeof x==='string'){ x.split(/\n+/).map(txt).filter(Boolean).forEach(t=>steps.push(t)); return; }
+      if(Array.isArray(x)){ x.forEach(addStep); return; } if(x.itemListElement){ addStep(x.itemListElement); return; } if(x.text) steps.push(txt(x.text)); else if(x.name) steps.push(txt(x.name)); };
+    addStep(rec.recipeInstructions);
+    let im=rec.image; if(Array.isArray(im)) im=im[0]; if(im&&typeof im==='object') im=im.url||im.contentUrl; image=im||'';
+    const y=Array.isArray(rec.recipeYield)?rec.recipeYield[0]:rec.recipeYield; yld=parseInt(String(y||'').match(/\d+/)||0)||0;
+  }
+  const iv=e=>txt(e.getAttribute('content')||e.textContent);
+  if(!ings.length){ ings=[...doc.querySelectorAll('[itemprop="recipeIngredient"],[itemprop="ingredients"]')].map(iv).filter(Boolean); }
+  if(!name){ const n=doc.querySelector('[itemtype*="Recipe"] [itemprop="name"],[itemprop="name"]'); if(n) name=iv(n); }
+  if(!image){ const im=[...doc.querySelectorAll('[itemprop="image"]')].map(e=>e.getAttribute('src')||e.getAttribute('content')||e.getAttribute('href')||'').find(x=>x&&!x.startsWith('data:')); if(im) image=im; }
+  if(!yld){ const y=doc.querySelector('[itemprop="recipeYield"]'); if(y) yld=parseInt((iv(y).match(/\d+/)||[0])[0])||0; }
+  if(!steps.length){ [...doc.querySelectorAll('[itemprop="recipeInstructions"]')].forEach(e=>{ const li=e.querySelectorAll('li,p'); (li.length?[...li]:[e]).forEach(x=>{ const t=txt(x.textContent); if(t) steps.push(t); }); }); }
+  if(!name){ const og=doc.querySelector('meta[property="og:title"]'); name=txt(og?og.content:(doc.querySelector('h1')||{}).textContent); }
+  if(!image){ const og=doc.querySelector('meta[property="og:image"]'); image=og?og.content:''; }
+  try{ if(image) image=new URL(image,base).href; }catch(e){ image=''; }
+  if(!ings.length && !steps.length) return null;
+  steps=steps.map(t=>t.replace(/^\d+[.)]\s*/,'')).filter(Boolean);
+  if(name.length>38) name=name.split(/:\s|\s[—–-]\s|\.\s/)[0];
+  return {name, ing:ings.map(parseIng).filter(Boolean), steps:steps.map((t,i)=>`${i+1}. ${t}`).join('\n'), image, yield:yld};
+}
+// «Мука — 500 г», «2 ст. л. сахара», «Соль по вкусу», «Яйца 3 шт.» → {n,q,u,c}
+const UNIT_RX=[[/^(кг|килограмм\S*)/i,'г',1000],[/^(г|гр|грамм\S*)\.?(?![а-яё])/i,'г',1],[/^(мл|миллилитр\S*)/i,'мл',1],[/^(л|литр\S*)\.?(?![а-яё])/i,'мл',1000],
+  [/^(ст\.?\s*л\.?|столов\S*\s+лож\S*)/i,'г',15],[/^(ч\.?\s*л\.?|чайн\S*\s+лож\S*)/i,'г',5],[/^(стакан\S*)/i,'мл',200],[/^(шт\.?|штук\S*)/i,'шт',1],
+  [/^(зуб\S*)/i,'зуб.',1],[/^(головк\S*|кусоч\S*|кусок\S*|ломт\S*|банк\S*|пакет\S*|стебл\S*|веточ\S*|лист\S*)/i,'шт',1],[/^(пуч\S*)/i,'пучок',1],[/^(щепот\S*)/i,'г',1],[/^(упак\S*|пач\S*)/i,'уп.',1],[/^(g|grams?)\b/i,'г',1],[/^(kg)\b/i,'г',1000],[/^(ml)\b/i,'мл',1],[/^(tbsp|tablespoons?)\b/i,'г',15],[/^(tsp|teaspoons?)\b/i,'г',5],[/^(cups?)\b/i,'мл',240],[/^(pcs|pieces?)\b/i,'шт',1]];
+const FRAC={'½':.5,'¼':.25,'¾':.75,'⅓':1/3,'⅔':2/3};
+function guessCat(name){
+  const n=name.toLowerCase();
+  for(const d of DISHES) for(const i of d.ing) if(i[0].toLowerCase()===n) return i[3];
+  if(/куриц|курин|говяд|свин|фарш|индей|бекон|колбас|сосиск|ветчин|мяс|баран|рыб|лосос|форел|креветк|филе|бедр|голен|печен[ьи]/.test(n)) return 'meat';
+  if(/молок|кефир|сметан|творог|сыр|йогурт|сливк|масло слив|яйц|яйко|mleko|mlijeko|sir\b|jogurt|pavlak|kajmak|jaja|milk|cheese|yogh?urt/.test(n)) return 'dairy';
+  if(/рис|греч|овсян|хлопь|мук|макарон|паст|спагет|хлеб|лаваш|тортиль|булгур|кускус|киноа|крупа/.test(n)) return 'grain';
+  if(/яблок|банан|груш|апельсин|мандарин|лимон|ягод|клубник|малин|черник|виноград|киви|персик|слив[аы]|абрикос|финик|изюм|ананас|авокадо/.test(n)) return 'fruit';
+  if(/лук|морков|картоф|капуст|помидор|томат|огур|перец сладк|болгарск|кабачк|баклажан|чеснок|зелен|укроп|петрушк|кинз|салат|шпинат|свекл|свёкл|гриб|шампиньон|брокколи|тыкв|сельдер|редис|руккол/.test(n)) return 'veg';
+  if(/соль|перец|специ|приправ|сахар|уксус|масло|соус|паприк|куркум|лавров|сода|разрыхл|ванил|корица|горчиц|майонез|кетчуп|вода/.test(n)) return 'pantry';
+  return 'other';
+}
+function parseIng(str){
+  let s=String(str).replace(/\s+/g,' ').trim(); if(!s) return null;
+  const taste=/по вкусу|для подачи|по желанию|на кончике/i.test(s);
+  s=s.replace(/\(.*?\)/g,' ').replace(/по вкусу|для подачи|по желанию|на кончике ножа/ig,' ');
+  const NUM='(\\d+(?:[.,]\\d+)?(?:\\s*\\/\\s*\\d+)?|[½¼¾⅓⅔])';
+  const rx=new RegExp(NUM+'(?:\\s*[-–]\\s*\\d+(?:[.,]\\d+)?)?\\s*','g');
+  let q=null,u='',name=s,m;
+  while((m=rx.exec(s))){
+    const raw=m[1]; let v = FRAC[raw]!=null ? FRAC[raw] : raw.includes('/') ? (()=>{const [a,b]=raw.split('/').map(Number); return b?a/b:0;})() : parseFloat(raw.replace(',','.'));
+    const rest=s.slice(m.index+m[0].length); let unit='шт', k=1, ulen=0, hit=false;
+    for(const [re,uu,kk] of UNIT_RX){ const mm=rest.match(re); if(mm){ unit=uu; k=kk; ulen=mm[0].length; hit=true; break; } }
+    if(!hit && /^[а-яёa-z]/i.test(rest) && m.index>0) continue; // «2 яйца» в начале — ок, «в 2 раза» — пропуск
+    q=Math.round(v*k*10)/10; u=unit; name=(s.slice(0,m.index)+' '+rest.slice(ulen)).trim(); break;
+  }
+  name=name.replace(/\s[—–-]\s/g,' ').replace(/^[\s—–\-:,.;]+|[\s—–\-:,.;]+$/g,'').replace(/\s+/g,' ');
+  if(!name) return null;
+  name=name.charAt(0).toUpperCase()+name.slice(1);
+  if(name.length>40) name=name.slice(0,40);
+  const c = taste&&q==null ? 'pantry' : guessCat(name);
+  return q==null ? {n:name,q:'',u:'г',c} : {n:name,q,u,c};
+}
 
 /* ---------- shopping list ---------- */
 function needFor(refs){
@@ -1019,8 +1197,17 @@ function renderShop(){
   const {items,covered,filled,days,prev}=all[activeTrip];
   h+=`<div class="tabs">${trips.map(t=>`<button class="tab${t.id===activeTrip?' on':''}" data-t="${t.id}">${CART_SVG}${t.t} <small title="${t.range.replace('на ','')}">${t.cnt}</small></button>`).join('')}</div>`;
   h+=`<div class="cols">`;
-  const stapleGrp=()=>{ let g=`<div class="grp"><h3 class="cat">Постоянные продукты <span class="st-sub">— если закончились</span></h3>`;
-    for(const n of state.staples){
+  const inMain=n=>{ const x=n.toLowerCase().trim(); return items.some(i=>{ const y=i.name.toLowerCase(); return y===x || y.startsWith(x+' ') || y.startsWith(x+','); }); };
+  const extras=((W().extras||{})[activeTrip])||[];
+  const stShown=state.staples.filter(n=>!inMain(n));
+  const stapleGrp=()=>{ let g=`<div class="grp"><h3 class="cat">Разовые покупки <span class="st-sub">— только в эту закупку</span></h3>`;
+    for(const n of extras){
+      const ck=activeTrip+'|extra|'+n, done=!!W().checked[ck];
+      g+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib ex-del" data-n="${esc(n)}" title="Убрать">✕</button></label>`;
+    }
+    g+=`<form class="st-add" id="exAdd"><input id="exInput" placeholder="Например: губки, корм коту" maxlength="40"><button class="btn" type="submit">+</button></form></div>`;
+    g+=`<div class="grp"><h3 class="cat">Постоянные продукты <span class="st-sub">— если закончились</span></h3>`;
+    for(const n of stShown){
       const ck=activeTrip+'|staple|'+n, done=!!W().checked[ck];
       g+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib st-del" data-n="${esc(n)}" title="Убрать из постоянных">✕</button></label>`;
     }
@@ -1055,9 +1242,14 @@ function renderShop(){
   el.querySelectorAll('.pt-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); if(!state.hiddenPantry.includes(b.dataset.n)) state.hiddenPantry.push(b.dataset.n); save(); renderShop(); }));
   const rp=document.getElementById('restorePantry'); if(rp) rp.addEventListener('click',()=>{ state.hiddenPantry=[]; save(); renderShop(); });
   el.querySelectorAll('.st-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); state.staples=state.staples.filter(x=>x!==b.dataset.n); save(); renderShop(); }));
+  el.querySelectorAll('.ex-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); const ex=W().extras[activeTrip]; W().extras[activeTrip]=ex.filter(x=>x!==b.dataset.n); delete W().checked[activeTrip+'|extra|'+b.dataset.n]; save(); renderShop(); }));
+  document.getElementById('exAdd').addEventListener('submit',e=>{ e.preventDefault(); const v=document.getElementById('exInput').value.trim(); if(!v) return;
+    if(inMain(v)){ toast('Это уже есть в списке'); return; }
+    W().extras=W().extras||{}; const ex=W().extras[activeTrip]=W().extras[activeTrip]||[]; if(!ex.includes(v)) ex.push(v); save(); renderShop();
+    setTimeout(()=>{ const i=document.getElementById('exInput'); if(i) i.focus(); },0); });
   document.getElementById('stAdd').addEventListener('submit',e=>{ e.preventDefault(); const v=document.getElementById('stInput').value.trim(); if(v && !state.staples.includes(v)){ state.staples.push(v); save(); } renderShop(); });
   el.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',()=>{ if(cb.checked) W().checked[cb.dataset.k]=true; else delete W().checked[cb.dataset.k]; save(); renderShop(); }));
-  document.getElementById('copyBtn').addEventListener('click',()=>copyList(items,tr,false,covered));
+  document.getElementById('copyBtn').addEventListener('click',()=>copyList(items,tr,false,covered,extras,stShown));
   document.getElementById('uncheckBtn').addEventListener('click',()=>{ for(const k of Object.keys(W().checked)) if(k.startsWith(activeTrip+'|')) delete W().checked[k]; save(); renderShop(); });
 }
 function bindPersons(el){
@@ -1067,7 +1259,7 @@ function bindPersons(el){
   el.querySelectorAll('.pm').forEach(b=>b.addEventListener('click',()=>set(state.persons+ +b.dataset.d)));
 }
 function bindTabs(el){ el.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{ activeTrip=b.dataset.t; renderShop(); })); }
-function copyList(items,tr,notes,covered){
+function copyList(items,tr,notes,covered,extras,stShown){
   const line=i=>{ const q=qtyText(i); return `${i.name}${i.note?` (${i.note})`:soupNote(i)}${q?' — '+q:''}`; };
   let t;
   if(notes){
@@ -1077,8 +1269,10 @@ function copyList(items,tr,notes,covered){
     t=lines.join('\n');
   } else {
     t=`${tr.full} (${tr.range.slice(3)}, неделя ${rangeLabel(activeWeek)})\n`;
-    const st=state.staples.filter(n=>!W().checked[tr.id+'|staple|'+n]);
+    const st=(stShown||state.staples).filter(n=>!W().checked[tr.id+'|staple|'+n]);
+    const ex=(extras||[]).filter(n=>!W().checked[tr.id+'|extra|'+n]);
     for(const [c,title] of SHOP){
+      if(c==='pantry' && ex.length) t+=`\nРазовые покупки\n`+ex.map(n=>'— '+n).join('\n')+'\n';
       if(c==='pantry' && st.length) t+=`\nПостоянные продукты (если закончились)\n`+st.map(n=>'— '+n).join('\n')+'\n';
       const list=items.filter(i=>i.cat===c && !W().checked[tr.id+'|'+i.key] && !(c==='pantry' && state.hiddenPantry.includes(i.name)));
       if(!list.length) continue;
@@ -1095,7 +1289,7 @@ function toast(m){ const el=document.getElementById('toast'); el.textContent=m; 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape' && selected){ selected=null; renderPalette(); renderWeek(); } });
 document.addEventListener('click',e=>{ if(!selected) return; if(e.target.closest('.dish,.slot,.chip,.modal,button,input,select,label')) return; selected=null; renderPalette(); renderWeek(); });
 
-function update(){ save(); renderStats(); renderWeek(); renderShop(); }
+function update(){ markLeftovers(); save(); renderStats(); renderWeek(); renderShop(); }
 function plural(n,a,b,c){ const m=n%10,h=n%100; return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<12||h>14))?b:c; }
 function rnd(i){ const x=Math.sin(i*12.9898)*43758.5453; return x-Math.floor(x); }
 function renderStats(){
@@ -1246,6 +1440,7 @@ function fsLookup(n){
 }
 function nutrOf(name){
   const n=name.trim().toLowerCase().replace(/ё/g,'е');
+  const my=(state.myFoods||{})[n]; if(my) return {k:my.k,p:my.p,f:my.f,c:my.c,pc:my.pc||null,src:'my'};
   for(const r of NUTR){ const st=r[0].replace(/ё/g,'е'); if(n===st||n.includes(st)) return {k:r[1],p:r[2],f:r[3],c:r[4],pc:r[5]}; }
   const f=n.length>=3?fsLookup(n):null;
   return f?{k:f.k,p:f.p,f:f.f,c:f.c,pc:null,src:'fs'}:null;
@@ -1264,10 +1459,10 @@ function toGrams(name,q,u){
 // КБЖУ всего состава: [[название,кол-во,ед.], …] → {tot, missing}
 function calcBatch(rows){
   const tot={kcal:0,p:0,f:0,c:0}, missing=[];
-  for(const [n,q,u] of rows){
+  for(const [n,q,u,own] of rows){
     if(!n) continue;
     if(q==null||q===''){ continue; }
-    const nu=nutrOf(n), g=toGrams(n,q,u);
+    const nu=own||nutrOf(n), g=toGrams(n,q,u);
     if(!nu||g==null){ missing.push(n); continue; }
     tot.kcal+=nu.k*g/100; tot.p+=nu.p*g/100; tot.f+=nu.f*g/100; tot.c+=nu.c*g/100;
   }
@@ -1317,12 +1512,12 @@ let openDishEditor, openNewDish;
   const m=document.getElementById('dishModal');
   const UNITS=['г','мл','шт','уп.','пучок','зуб.'];
   const SHOP_OPTS=SHOP.map(([k,t])=>`<option value="${k}">${t}</option>`).join('');
-  let cat='meat', mode='tot', editId=null, auto=true;
+  let cat=null, mode='tot', editId=null, auto=true;
   const short=k=>CATS[k].t.split(' · ')[0];
   function catBtns(){
     dCat.innerHTML=catOrderKeys().map(k=>[k,CATS[k]]).map(([k,c])=>`<button type="button" data-c="${k}" class="${k===cat?'on':''}" style="--mc:${c.c}"><i></i>${esc(short(k))}</button>`).join('');
     dCat.innerHTML+=`<button type="button" class="addcat-pill" id="dAddCat">＋ Добавить категорию</button>`;
-    m.querySelectorAll('#dCat button[data-c]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.c;catBtns();calc();}));
+    m.querySelectorAll('#dCat button[data-c]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.c;dCat.classList.remove('need');catBtns();calc();}));
     document.getElementById('dAddCat').addEventListener('click',()=>openCatModal(k=>{ cat=k; catBtns(); calc(); }));
   }
   function setMode(v){ mode=v; m.querySelectorAll('#dMode button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode)); calc(); }
@@ -1332,9 +1527,21 @@ let openDishEditor, openNewDish;
     dPortion.textContent = dEqual.checked ? `1 порция: ${v(dK)} ккал · Б ${v(dP)} · Ж ${v(dF)} · У ${v(dC)} — женщине и мужчине одинаково` : `1 порция: женщине ≈ ${Math.round(v(dK)*WF)} ккал · Б ${Math.round(v(dP)*WF)}, мужчине ≈ ${Math.round(v(dK)*WF*MANK)} ккал · Б ${Math.round(v(dP)*WF*MANK)} (в среднем ${v(dK)} ккал). На карточке и в днях — порция для выбранного в профиле.`;
     if(v(dK)>2500) dPortion.textContent='⚠︎ Порция больше 2500 ккал — проверь количество и единицы (г / шт) в составе. '+dPortion.textContent;
     const ps=placeServ(cat,sv);
-    dPlace.textContent = `В плане: блюдо = весь состав выше, он целиком идёт в список покупок. Если ешь его ещё раз (например, на ужин или на следующий день) — поставь снова и отметь как остатки.`;
+    dPlace.textContent = `В плане: блюдо = весь состав выше, он целиком идёт в список покупок. Если поставить его ещё раз, доска сама посчитает это остатками, пока не закончатся ${sv} порц. (по ${Math.max(1,state.persons||2)} на приём).`;
   }
-  function readRows(){ return [...m.querySelectorAll('.ingrow')].map(r=>[r.querySelector('.iN').value.trim(),r.querySelector('.iQ').value,r.querySelector('.iU').value]); }
+  function readRows(){ return [...m.querySelectorAll('.ingrow')].map(r=>[r.querySelector('.iN').value.trim(),r.querySelector('.iQ').value,r.querySelector('.iU').value,rowNut(r)]); }
+  // КБЖУ на 100 г, введённые вручную или со штрихкода
+  function rowNut(r){ if(r.dataset.own!=='1') return null; const v=c=>+r.querySelector(c).value||0; return {k:v('.nK'),p:v('.nP'),f:v('.nF'),c:v('.nC'),pc:null}; }
+  function rowLine(r){
+    const n=r.querySelector('.iN').value.trim(), q=r.querySelector('.iQ').value, u=r.querySelector('.iU').value, line=r.querySelector('.nv');
+    if(!n){ line.textContent=''; line.className='nv'; return; }
+    const nu=rowNut(r)||nutrOf(n);
+    if(!nu){ line.textContent='нет данных о КБЖУ — укажи на 100 г'; line.className='nv bad'; return; }
+    if(r.dataset.own!=='1'){ r.querySelector('.nK').placeholder=nu.k; r.querySelector('.nP').placeholder=nu.p; r.querySelector('.nF').placeholder=nu.f; r.querySelector('.nC').placeholder=nu.c; }
+    const g=toGrams(n,q,u);
+    if(g==null){ line.textContent=`на 100 г: ${Math.round(nu.k)} ккал · Б ${+(+nu.p).toFixed(1)} · Ж ${+(+nu.f).toFixed(1)} · У ${+(+nu.c).toFixed(1)}`; line.className='nv'; return; }
+    const x=v=>v*g/100; line.textContent=`≈ ${Math.round(x(nu.k))} ккал · Б ${Math.round(x(nu.p))} · Ж ${Math.round(x(nu.f))} · У ${Math.round(x(nu.c))}${u==='шт'&&!nu.pc?' (1 шт ≈ 100 г)':''}`; line.className='nv';
+  }
   function autoCalc(force){
     const {tot,missing}=calcBatch(readRows());
     const el=document.getElementById('dAuto');
@@ -1356,41 +1563,96 @@ let openDishEditor, openNewDish;
     if(v.fw) d.dataset.fw=v.fw;
     d.innerHTML=`<input class="iN" list="prodList" placeholder="Продукт" value="${esc(v.n||'')}"><input class="iQ" type="number" min="0" step="any" placeholder="${v.c==='pantry'?'—':'Кол-во'}" value="${v.q??''}"><select class="iU">${UNITS.map(u=>`<option${u===(v.u||'г')?' selected':''}>${u}</option>`).join('')}</select><select class="iC">${SHOP_OPTS}</select><button type="button" class="ib" title="Убрать">✕</button>`;
     d.querySelector('.iC').value=v.c||'veg';
+    const nb=document.createElement('div'); nb.className='inut';
+    nb.innerHTML=`<span class="nv"></span><button type="button" class="nbtn" data-a="ed">КБЖУ</button><button type="button" class="nbtn" data-a="scan" title="Сканировать штрихкод">${SCAN_ICON}</button><span class="ned" hidden><em>на 100 г</em><input class="nK" type="number" min="0" step="any" placeholder="ккал"><input class="nP" type="number" min="0" step="any" placeholder="Б"><input class="nF" type="number" min="0" step="any" placeholder="Ж"><input class="nC" type="number" min="0" step="any" placeholder="У"></span>`;
+    d.appendChild(nb);
+    if(v.own){ d.dataset.own='1'; nb.querySelector('.nK').value=v.own.k; nb.querySelector('.nP').value=v.own.p; nb.querySelector('.nF').value=v.own.f; nb.querySelector('.nC').value=v.own.c; nb.querySelector('.ned').hidden=false; }
+    nb.querySelector('[data-a=ed]').addEventListener('click',()=>{ const e=nb.querySelector('.ned'); e.hidden=!e.hidden; if(!e.hidden) nb.querySelector('.nK').focus(); });
+    nb.querySelector('[data-a=scan]').addEventListener('click',()=>openScanner(d));
+    nb.querySelectorAll('.ned input').forEach(x=>x.addEventListener('input',()=>{ d.dataset.own=[...nb.querySelectorAll('.ned input')].some(i=>i.value!=='')?'1':''; }));
     d.querySelector('button').addEventListener('click',()=>{ d.remove(); autoCalc(true); });
-    d.querySelectorAll('input,select').forEach(x=>x.addEventListener('input',()=>autoCalc(true)));
+    d.querySelectorAll('input,select').forEach(x=>x.addEventListener('input',()=>{ rowLine(d); autoCalc(true); }));
     d.querySelector('.iN').addEventListener('change',e=>{
       const name=e.target.value.trim().toLowerCase();
-      for(const dd of DISHES) for(const ing of dd.ing) if(ing[0].toLowerCase()===name){ d.querySelector('.iC').value=ing[3]; if(ing[2]&&UNITS.includes(ing[2])) d.querySelector('.iU').value=ing[2]; break; }
-      autoCalc(true);
+      let hit=false; for(const dd of DISHES){ for(const ing of dd.ing) if(ing[0].toLowerCase()===name){ d.querySelector('.iC').value=ing[3]; if(ing[2]&&UNITS.includes(ing[2])) d.querySelector('.iU').value=ing[2]; hit=true; break; } if(hit) break; }
+      if(!hit && name) d.querySelector('.iC').value=guessCat(name);
+      rowLine(d); autoCalc(true);
     });
-    dIng.appendChild(d);
+    dIng.appendChild(d); rowLine(d);
+    return d;
   }
   function fillList(){
-    const names=new Set(); for(const dd of DISHES) for(const ing of dd.ing) names.add(ing[0]); for(const r of FS) names.add(r.n);
+    const names=new Set(); for(const dd of DISHES) for(const ing of dd.ing) names.add(ing[0]); for(const r of FS) names.add(r.n); for(const k of Object.keys(state.myFoods||{})) names.add((state.myFoods[k].name)||k);
     document.getElementById('prodList').innerHTML=[...names].sort((a,b)=>a.localeCompare(b,'ru')).map(n=>`<option value="${esc(n)}">`).join('');
   }
   function open(rec){
     fillList();
     editId=rec?rec.id:null;
-    cat=rec?rec.cat:'meat'; catBtns();
+    cat=rec?rec.cat:null; dCat.classList.remove('need'); catBtns();
     dTitle.textContent = rec ? 'Редактировать блюдо' : 'Новое блюдо';
     dSave.textContent = rec ? 'Сохранить' : 'Добавить блюдо';
     dName.value=rec?rec.name:''; dNote.value=rec&&rec.note?rec.note:''; dEqual.checked=!!(rec&&rec.equal); dServ.value=rec?rec.servings:4;
     mode='tot';
     dK.value=rec?Math.round(rec.tot.kcal):''; dP.value=rec?Math.round(rec.tot.p):''; dF.value=rec?Math.round(rec.tot.f):''; dC.value=rec?Math.round(rec.tot.c):'';
     dIng.innerHTML=''; (rec?rec.batch:[]).forEach(([n,q,u,c,fw]=[])=>row({n,q,u,c,fw}));
+    dUrl.value=rec&&rec.url||''; setPhoto(rec&&rec.photo||''); dSteps.value=rec&&rec.steps||''; showSteps(!!(rec&&rec.steps)); hideFill(); syncUrlOpen();
     const isCustom=editId&&editId.startsWith('c'), isOver=editId&&state.overrides[editId];
     dDelete.hidden=!(isCustom||isOver);
     dDelete.textContent=isCustom?'Удалить блюдо':'Вернуть исходный рецепт';
     setMode('tot');
-    auto=!rec; autoCalc();
+    auto=!rec;
+    if(rec){ const {tot,missing}=calcBatch(readRows()); if(!missing.length && tot.kcal>0 && Math.abs(tot.kcal-rec.tot.kcal)<0.5) auto=true; }
+    autoCalc();
     m.hidden=false; setTimeout(()=>dName.focus(),30);
   }
+  /* --- фото, ссылка, шаги --- */
+  let photo='';
+  function setPhoto(v){ photo=v||''; dPhotoBox.hidden=!photo; dPhotoImg.src=photo||''; dPhotoBtn.textContent=photo?'Заменить фото':'＋ Фото блюда'; }
+  function showSteps(on){ dStepsBox.hidden=!on; dStepsBtn.hidden=on; }
+  dStepsBtn.addEventListener('click',()=>{ showSteps(true); dSteps.focus(); });
+  dPhotoBtn.addEventListener('click',()=>dPhotoFile.click());
+  dPhotoDel.addEventListener('click',()=>setPhoto(''));
+  dPhotoFile.addEventListener('change',()=>{ const f=dPhotoFile.files[0]; dPhotoFile.value=''; if(!f) return;
+    const r=new FileReader(); r.onload=()=>{ const img=new Image(); img.onload=()=>{
+        // уменьшаем фото, чтобы оно не занимало много места в памяти телефона
+        const M=480, k=Math.min(1,M/Math.max(img.width,img.height)), c=document.createElement('canvas');
+        c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+        setPhoto(c.toDataURL('image/jpeg',0.72)); };
+      img.onerror=()=>toast('Не получилось открыть это фото'); img.src=r.result; };
+    r.readAsDataURL(f); });
+  const isUrl=v=>/^https?:\/\/\S+\.\S+/i.test(v);
+  function syncUrlOpen(){ const v=dUrl.value.trim(); dUrlOpen.hidden=!isUrl(v); if(isUrl(v)) dUrlOpen.href=v; }
+  function hideFill(){ dFill.hidden=true; dFill.classList.remove('busy'); }
+  let askedFor='';
+  function askFill(){ const v=dUrl.value.trim(); syncUrlOpen(); if(!isUrl(v) || v===askedFor) return; askedFor=v;
+    dFillTxt.textContent = (dName.value.trim()||m.querySelector('.ingrow')) ? 'Заполнить блюдо по этой ссылке? Название, состав и шаги заменятся.' : 'Заполнить блюдо по этой ссылке автоматически?';
+    dFill.hidden=false; dFill.classList.remove('busy'); }
+  dUrl.addEventListener('input',()=>{ syncUrlOpen(); if(!dUrl.value.trim()){ askedFor=''; hideFill(); } });
+  dUrl.addEventListener('change',askFill);
+  dUrl.addEventListener('paste',()=>setTimeout(askFill,30));
+  dFillNo.addEventListener('click',hideFill);
+  dFillYes.addEventListener('click',async()=>{
+    const url=dUrl.value.trim(); dFill.classList.add('busy'); dFillTxt.textContent='Читаю рецепт…';
+    const r=await fetchRecipe(url);
+    if(!r){ dFill.classList.remove('busy'); dFill.querySelector('.af-btns').style.display='none'; dFillTxt.textContent='Не получилось прочитать рецепт с этого сайта — заполни вручную. Ссылка сохранится в блюде.'; setTimeout(()=>{ dFill.querySelector('.af-btns').style.display=''; },0); return; }
+    if(r.name) dName.value=r.name.slice(0,50);
+    if(r.ing.length){ dIng.innerHTML=''; r.ing.forEach(v=>row(v)); }
+    if(r.steps){ dSteps.value=r.steps; showSteps(true); }
+    if(r.yield) dServ.value=Math.min(40,r.yield);
+    if(r.image && !photo) setPhoto(r.image);
+    auto=true; setMode('tot'); autoCalc(true);
+    hideFill(); toast(`Заполнила: ${r.ing.length} ${plural(r.ing.length,'продукт','продукта','продуктов')}${r.steps?', шаги':''} — проверь количества`);
+  });
   let afterSave=null;
   openDishEditor=id=>{ afterSave=null; const d=BY[id]; if(d) open(toEditable(d)); };
   openNewDish=(cb,defCat)=>{ afterSave=cb||null; open(null); if(defCat&&CATS[defCat]){ cat=defCat; catBtns(); calc(); } };
   document.getElementById('addDishBtn').addEventListener('click',()=>{ afterSave=null; open(null); });
   dAddIng.addEventListener('click',()=>{ row(); const r=dIng.lastElementChild; if(r) r.querySelector('.iN').focus(); });
+  dScanBtn.addEventListener('click',()=>{ const r=row(); openScanner(r); });
+  scanFill=(r,prod)=>{ r.querySelector('.iN').value=prod.name; r.querySelector('.iC').value=guessCat(prod.name);
+    const nb=r.querySelector('.inut'); nb.querySelector('.nK').value=prod.k; nb.querySelector('.nP').value=prod.p; nb.querySelector('.nF').value=prod.f; nb.querySelector('.nC').value=prod.c; nb.querySelector('.ned').hidden=false; r.dataset.own='1';
+    if(prod.g && !r.querySelector('.iQ').value){ r.querySelector('.iQ').value=prod.g; r.querySelector('.iU').value=prod.u||'г'; }
+    rowLine(r); autoCalc(true); setTimeout(()=>r.querySelector('.iQ').focus(),50); };
   dServ.addEventListener('input',()=>{ if(auto&&mode==='one') autoCalc(); else calc(); });
   dEqual.addEventListener('change',()=>calc());
   [dK,dP,dF,dC].forEach(i=>i.addEventListener('input',()=>{ if(auto){ auto=false; autoCalc(); } calc(); }));
@@ -1412,8 +1674,11 @@ let openDishEditor, openNewDish;
   dishForm.addEventListener('submit',e=>{
     e.preventDefault();
     const name=dName.value.trim(); if(!name) return;
+    if(!cat||!CATS[cat]){ dCat.classList.add('need'); dCat.scrollIntoView({block:'center',behavior:'smooth'}); toast('Выбери категорию блюда'); return; }
     const sv=Math.max(1,Math.round(+dServ.value)||1);
     const batch=[];
+    state.myFoods=state.myFoods||{};
+    m.querySelectorAll('.ingrow').forEach(r=>{ const nn=r.querySelector('.iN').value.trim(), own=rowNut(r); if(nn&&own) state.myFoods[nn.toLowerCase().replace(/ё/g,'е')]=Object.assign({},state.myFoods[nn.toLowerCase().replace(/ё/g,'е')]||{},{k:own.k,p:own.p,f:own.f,c:own.c}); });
     m.querySelectorAll('.ingrow').forEach(r=>{
       const n=r.querySelector('.iN').value.trim(); if(!n) return;
       const c=r.querySelector('.iC').value, qv=r.querySelector('.iQ').value, fw=r.dataset.fw;
@@ -1426,7 +1691,8 @@ let openDishEditor, openNewDish;
     const k=mode==='tot'?1:sv, num=x=>Math.max(0,(+x.value||0)*k);
     const old = editId ? (BY[editId]||{}) : {};
     const rec={id:editId||('c'+uid()),cat,name,servings:sv,batch,tot:{kcal:num(dK),p:num(dP),f:num(dF),c:num(dC)},
-      gen: old.name===name && old.gen ? old.gen : name.toLowerCase(), note: dNote.value.trim()||undefined, equal: dEqual.checked||undefined};
+      gen: old.name===name && old.gen ? old.gen : name.toLowerCase(), note: dNote.value.trim()||undefined, equal: dEqual.checked||undefined,
+      url: dUrl.value.trim()||undefined, photo: photo||undefined, steps: dSteps.value.trim()||undefined};
     if(rec.id.startsWith('c')){ const i=state.custom.findIndex(c=>c.id===rec.id); if(i>-1) state.custom[i]=rec; else state.custom.push(rec); }
     else state.overrides[rec.id]=rec;
     state.collapsed[cat]=false;
@@ -1436,13 +1702,12 @@ let openDishEditor, openNewDish;
   });
 })();
 let pickerSlot=null;
-let pickSel=[], openInstallHelp=()=>{};
 function openPicker(di,s){
   pickerSlot=[di,s];
   const m=document.getElementById('pickModal'); const lab=SLOTS.find(x=>x[0]===s)[1];
   document.getElementById('pTitle').textContent=`${DAYS[di]} · ${lab}`;
   document.getElementById('pList').innerHTML=catOrderKeys().map(k=>{ const c=CATS[k], list=DISHES.filter(d=>d.cat===k&&BY[d.id]); if(!list.length) return '';
-    return `<div class="pcat" style="--mc:${c.c}"><h5>${esc(c.t)}</h5><div class="pgrid">${list.map(d=>`<button type="button" class="pdish" data-id="${d.id}">${esc(d.name)}<small>~${Math.round(pv(d,'kcal'))} ккал</small></button>`).join('')}</div></div>`; }).join('');
+    return `<div class="pcat" style="--mc:${c.c}"><h5>${esc(c.t)}</h5><div class="pgrid">${list.map(d=>`<button type="button" class="pdish" data-id="${d.id}">${d.src&&d.src.photo?`<img class="pph" src="${esc(d.src.photo)}" alt="" loading="lazy" onerror="this.remove()">`:''}${esc(d.name)}<small>~${Math.round(pv(d,'kcal'))} ккал</small></button>`).join('')}</div></div>`; }).join('');
   pickSel=[]; const foot=document.getElementById('pFoot'), addB=document.getElementById('pAdd');
   const sync=()=>{ foot.hidden=!pickSel.length; addB.textContent = pickSel.length===1 ? 'Добавить блюдо' : `Добавить ${pickSel.length} ${plural(pickSel.length,'блюдо','блюда','блюд')}`; };
   m.querySelectorAll('.pdish').forEach(b=>b.addEventListener('click',()=>{ const id=b.dataset.id, i=pickSel.indexOf(id);
@@ -1472,7 +1737,7 @@ function openPicker(di,s){
   hm.addEventListener('click',e=>{ if(e.target===hm) hm.hidden=true; });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ pm.hidden=true; hm.hidden=true; } });
 })();
-function renderAll(){ renderNorm(); renderWeekTabs(); renderStats(); renderPalette(); renderWeek(); renderShop(); }
+function renderAll(){ markLeftovers(); renderNorm(); renderWeekTabs(); renderStats(); renderPalette(); renderWeek(); renderShop(); }
 // если доска открыта при смене недели — перестроить
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(); renderAll(); } });
 const lsTs=(()=>{ try{ return (JSON.parse(localStorage.getItem(KEY)||'null')||{})._ts||0; }catch(e){ return 0; } })();
@@ -1483,6 +1748,75 @@ idbGet().then(json=>{
   save();
 });
 if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+// Сканер штрихкодов: камера → код → база Open Food Facts (КБЖУ на 100 г)
+let openScanner=()=>{};
+(function(){
+  const m=document.getElementById('scanModal'), video=document.getElementById('scanVideo'), st=document.getElementById('scanSt'), vbox=document.getElementById('scanV');
+  let row=null, stream=null, timer=null, zreader=null, busy=false;
+  const say=(t,bad)=>{ st.textContent=t; st.classList.toggle('bad',!!bad); };
+  function stop(){ clearInterval(timer); timer=null; if(zreader){ try{ zreader.reset(); }catch(e){} zreader=null; } if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } video.srcObject=null; }
+  function close(){ stop(); m.hidden=true; }
+  const loadZX=()=>window.ZXing?Promise.resolve():new Promise((res,rej)=>{ const sc=document.createElement('script'); sc.src='https://unpkg.com/@zxing/library@0.21.3/umd/index.min.js'; sc.onload=res; sc.onerror=rej; document.head.appendChild(sc); });
+  async function start(){
+    busy=false; vbox.hidden=false;
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ vbox.hidden=true; say('Камера здесь недоступна — введи цифры штрихкода'); return; }
+    try{
+      if('BarcodeDetector' in window){
+        const det=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e']});
+        stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
+        video.srcObject=stream; await video.play();
+        timer=setInterval(async()=>{ if(busy||!stream) return; try{ const r=await det.detect(video); if(r.length) found(r[0].rawValue); }catch(e){} },250);
+      } else {
+        say('Включаю камеру…'); await loadZX();
+        zreader=new ZXing.BrowserMultiFormatReader();
+        await zreader.decodeFromConstraints({video:{facingMode:'environment'}},video,(res)=>{ if(res && !busy) found(res.getText()); });
+        say('Наведи камеру на штрихкод на упаковке');
+      }
+    }catch(e){ stop(); vbox.hidden=true; say('Нет доступа к камере — разреши её в настройках или введи цифры штрихкода',true); }
+  }
+  async function found(code){
+    code=String(code).replace(/\D/g,''); if(code.length<8) return;
+    busy=true; stop(); vbox.hidden=true; say('Ищу продукт '+code+'…');
+    try{
+      const r=await fetch('https://world.openfoodfacts.org/api/v2/product/'+code+'.json?fields=product_name,product_name_ru,product_name_sr,product_name_en,generic_name,brands,nutriments,quantity,product_quantity');
+      const j=await r.json(); const pr=j&&j.status===1&&j.product;
+      const nu=pr&&pr.nutriments||{}, k=nu['energy-kcal_100g']!=null?nu['energy-kcal_100g']:(nu['energy_100g']!=null?nu['energy_100g']/4.184:null);
+      if(!pr || k==null){ say('Такого продукта нет в базе Open Food Facts — введи название и КБЖУ вручную (кнопка «КБЖУ»)',true); busy=false; return; }
+      let name=(pr.product_name_ru||pr.product_name_sr||pr.product_name||pr.product_name_en||pr.generic_name||'Продукт').trim();
+      const br=(pr.brands||'').split(',')[0].trim(); if(br && !name.toLowerCase().includes(br.toLowerCase()) && (name+' '+br).length<=40) name+=' '+br;
+      name=name.charAt(0).toUpperCase()+name.slice(1); if(name.length>40) name=name.slice(0,40);
+      const qm=String(pr.quantity||'').match(/([\d.,]+)\s*(g|г|ml|мл|kg|кг|l|л)\b/i); let g=null,u='г';
+      if(qm){ g=parseFloat(qm[1].replace(',','.')); const un=qm[2].toLowerCase(); if(un==='kg'||un==='кг') g*=1000; if(un==='l'||un==='л'){ g*=1000; u='мл'; } if(un==='ml'||un==='мл') u='мл'; }
+      const r1=x=>Math.round((+x||0)*10)/10;
+      if(row && scanFill) scanFill(row,{name,k:Math.round(k),p:r1(nu.proteins_100g),f:r1(nu.fat_100g),c:r1(nu.carbohydrates_100g),g,u});
+      close(); toast(`${name}: ${Math.round(k)} ккал на 100 г${g?` · упаковка ${g} ${u}`:''}`);
+    }catch(e){ say('Нет связи с базой продуктов — проверь интернет',true); busy=false; }
+  }
+  openScanner=r=>{ row=r; document.getElementById('scanCode').value=''; say('Наведи камеру на штрихкод на упаковке'); m.hidden=false; start(); };
+  document.getElementById('scanClose').addEventListener('click',close);
+  m.addEventListener('click',e=>{ if(e.target===m) close(); });
+  document.getElementById('scanMan').addEventListener('submit',e=>{ e.preventDefault(); const v=document.getElementById('scanCode').value.replace(/\D/g,''); if(v.length<8){ say('В штрихкоде обычно 8 или 13 цифр',true); return; } found(v); });
+})();
+// Обучение при первом входе
+(function(){
+  const m=document.getElementById('introModal'), sl=[...m.querySelectorAll('.isl')], dots=[...m.querySelectorAll('.idots i')];
+  let i=0;
+  const show=n=>{ i=Math.max(0,Math.min(sl.length-1,n)); sl.forEach((x,k)=>x.hidden=k!==i); dots.forEach((x,k)=>x.classList.toggle('on',k===i));
+    document.getElementById('iPrev').hidden=i===0; document.getElementById('iNext').textContent = i===sl.length-1 ? 'Начать' : 'Далее'; };
+  const close=()=>{ m.hidden=true; try{ localStorage.setItem('meal-board-intro-seen','1'); }catch(e){} if(afterIntro){ const f=afterIntro; afterIntro=null; setTimeout(f,250); } };
+  document.getElementById('iNext').addEventListener('click',()=>{ if(i===sl.length-1) close(); else show(i+1); });
+  document.getElementById('iPrev').addEventListener('click',()=>show(i-1));
+  document.getElementById('iSkip').addEventListener('click',close);
+  dots.forEach((d,k)=>d.addEventListener('click',()=>show(k)));
+  let x0=null; m.addEventListener('touchstart',e=>{ x0=e.touches[0].clientX; },{passive:true});
+  m.addEventListener('touchend',e=>{ if(x0==null) return; const dx=e.changedTouches[0].clientX-x0; x0=null; if(Math.abs(dx)>50) show(i+(dx<0?1:-1)); },{passive:true});
+  document.getElementById('hIntro').addEventListener('click',()=>{ document.getElementById('helpModal').hidden=true; show(0); m.hidden=false; });
+  // отзыв — письмом автору
+  const mail='mailto:appolinariiiia@gmail.com?subject='+encodeURIComponent('Доска меню — отзыв');
+  document.getElementById('mailBtn').href=mail; document.getElementById('hMail').href=mail;
+  let seen=false; try{ seen=!!localStorage.getItem('meal-board-intro-seen'); }catch(e){}
+  if(!seen){ show(0); m.hidden=false; }
+})();
 // Первое открытие в браузере: подсказка, как добавить доску на экран «Домой» / рабочий стол
 (function(){
   if(!document.querySelector('link[rel=manifest]')) return;           // только в версии-приложении
@@ -1513,7 +1847,7 @@ if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=
   const hb=document.getElementById('instHelp'); if(hb){ hb.hidden=standalone; hb.addEventListener('click',()=>{ document.getElementById('helpModal').hidden=true; openInstallHelp(); }); }
   let seen=false; try{ seen=!!localStorage.getItem('meal-board-install-seen'); }catch(e){}
   // на телефоне в браузере показываем при каждом открытии (пока доска не добавлена на экран), на компьютере — один раз
-  if(!standalone && (iOS || android || !seen)) setTimeout(()=>{ if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
+  if(!standalone && (iOS || android || !seen)) setTimeout(()=>{ if(!document.getElementById('introModal').hidden){ afterIntro=()=>openInstallHelp(); return; } if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
 })();
 
 </script>
