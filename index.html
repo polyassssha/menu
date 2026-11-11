@@ -18,21 +18,21 @@
   html{accent-color:var(--accent);caret-color:var(--accent);-webkit-tap-highlight-color:color-mix(in srgb,#6d4fd6 14%,transparent)}
   ::selection{background:color-mix(in srgb,#6d4fd6 26%,transparent)}
   input,textarea{caret-color:var(--accent)}
-  .mbox.intro{max-width:380px;text-align:center;position:relative;padding-top:30px}
-  .iic{width:64px;height:64px;border-radius:18px;margin:6px auto 16px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#7b5cf0,#3fa9f5);box-shadow:0 6px 18px rgba(109,79,214,.25)}
-  .isl h3{margin:0 0 8px}
-  .mbox.intro .isl p{margin:0 auto;color:var(--muted);font-size:13.5px;line-height:1.5;max-width:300px;min-height:82px}
-  .idots{display:flex;justify-content:center;gap:6px;margin:16px 0 6px}
+  .mbox.intro{max-width:380px;text-align:center;padding-top:14px}
+  .isl{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .itext{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .iic{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;color:#fff;background:linear-gradient(135deg,#7b5cf0,#3fa9f5);box-shadow:0 6px 18px rgba(109,79,214,.25)}
+  .mbox.intro .isl p{color:var(--muted);font-size:13.5px;line-height:1.5;max-width:300px;min-height:82px}
+  .idots{display:flex;justify-content:center;gap:6px;padding:4px 0}
   .idots i{width:6px;height:6px;border-radius:3px;background:#d3d6dc;transition:width .2s,background .2s;cursor:pointer}
   .idots i.on{width:18px;background:var(--accent)}
   .hfoot{display:flex;flex-wrap:wrap;gap:8px}
   .hfoot a.btn,.hintbar a.btn{text-decoration:none;color:var(--ink)}
   .mbox.inst{max-width:360px;text-align:center}
-  .inst-ic{width:64px;height:64px;border-radius:15px;display:block;margin:2px auto 12px;box-shadow:0 6px 18px rgba(109,79,214,.25)}
-  .mbox.inst h3{margin-bottom:6px}
-  .inst-steps{list-style:none;counter-reset:st;padding:0;margin:14px 0 16px;text-align:left;display:grid;gap:8px}
+  .inst-ic{width:64px;height:64px;border-radius:15px;display:block;box-shadow:0 6px 18px rgba(109,79,214,.25)}
+  .inst-steps{list-style:none;counter-reset:st;padding:0;margin:0;text-align:left;display:grid;gap:8px}
   .inst-steps li{counter-increment:st;display:flex;gap:10px;align-items:flex-start;background:var(--soft);border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.4}
-  .inst-steps li::before{content:counter(st);flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;margin-top:-1px}
+  .inst-steps li::before{content:counter(st);flex:none;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center}
   .inst-steps b{font-weight:600}
   .mbox.inst .mact .btn{width:100%;justify-content:center}
   :root{
@@ -59,8 +59,8 @@
 
   /* top bar */
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--dark);color:#fff;border-radius:16px;padding:8px 10px;flex-wrap:wrap}
-  .weekbar{margin-bottom:var(--gap)}
-  .daychips{margin-top:var(--gap);background:var(--card);border-radius:14px;padding:4px;touch-action:pan-y;overflow:hidden}
+  .wk,.weekbar{display:flex;flex-direction:column;gap:var(--gap)}
+  .daychips{background:var(--card);border-radius:14px;padding:4px;touch-action:pan-y;overflow:hidden}
   .dtrack{display:flex;gap:4px;will-change:transform}
   .weektabs{display:flex;gap:4px;background:var(--card);border-radius:16px;padding:4px;width:max-content;max-width:100%}
   .wtab{flex:1;border:0;background:transparent;color:var(--muted);border-radius:12px;padding:8px 14px;font:500 12.5px Inter,sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:1px}
@@ -86,32 +86,38 @@
   .layout>section{order:1} .layout>#shopWrap{order:2} .layout>aside{order:3}
   .row1>*,.layout>*,.day>*{min-width:0}
   .weekcard{display:flex;flex-direction:column;justify-content:flex-start}
-  .nsub{color:#8a8e96;font-size:12px;margin-top:5px}
+  .nwrap{display:flex;flex-direction:column;gap:26px}
+  .ntop{display:flex;flex-direction:column;gap:5px}
+  .nsub{color:#8a8e96;font-size:12px}
   .nhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
   .ndate{color:#8a8e96;font-size:12px;white-space:nowrap}
-  .nstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:26px}
+  .nstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
   .nstat .k{display:flex;align-items:center;gap:6px;color:#9a9ea6;font-size:11.5px;white-space:nowrap}
   .nstat .k i{width:12px;height:7px;border-radius:2px;background:var(--mc)}
-  .nstat .v{font-size:26px;margin-top:6px;letter-spacing:-.02em;line-height:1}
-  .nstat .v small{font-size:12px;color:#6c7078;margin-left:2px;letter-spacing:0;white-space:nowrap;display:inline-block}
-  .nstat .bar{height:3px;border-radius:2px;background:#24272c;margin-top:9px;overflow:hidden}
+  .nstat{display:flex;flex-direction:column;gap:7px}
+  .nstat .v{display:flex;align-items:baseline;flex-wrap:wrap;gap:5px;font-size:26px;letter-spacing:-.02em;line-height:1}
+  .nstat .v small{font-size:12px;color:#6c7078;letter-spacing:0;white-space:nowrap}
+  .nstat .bar{height:3px;border-radius:2px;background:#24272c;overflow:hidden}
   .nstat .bar b{display:block;height:100%;background:var(--mc);border-radius:2px}
   .ngauge svg{display:block;width:100%;height:auto}
-  .ngauge .gv{text-align:center;font-size:24px;margin-top:-4px;letter-spacing:-.02em}
+  .ngauge,.gtxt{display:flex;flex-direction:column}
+  .gtxt{gap:2px;text-align:center}
+  .ngauge .gv{font-size:24px;letter-spacing:-.02em}
   .ngauge .gv small{font-size:12px;color:#8a8e96}
-  .ngauge .gday{text-align:center;font-size:11.5px;color:#8a8e96;margin-top:2px}
+  .ngauge .gday{font-size:11.5px;color:#8a8e96}
   .tripcard{display:flex;flex-direction:column;justify-content:center}
-  .tripcard .ngauge{width:100%;max-width:260px;margin:0 auto}
+  .tripcard{align-items:center}
+  .tripcard .ngauge{width:100%;max-width:260px}
 
   /* layout */
   .col{display:flex;flex-direction:column;gap:8px}
   .section-title{font-size:17px;font-weight:400;letter-spacing:-.01em}
 
   /* palette */
-  .mod{border:1px solid var(--line);border-radius:8px;padding:0;margin-bottom:8px;background:var(--mb);cursor:pointer}
+  .mod{border:1px solid var(--line);border-radius:8px;padding:0;background:var(--mb);cursor:pointer}
   .mod .mh{margin:0;padding:11px 10px 11px 12px}
   .mbody{padding:0 8px 4px;cursor:default}
-  h2{font-size:12px;font-weight:500;color:var(--ink);margin:0 4px 8px;display:flex;align-items:center;gap:7px}
+  h2{font-size:12px;font-weight:500;color:var(--ink);margin:0;display:flex;align-items:center;gap:7px}
   .mod h2::before{content:"";width:14px;height:8px;border-radius:2px;background:var(--mc);flex:none}
   .mh{cursor:pointer;user-select:none}
   .mh span:first-of-type{flex:1}
@@ -123,7 +129,7 @@
   .mh .cat-del{opacity:0;padding:0 4px;font-size:11px}
   .mh:hover .cat-del{opacity:1}
   .ib.armed{opacity:1!important;background:var(--warn);color:#fff;font-size:10.5px;padding:2px 6px}
-  .addcat{display:block;width:calc(100% - 4px);margin:4px 2px 2px;border-style:dashed;color:var(--muted)}
+  .addcat{display:block;width:100%;margin:0;border-style:dashed;color:var(--muted)}
   .addcat:hover{color:var(--ink)}
   .addcat.adddish{background:var(--accent);border:1px solid var(--accent);color:#fff}
   .addcat.adddish:hover{background:#5a3cc4;color:#fff}
@@ -132,38 +138,37 @@
   .swatches button.on{box-shadow:0 0 0 2px var(--ink)}
   .kinds{display:flex;flex-direction:column;gap:6px}
   .kinds label{display:flex;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:9px 11px;cursor:pointer;font-size:12.5px}
-  .kinds label small{display:block;color:var(--note);font-size:11.5px;margin-top:1px}
+  .kinds label small{color:var(--note);font-size:11.5px}
   .kinds input{accent-color:var(--accent);margin-top:2px}
   .mh .chev{flex:none;color:var(--muted);font-size:14px;line-height:1;transition:transform .15s;transform:translateY(-2px)}
   .mod.col{padding-bottom:2px}
   .mod.col .chev{transform:rotate(-90deg)}
-  .dish-tools{position:absolute;right:4px;top:4px;display:flex;gap:1px;opacity:0;transition:opacity .12s;background:#fff;border-radius:7px}
+  .dish-tools{grid-column:2;grid-row:1;display:flex;gap:1px;opacity:0;transition:opacity .12s;border-radius:7px}
   .dish:hover .dish-tools,.dish.sel .dish-tools{opacity:1}
-  .dish .n{padding-right:22px}.card{}
-  .dish{position:relative;border-radius:10px;padding:9px 11px;margin-bottom:5px;background:#fff;border:1px solid var(--line);cursor:grab;user-select:none;transition:box-shadow .15s,border-color .15s}
+  .dish{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:4px;row-gap:2px;align-items:start;align-content:start;border-radius:10px;padding:4px 4px 9px 11px;background:#fff;border:1px solid var(--line);cursor:grab;user-select:none;transition:box-shadow .15s,border-color .15s}
   .dish:hover{box-shadow:0 4px 14px rgba(17,18,20,.07)}
   .dish.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-  .dish .n{font-weight:500;font-size:12.5px}
-  .dish .m{color:var(--note);font-size:11px;margin-top:2px}
+  .dish .n{grid-column:1;grid-row:1;padding-top:5px;font-weight:500;font-size:12.5px}
+  .dish .m{grid-column:1/-1;color:var(--note);font-size:11px;padding-right:7px}
   .week{display:flex;flex-direction:row;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
   .week::-webkit-scrollbar{display:none}
   .day{flex:0 0 100%;scroll-snap-align:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-content:start;background:var(--card);border-radius:16px;padding:8px;border:1px solid transparent}
   .day.shopday{border-color:#d6cdf6;box-shadow:inset 2px 0 0 var(--accent);padding-left:10px}
 
   .dlabel{grid-column:1/-1;display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:10px;padding:2px 4px 4px}
-  .dlabel b{font-size:20px;font-weight:400;letter-spacing:-.02em;line-height:1}
-  .date{display:block;font-weight:400;font-size:11px;color:var(--faint);margin-top:3px;letter-spacing:0}
-  .kcal{font-size:11.5px;color:var(--muted);margin-top:6px}
+  .dlabel b{display:inline-flex;align-items:baseline;gap:8px;font-size:20px;font-weight:400;letter-spacing:-.02em;line-height:1}
+  .date{font-weight:400;font-size:11px;color:var(--faint);letter-spacing:0}
+  .kcal{font-size:11.5px;color:var(--muted)}
   .kcal.ok{color:var(--ok)} .kcal.hi{color:var(--warn)}
-  .shoptg{margin-top:7px;width:max-content;border:1px solid var(--line);background:#fff;color:var(--faint);border-radius:8px;padding:3px 8px;font:500 11px Inter,sans-serif;cursor:pointer}
+  .shoptg{display:inline-flex;align-items:center;gap:4px;width:max-content;border:1px solid var(--line);background:#fff;color:var(--faint);border-radius:8px;padding:3px 8px;font:500 11px Inter,sans-serif;cursor:pointer}
   .shoptg.on{background:#fff;border-color:var(--accent);color:var(--accent)}
-  svg.cart{width:13px;height:13px;vertical-align:-2px;margin-right:4px}
+  svg.cart{flex:none;width:13px;height:13px}
   .slot{min-height:64px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:5px;transition:background .12s,border-color .12s}
   .slot .lab{font-size:11px;color:var(--muted)}
   .hint{font-size:11.5px;color:#c3c6cc}
-  .chip{position:relative;display:flex;align-items:flex-start;gap:4px;background:#fff;border:1px solid color-mix(in srgb,var(--c) 38%,#fff);border-radius:9px;padding:6px 44px 6px 9px;min-height:30px;font-size:12px;font-weight:500;cursor:grab}
-  .chip .t{flex:1;min-width:0;overflow-wrap:break-word;hyphens:manual;line-height:1.3}
-  .ctools{position:absolute;top:3px;right:3px;display:flex;gap:1px}
+  .chip{display:flex;align-items:flex-start;gap:0;background:#fff;border:1px solid color-mix(in srgb,var(--c) 38%,#fff);border-radius:9px;padding:3px 3px 3px 9px;min-height:30px;font-size:12px;font-weight:500;cursor:grab}
+  .chip .t{flex:1;min-width:0;padding:3px 0;overflow-wrap:break-word;hyphens:manual;line-height:1.3}
+  .ctools{flex:none;display:flex;gap:1px}
   .ib.ci{width:20px;height:20px;padding:0;display:grid;place-items:center;border-radius:6px}
   .ib.ci svg{display:block}
   .chip.left{background:#fafafb}
@@ -173,7 +178,7 @@
   .chip.ghost{position:fixed;top:0;left:0;z-index:300;margin:0;pointer-events:none;background:#fff;box-shadow:0 14px 32px rgba(17,18,20,.18);transition:none}
   .slot.drop{outline:2px dashed var(--accent);outline-offset:-2px;background:#f5f2ff}
   .dchip.drop{background:#ece6ff;color:var(--accent)}
-  .chip .lo{display:block;font-weight:400;font-size:10.5px;color:var(--note);margin-top:1px}
+  .chip .lo{display:block;font-weight:400;font-size:10.5px;color:var(--note);padding-top:1px}
   .chip .lo.cook{color:color-mix(in srgb,var(--c) 70%,#555)}
   .ib{border:0;background:transparent;cursor:pointer;font-size:11.5px;padding:2px 5px;border-radius:6px;color:var(--faint)}
   .ib:hover{background:var(--soft);color:var(--ink)}
@@ -181,14 +186,15 @@
 
   /* shop */
   .shop .shead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
-  .tabs{display:flex;gap:6px;margin:12px 0 8px;flex-wrap:wrap}
-  .tab{flex:1;min-width:80px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font:500 12.5px Inter,sans-serif;cursor:pointer;color:var(--ink);text-align:left}
-  .tab small{display:block;font-weight:400;color:var(--note);font-size:11px;margin-top:1px}
+  .shop{display:flex;flex-direction:column;gap:14px}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap}
+  .tab{flex:1;min-width:80px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font:500 12.5px Inter,sans-serif;cursor:pointer;color:var(--ink);text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+  .tab .tl{display:inline-flex;align-items:center;gap:4px}
+  .tab small{font-weight:400;color:var(--note);font-size:11px}
   .tab.on{background:var(--dark);border-color:var(--dark);color:#fff}
   .tab.on small{color:#9a9ea6}
-  .shop h3.cat{font-size:12px;color:var(--muted);margin:0 0 2px;font-weight:600}
-  .cols{margin-top:6px}
-  .grp{padding-top:12px}
+  .shop h3.cat{font-size:12px;color:var(--muted);margin:0;padding-bottom:2px;font-weight:600}
+  .cols{display:flex;flex-direction:column;gap:16px;padding-top:4px}
   input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
   input[type=number]{-moz-appearance:textfield;appearance:textfield}
   .item{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:12.5px}
@@ -199,7 +205,7 @@
   .item .q{margin-left:auto;color:var(--muted);white-space:nowrap;padding-left:8px;font-size:11.5px}
   .item.done span{text-decoration:line-through;color:var(--faint)}
   .item em{font-style:normal;color:var(--accent);font-size:11px}
-  .item i{display:block;font-style:normal;color:var(--faint);font-size:10.5px;margin-top:1px}
+  .item i{display:block;font-style:normal;color:var(--faint);font-size:10.5px;padding-top:1px}
   .item .st-del{margin-left:auto;padding:0 4px}
   .btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 14px;font:500 12.5px Inter,sans-serif;cursor:pointer;transition:background .15s,border-color .15s,color .15s,transform .12s;-webkit-tap-highlight-color:transparent}
   .btn:active{transform:scale(.97)}
@@ -207,9 +213,9 @@
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
   .btn.primary:hover{background:#5a3cc4;border-color:#5a3cc4}
   .empty{color:var(--muted);padding:8px 0;font-size:12.5px}
-  .shop-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-  .leftover{margin-top:12px;background:var(--accent-soft);border-radius:8px;padding:10px 12px}
-  .lo-h{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;margin-bottom:4px;font-size:12.5px}
+  .shop-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .leftover{background:var(--accent-soft);border-radius:8px;padding:10px 12px}
+  .lo-h{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;padding-bottom:4px;font-size:12.5px}
   .lo-h b{font-weight:600}
   .lo-h span{font-size:11px;color:var(--note)}
   .lo-i{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:12.5px;border-top:1px solid color-mix(in srgb,var(--accent) 14%,transparent)}
@@ -218,11 +224,20 @@
   .hintbar{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;font-size:11.5px;color:var(--muted);padding:6px 0 4px}
 
   button.norm{display:flex;align-items:center;gap:9px;background:transparent;border:0;color:#fff;font:inherit;text-align:left;cursor:pointer;padding:2px 6px 2px 0;border-radius:0}
-  button.norm .edit{color:#6c7078;font-size:13px;margin-left:2px}
+  button.norm .edit{color:#6c7078;font-size:13px}
   button.norm:hover .edit{color:#fff}
   .modal{position:fixed;inset:0;background:rgba(10,11,13,.45);display:grid;place-items:center;z-index:50;padding:16px}
   .modal[hidden]{display:none}
-  .mbox{position:relative;background:#fff;border-radius:20px;padding:22px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+  /* Окно — вертикальная стопка с шагом 12; связанные элементы собраны в .mgroup (шаг 6) */
+  .mbox{background:#fff;border-radius:20px;padding:22px;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:12px}
+  .mbox>*{flex-shrink:0}
+  .mhead{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:30px}
+  .mhead>h3{flex:1;min-width:0}
+  .mhead.end{justify-content:flex-end}
+  .mhead.grid3{display:grid;grid-template-columns:30px 1fr 30px;align-items:start;justify-items:center}
+  .mgroup{display:flex;flex-direction:column;gap:6px}
+  .mgroup.tight{gap:8px}
+  .spacer{flex:1}
   /* появление и закрытие окон */
   .modal:not([hidden]){animation:mBg .2s ease backwards}
   .modal:not([hidden])>.mbox{animation:mIn .24s cubic-bezier(.2,.8,.2,1) backwards}
@@ -241,12 +256,10 @@
     *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   }
   /* крестик закрытия — одинаковый во всех окнах */
-  .mclose{position:absolute;top:14px;right:14px;z-index:3;width:30px;height:30px;padding:0;border:0;border-radius:50%;background:var(--soft);color:var(--muted);font:500 13px/1 Inter,sans-serif;display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
+  .mclose{flex:none;width:30px;height:30px;padding:0;border:0;border-radius:50%;background:var(--soft);color:var(--muted);font:500 13px/1 Inter,sans-serif;display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
   .mclose:hover,.mclose:active{background:var(--line);color:var(--ink)}
-  .mclose.inl{position:static;flex:none}
-  .mbox>.mclose+h3,.mbox>.mclose+*>h3:first-child{padding-right:36px}
-  .mbox p{margin:6px 0 16px;font-size:12px}
-  .fld{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft);margin-bottom:8px}
+  .mbox p{margin:0;font-size:12px}
+  .fld{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft)}
   .fld span{font-size:11.5px;color:var(--muted);flex:1}
   .fld input{width:70px;border:0;background:transparent;font:500 16px Inter,sans-serif;text-align:right;outline:none;color:var(--ink)}
   .fld em{font-style:normal;color:var(--muted);font-size:12px}
@@ -257,124 +270,130 @@
   .fgrid3 .fld{flex-wrap:wrap;gap:2px 4px}
   .fgrid3 .fld span{flex-basis:100%}
   .fgrid3 .fld input{width:0;flex:1;text-align:left}
-  .mrow{display:flex;justify-content:space-between;align-items:center;margin:12px 2px 8px;font-size:12px}
+  .mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 2px;font-size:12px}
   .seg2{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:2px}
   .seg2 button{border:0;background:transparent;border-radius:8px;padding:5px 12px;font:500 12px Inter,sans-serif;color:var(--muted);cursor:pointer}
   .seg2 button.on{background:var(--accent);color:#fff}
-  .nsum{font-size:11.5px;color:var(--note);margin:2px 2px 0}
+  .nsum{font-size:11.5px;color:var(--note);padding:0 2px}
   .nsum.bad{color:var(--warn)}
-  .nsum.auto{margin-bottom:4px}
-  .nsum.auto button{border:0;background:transparent;color:var(--accent);font:500 11.5px Inter,sans-serif;cursor:pointer;padding:0;margin-left:4px}
+  .nsum.auto{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px}
+  .nsum.auto button{border:0;background:transparent;color:var(--accent);font:500 11.5px Inter,sans-serif;cursor:pointer;padding:0}
   .mbox.wide{max-width:560px;max-height:calc(100vh - 32px);overflow:auto}
-  .mlabel{font-size:11.5px;color:var(--muted);margin:12px 2px 6px}
-  .catpick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+  .mlabel{font-size:11.5px;color:var(--muted);padding:0 2px;display:flex;align-items:baseline;gap:4px}
+  .catpick{display:flex;flex-wrap:wrap;gap:6px}
   .catpick button{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font:500 12px Inter,sans-serif;cursor:pointer;color:var(--ink)}
   .catpick button i{width:8px;height:8px;border-radius:50%;background:var(--mc)}
   .catpick .addcat-pill{border-style:dashed;color:var(--muted)}
   .catpick .addcat-pill:hover{color:var(--accent);border-color:var(--accent)}
-  .catpick button.on{border-color:var(--mc);background:var(--mc);color:var(--mt,#fff)}
-  .catpick button.on i{background:var(--mt,#fff)}
+  .catpick button.on{border-color:var(--mc);background:var(--mc);color:#fff}
+  .catpick button.on i{background:#fff}
   .catpick.need button[data-c]{border-color:#e9a3a3}
-  .req{color:var(--warn);font-weight:400;margin-left:4px;font-size:11px}
+  .req{color:var(--warn);font-weight:400;font-size:11px}
   .fgrid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
   .fgrid4 .fld{flex-wrap:wrap;gap:2px}
   .fgrid4 .fld span{flex-basis:100%}
   .fgrid4 .fld input{width:100%;text-align:left}
- #palette .section-title{margin:0 0 12px}
+  #palette{display:flex;flex-direction:column;gap:12px}
+  .pbody{display:flex;flex-direction:column;gap:8px}
+  .paladd{display:flex;flex-direction:column;gap:6px;padding:4px 2px 0}
+  .mhint{grid-column:1/-1;padding:0 4px 8px}
 
-  .ingrow{display:grid;grid-template-columns:minmax(0,2.2fr) 70px 70px minmax(0,1.6fr) 28px;gap:5px;margin-bottom:5px}
+  .ingrow{display:grid;grid-template-columns:minmax(0,2.2fr) 70px 70px minmax(0,1.6fr) 28px;gap:5px}
+  #dIng{display:flex;flex-direction:column;gap:5px}
   .ingrow input,.ingrow select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font:400 12.5px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ingrow input:focus,.ingrow select:focus{border-color:var(--accent);background:#fff}
   .btn.ghostred{color:var(--warn);border-color:transparent;padding-left:4px}
   .btn.ghostred:hover{border-color:var(--warn)}
   .btn.small{padding:6px 12px;font-size:12px}
-  @media (max-width:560px){ .fgrid4{grid-template-columns:1fr 1fr} .ingrow{grid-template-columns:72px 66px minmax(0,1fr) 28px;row-gap:5px;padding-bottom:8px;margin-bottom:8px;border-bottom:1px solid var(--line)} .ingrow .iN{grid-column:1/-1} .ingrow .iQ{grid-row:2;grid-column:1} .ingrow .iU{grid-row:2;grid-column:2} .ingrow .iC{grid-row:2;grid-column:3} .ingrow .ib{grid-row:2;grid-column:4} .ingrow input,.ingrow select{font-size:13.5px} }
-  .eqrow{display:flex;gap:9px;align-items:flex-start;margin:10px 2px 4px;cursor:pointer;font-size:12.5px}
-  .eqrow small{display:block;color:var(--note);font-size:11.5px;margin-top:1px}
+  @media (max-width:560px){ .fgrid4{grid-template-columns:1fr 1fr} .ingrow{grid-template-columns:72px 66px minmax(0,1fr) 28px;row-gap:5px;padding-bottom:8px;border-bottom:1px solid var(--line)} #dIng{gap:8px} .ingrow .iN{grid-column:1/-1} .ingrow .iQ{grid-row:2;grid-column:1} .ingrow .iU{grid-row:2;grid-column:2} .ingrow .iC{grid-row:2;grid-column:3} .ingrow .ib{grid-row:2;grid-column:4} .ingrow input,.ingrow select{font-size:13.5px} }
+  .eqrow{display:flex;gap:9px;align-items:flex-start;padding:0 2px;cursor:pointer;font-size:12.5px}
+  .eqrow>span,.kinds label>span{display:flex;flex-direction:column;gap:1px}
+  .eqrow small{color:var(--note);font-size:11.5px}
   .eqrow input{-webkit-appearance:none;appearance:none;flex:none;width:17px;height:17px;margin:1px 0 0;border-radius:5px;background:#eceef1;border:1px solid #dfe2e7;display:grid;place-items:center;cursor:pointer}
   .eqrow input:checked{background:var(--accent);border-color:var(--accent)}
   .eqrow input:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
-  .mact{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+  .mact{display:flex;justify-content:flex-end;gap:8px}
+  .mact.stack{flex-direction:column}
   .pt-del,.ex-del,.st-del{margin-left:auto;padding:0 4px}
-  .isup{display:inline-flex;margin-top:12px;text-decoration:none;color:var(--accent);border-color:var(--accent)}
+  .isup{display:inline-flex;text-decoration:none;color:var(--accent);border-color:var(--accent)}
   .isup[hidden]{display:none}
-  .inote{font-size:12px;line-height:1.45;color:var(--ink);background:var(--soft);border-radius:12px;padding:10px 12px;margin:4px 0 10px;text-align:left}
+  .inote{font-size:12px;line-height:1.45;color:var(--ink);background:var(--soft);border-radius:12px;padding:10px 12px;text-align:left}
   .inote[hidden]{display:none}
-  .pempty{background:var(--soft);border-radius:14px;padding:18px 16px;text-align:center;margin-bottom:10px}
-  .pempty b{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
-  .pempty span{display:block;font-size:12px;color:var(--muted);line-height:1.45}
+  .pempty{background:var(--soft);border-radius:14px;padding:18px 16px;text-align:center;display:flex;flex-direction:column;gap:4px}
+  .pempty b{font-size:14px;font-weight:600}
+  .pempty span{font-size:12px;color:var(--muted);line-height:1.45}
   .ab-note{font-size:11px;color:var(--note);padding:6px 0 0}
-  .restore{display:block;width:100%;margin:4px 0 0;padding:11px 12px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:500 12.5px Inter,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .restore{display:block;width:100%;margin:0;padding:11px 12px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:500 12.5px Inter,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .restore:active{background:var(--soft);color:var(--ink)}
   /* экран входа */
   #privacyModal{z-index:210}
   /* окно профиля */
-  .mbox.prof{padding:18px 18px 16px;max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain}
+  .mbox.prof{gap:16px;padding:18px 18px 16px;max-height:calc(100dvh - 32px);overflow:auto;overscroll-behavior:contain}
   .phead{display:flex;align-items:center;gap:12px}
   .pava{width:46px;height:46px;flex:none}
   .pava svg{width:22px;height:22px;fill:#fff}
-  .pwho{flex:1;min-width:0}
+  .pwho{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
   .pwho b{display:block;font-size:17px;font-weight:600;line-height:1.25}
   .pwho small{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .pwho small.sync{font-size:11px;margin-top:1px}
+  .pwho small.sync{font-size:11px}
   .pwho small.sync.ok{color:var(--ok)} .pwho small.sync.bad{color:var(--warn)}
   .phead .mclose{align-self:flex-start}
-  .psec{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
-  .ptitle{font-size:13.5px;font-weight:600;margin:0 2px 10px}
-  .psec .mrow{margin:10px 2px 6px}
-  .pnote{font-size:11.5px;color:var(--note);margin:8px 2px 0;line-height:1.45}
+  .psec{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
+  .ptitle{font-size:13.5px;font-weight:600;padding:0 2px}
+  .pnote{font-size:11.5px;color:var(--note);padding:0 2px;line-height:1.45}
   .pbig{width:100%;justify-content:center;padding:11px;font-size:13.5px}
-  .psave{margin-top:16px}
-  #famSec .pbig{margin-top:12px}
-  .pbottom{border-top:1px solid var(--line);margin-top:18px;padding-top:14px;text-align:center}
+  .pbottom{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;align-items:center;gap:14px}
   .pbottom>a{font-size:12px;color:var(--muted)}
-  .prow{display:flex;gap:8px;margin-top:14px}
+  .prow{display:flex;gap:8px;align-self:stretch}
   .prow .btn{flex:1;justify-content:center;padding:10px}
   .prow[hidden]{display:none}
-  .pjoin{display:block;margin:10px auto 0}
+  .pjoin{align-self:center}
   .pjoin[hidden]{display:none}
   .pleave{color:var(--warn)}
-  .famlist{display:flex;flex-direction:column;gap:8px;margin:0 2px 10px}
+  .famlist{display:flex;flex-direction:column;gap:8px;padding:0 2px}
   .famrow{display:flex;align-items:center;gap:10px}
   .famrow .fa{width:30px;height:30px;border-radius:50%;flex:none;display:grid;place-items:center;font:600 12.5px Inter,sans-serif;color:#fff;background:linear-gradient(135deg,#7b5cf0,#3fa9f5)}
   .famrow .fn{min-width:0;flex:1}
   .famrow .fn b{display:block;font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .famrow .fn small{display:block;font-size:11px;color:var(--note);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .famrow em{font-style:normal;font-size:11px;color:var(--note)}
-  .pjoinrow{display:flex;gap:6px;margin-top:10px}
+  .pjoinrow{display:flex;gap:6px}
   .pjoinrow[hidden]{display:none}
   .pjoinrow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .pjoinrow input:focus{border-color:var(--accent);background:#fff}
   .gate{position:fixed;inset:0;z-index:200;background:var(--frame);display:flex;align-items:center;justify-content:center;padding:24px 20px;overflow-y:auto;overscroll-behavior:contain}
   .gate[hidden]{display:none}
   body:has(.gate:not([hidden])){overflow:hidden}
-  .gbox{width:100%;max-width:320px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:stretch}
-  .gbox h2{display:block;margin:14px 0 2px;font-size:22px;font-weight:600;text-align:center}
-  .gsub{color:var(--muted);font-size:13px;margin:0 0 18px}
+  .gbox{width:100%;max-width:320px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:stretch;gap:18px}
+  .ghead{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .gtitle{display:flex;flex-direction:column;gap:2px}
+  .gstack{display:flex;flex-direction:column;gap:8px}
+  .gbox h2{display:block;margin:0;font-size:22px;font-weight:600;text-align:center}
+  .gsub{color:var(--muted);font-size:13px;margin:0}
   .gicon{display:block;margin:0 auto;border-radius:18px;box-shadow:0 8px 22px rgba(109,79,214,.28)}
   .gwhite{background:var(--card);border:1px solid var(--line);color:var(--ink);font-weight:500}
-  .gbig+.gbig{margin-top:8px}
-  #gMail{margin-top:14px}
-  .gnote{font-size:11.5px;color:var(--note);margin:14px 0 0;line-height:1.45}
+  .gnote{font-size:11.5px;color:var(--note);margin:0;line-height:1.45}
   .gnote a{color:var(--accent)}
   #syncModal,#joinModal,#askModal{z-index:205}
+  #catModal{z-index:60}
   #installModal{z-index:206}
-  .gtabs{display:flex;gap:4px;background:var(--soft);border-radius:12px;padding:4px;margin-bottom:14px}
+  .gtabs{display:flex;gap:4px;background:var(--soft);border-radius:12px;padding:4px}
   .gtabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 0;font:500 13px Inter,sans-serif;color:var(--muted);cursor:pointer}
   .gtabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
-  .gate input[type=email],.gate input[type=password]{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font:400 15px Inter,sans-serif;background:var(--card);color:var(--ink);outline:none;margin-bottom:8px}
+  .gate input[type=email],.gate input[type=password]{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font:400 15px Inter,sans-serif;background:var(--card);color:var(--ink);outline:none}
   .gate input:focus{border-color:var(--accent)}
   .gbig{width:100%;justify-content:center;padding:12px;font-size:14px}
-  .gconsent{display:flex;gap:8px;align-items:center;justify-content:center;text-align:left;font-size:12px;color:var(--muted);margin:6px 0 12px;line-height:1.4}
+  .gconsent{display:flex;gap:8px;align-items:center;justify-content:center;text-align:left;font-size:12px;color:var(--muted);line-height:1.4}
   .gconsent[hidden]{display:none}
   .gconsent input{flex:none;width:18px;height:18px;accent-color:var(--accent)}
   .gconsent a{color:var(--accent)}
-  .glink{border:0;background:transparent;color:var(--muted);font:400 12px Inter,sans-serif;text-decoration:underline;cursor:pointer;margin-top:12px}
-  .gerr{color:var(--warn);font-size:12.5px;margin-top:10px;min-height:16px;line-height:1.4}
-  .gload{color:var(--muted);font-size:13px;padding:20px 0}
+  .glink{border:0;background:transparent;color:var(--muted);font:400 12px Inter,sans-serif;text-decoration:underline;cursor:pointer;align-self:center}
+  .gerr{color:var(--warn);font-size:12.5px;line-height:1.4}
+  .gerr:empty{display:none}
+  .gload{color:var(--muted);font-size:13px}
   .ptext{font-size:13px;line-height:1.6;color:var(--ink)}
-  .ptext h4{margin:14px 0 4px;font-size:13.5px}
-  .ptext p{margin:0 0 6px;color:var(--muted)}
+  .ptext p{color:var(--muted)}
+  .ptext{gap:12px}
   .btn.danger{color:var(--warn)}
   .addrow{display:flex;align-items:center;min-height:38px;padding:8px 0;border-top:1px solid var(--line);color:var(--note);font-size:12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .addrow:active{color:var(--accent)}
@@ -388,66 +407,73 @@
 
   .modal.sheet{place-items:end center;padding:0}
   .modal.sheet{background:rgba(10,11,13,.55)}
-  .modal.sheet .mbox{border-radius:20px 20px 0 0;max-height:72vh;overflow:auto;overscroll-behavior:contain;max-width:640px;padding-top:6px;transition:max-height .2s,transform .2s}
+  .modal.sheet .mbox{border-radius:20px 20px 0 0;max-height:72vh;overflow:auto;overscroll-behavior:contain;max-width:640px;padding:0;gap:0;transition:max-height .2s,transform .2s}
   .modal.sheet .mbox.full{max-height:94vh}
-  .modal.sheet .mbox{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
-  .grabber{position:sticky;top:-6px;z-index:2;display:flex;justify-content:center;padding:6px 0 10px;margin:0 -22px;background:#fff;cursor:grab;touch-action:none}
+  .sbody{display:flex;flex-direction:column;gap:12px;padding:0 22px calc(16px + env(safe-area-inset-bottom))}
+  #pBox:has(#pFoot:not([hidden])) .sbody{padding-bottom:12px}
+  .phint{font-size:12px;padding:0 2px}
+  #pList{display:flex;flex-direction:column;gap:12px}
+  .grabber{position:sticky;top:0;z-index:2;display:flex;justify-content:center;padding:12px 0 10px;background:#fff;cursor:grab;touch-action:none}
   .grabber span{width:40px;height:5px;border-radius:3px;background:#d3d6dc}
   body.lock{overflow:hidden;touch-action:none}
-  .pcat{margin-bottom:12px}
-  .pactions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px}
-  .pactions .addcat{width:auto;margin:0}
-  .pcat h5{display:flex;align-items:center;gap:7px;margin:0 2px 6px;font-size:12px;font-weight:500}
+  .pcat{display:flex;flex-direction:column;gap:6px}
+  .pactions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .pcat h5{display:flex;align-items:center;gap:7px;margin:0;padding:0 2px;font-size:12px;font-weight:500}
   .pcat h5::before{content:"";width:14px;height:8px;border-radius:2px;background:var(--mc)}
   .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .pdish{position:relative;padding-right:30px!important;display:flex;flex-direction:column;justify-content:flex-start}
-  .pdish::after{content:"";position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;border:1.5px solid #d3d6dc;box-sizing:border-box}
+  .pdish{display:grid;grid-template-columns:minmax(0,1fr) 16px;column-gap:4px;row-gap:2px;align-items:start}
+  .pdish>*{grid-column:1}
+  .pdish::after{content:"";grid-column:2;grid-row:1 / span 2;width:16px;height:16px;border-radius:50%;border:1.5px solid #d3d6dc;box-sizing:border-box}
   .pdish.sel{border-color:var(--accent);background:var(--accent-soft)}
   .pdish.sel::after{border-color:var(--accent);background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.2l2.3 2.3 4.7-4.9' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
-  .pfoot{position:sticky;bottom:calc(-16px - env(safe-area-inset-bottom));margin:10px -22px calc(-16px - env(safe-area-inset-bottom));padding:10px 22px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
+  .pfoot{position:sticky;bottom:0;padding:10px 22px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line)}
   .pfoot .btn{width:100%;padding:12px;font-size:14px}
   .pdish{text-align:left;border:1px solid color-mix(in srgb,var(--mc) 38%,#fff);background:#fff;border-radius:10px;padding:9px 10px;font:500 12.5px Inter,sans-serif;color:var(--ink);cursor:pointer}
   .autofill[hidden]{display:none}
-  .autofill{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;background:var(--accent-soft);border-radius:10px;padding:10px 12px;margin:-2px 0 10px;font-size:12.5px}
+  .autofill{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;background:var(--accent-soft);border-radius:10px;padding:10px 12px;font-size:12.5px}
   .autofill .af-btns{display:flex;gap:6px;margin-left:auto}
   .autofill.busy .af-btns{display:none}
-  .photo-row{display:flex;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap}
+  .photo-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .photo-row:empty,.photo-row:has(>a[hidden]:only-child){display:none}
   .urlopen{font-size:12.5px;color:var(--accent);text-decoration:none;font-weight:500}
-  .inut{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:-1px 0 4px 2px;font-size:11px;color:var(--note)}
+  .inut{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding-left:2px;font-size:11px;color:var(--note)}
   .inut .nv{flex:1;min-width:140px}
   .inut .nv.bad{color:var(--warn)}
   .nbtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:2px 8px;font:500 11px Inter,sans-serif;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
   .ned{display:flex;align-items:center;gap:4px;flex-basis:100%}
   .ned[hidden]{display:none}
-  .ned em{font-style:normal;margin-right:2px;white-space:nowrap}
+  .ned em{font-style:normal;white-space:nowrap}
   .ned input{width:58px;min-width:0;border:1px solid var(--line);border-radius:7px;padding:5px 6px;font:400 12px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ned input:focus{border-color:var(--accent);background:#fff}
-  .hid{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:9px 10px 9px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;box-shadow:inset 3px 0 0 var(--c)}
+  .hid{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:9px 10px 9px 12px;border:1px solid var(--line);border-radius:10px;box-shadow:inset 3px 0 0 var(--c)}
+  #hidList{display:flex;flex-direction:column;gap:6px}
   .hid b{display:block;font-weight:500;font-size:13px}
   .hid small{font-size:11px;color:var(--note)}
+  .hid>span:first-child{display:flex;flex-direction:column;gap:1px;min-width:0}
   .hid-b{display:flex;gap:6px;flex:none}
   #hidList{max-height:55vh;overflow:auto;overscroll-behavior:contain}
   .mbox.scan{max-width:420px}
-  .scanv{position:relative;border-radius:12px;overflow:hidden;background:#0d0e10;aspect-ratio:4/3;margin:10px 0}
+  .scanv{position:relative;border-radius:12px;overflow:hidden;background:#0d0e10;aspect-ratio:4/3}
   .scanv video{width:100%;height:100%;object-fit:cover;display:block}
   .scanv::after{content:"";position:absolute;left:12%;right:12%;top:42%;height:16%;border:2px solid rgba(255,255,255,.85);border-radius:10px;box-shadow:0 0 0 999px rgba(0,0,0,.25)}
   .scanst{font-size:12.5px;color:var(--muted);min-height:18px}
   .scanst.bad{color:var(--warn)}
-  .scanman{display:flex;gap:6px;margin-top:10px}
+  .scanman{display:flex;gap:6px}
   .scanman input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 11px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ingbtns{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
   .ingbtns .btn{display:inline-flex;align-items:center;gap:6px}
   .fld.steps[hidden]{display:none!important}
-  .fld.steps,.fld.steps:focus-within{display:block;margin-top:12px;border:0!important;background:none!important;padding:0!important;box-shadow:none!important}
+  .fld.steps,.fld.steps:focus-within{display:flex;flex-direction:column;gap:5px;border:0!important;background:none!important;padding:0!important;box-shadow:none!important}
   .fld.steps textarea:focus{outline:none;border-color:var(--accent);background:#fff}
-  .fld.steps span{display:block;margin-bottom:5px}
   .fld.steps textarea{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--soft);border-radius:10px;padding:10px 12px;font:13px/1.5 Inter,sans-serif;color:var(--ink);resize:vertical}
   .dish .m .rc{color:var(--accent)}
-  .pdish small{display:block;color:var(--note);font-weight:400;font-size:11px;margin-top:2px}
-  .help .htext{margin-top:8px;font-size:13px;line-height:1.5}
-  .help h4{margin:16px 0 4px;font-size:13.5px;font-weight:600}
-  .help p{margin:0 0 6px}
+  .pdish small{display:block;color:var(--note);font-weight:400;font-size:11px}
+  .htext,.ptext{display:flex;flex-direction:column;gap:14px}
+  .help .htext{font-size:13px;line-height:1.5}
+  .help .htext>.btn{align-self:flex-start}
+  .tsec{display:flex;flex-direction:column;gap:6px}
+  .tsec h4{margin:0;font-size:13.5px;font-weight:600}
+  .tsec p{margin:0}
   .hintbar .btn{background:transparent}
   .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,10px);background:var(--dark);color:#fff;padding:10px 18px;border-radius:12px;font-weight:500;opacity:0;transition:opacity .22s ease,transform .22s cubic-bezier(.2,.8,.2,1);pointer-events:none}
   .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -462,12 +488,10 @@
   .dtrack.slide-r,.week.slide-r{animation:dcr .24s cubic-bezier(.22,.61,.36,1)}
   @keyframes dcl{from{transform:translateX(44px);opacity:0}to{transform:none;opacity:1}}
   @keyframes dcr{from{transform:translateX(-44px);opacity:0}to{transform:none;opacity:1}}
-  .dlabel .date{display:inline;margin:0 0 0 4px}
-  .dlabel .kcal{margin:0}
-  .dlabel .shoptg{margin:0 0 0 auto;order:3}
+  .dlabel .shoptg{margin-left:auto;order:3}
   .norm small{font-size:10.5px}
   .weektabs{width:100%}
-  #palette .mbody{display:grid;grid-template-columns:1fr 1fr;gap:0 5px}
+  #palette .mbody{display:grid;grid-template-columns:1fr 1fr;gap:5px;padding-bottom:8px}
 
   /* планшет: та же раскладка, что на телефоне, но аккуратной колонкой по центру */
   @media (min-width:761px){
@@ -492,7 +516,7 @@
 
   <section class="layout">
     <aside><div class="card" id="palette"></div></aside>
-    <section>
+    <section class="wk">
       <div class="weekbar"><div class="weektabs" id="weektabs"></div><div class="daychips" id="daychips"></div></div>
       <div class="week" id="week"></div>
     </section>
@@ -535,7 +559,7 @@
     <div class="psec" id="famSec">
       <div class="ptitle">Семья</div>
       <div class="famlist" id="famList" hidden></div>
-      <div class="pnote" style="margin-top:0" id="famInfo">Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.</div>
+      <div class="pnote" id="famInfo">Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.</div>
       <button type="button" class="btn pbig" id="inviteBtn">Добавить в семью</button>
       <button type="button" class="glink pjoin" id="haveInvite">У меня есть приглашение</button>
       <button type="button" class="glink pjoin pleave" id="leaveFam" hidden>Выйти из семьи</button>
@@ -550,23 +574,29 @@
 </div>
 <div class="modal" id="dishModal" hidden>
   <form class="mbox wide" id="dishForm">
-    <button type="button" class="mclose" data-close="dishCancel" aria-label="Закрыть">✕</button>
-    <h3 id="dTitle">Новое блюдо</h3>
-    <p class="muted">Внеси состав <b>всего блюда</b>, как готовишь его целиком, и сколько порций из него выходит. Порцию на одного человека доска посчитает сама.</p>
-    <div class="mlabel">Категория<span class="req">обязательно</span></div>
-    <div class="catpick" id="dCat"></div>
+    <div class="mgroup"><div class="mhead"><h3 id="dTitle">Новое блюдо</h3><button type="button" class="mclose inl" data-close="dishCancel" aria-label="Закрыть">✕</button></div>
+    <p class="muted">Внеси состав <b>всего блюда</b>, как готовишь его целиком, и сколько порций из него выходит. Порцию на одного человека доска посчитает сама.</p></div>
+    <div class="mgroup">
+      <div class="mlabel">Категория<span class="req">обязательно</span></div>
+      <div class="catpick" id="dCat"></div>
+    </div>
+    <div class="mgroup tight">
     <label class="fld"><span>Название</span><input type="text" id="dName" class="plain" maxlength="50" required autocomplete="off" placeholder="Например, «Плов с курицей»"></label>
     <label class="fld"><span>Ссылка на рецепт</span><input type="url" id="dUrl" class="plain" inputmode="url" autocomplete="off" placeholder="Вставь ссылку"></label>
     <div class="autofill" id="dFill" hidden><span id="dFillTxt">Заполнить блюдо по этой ссылке автоматически?</span><span class="af-btns"><button type="button" class="btn small primary" id="dFillYes">Заполнить</button><button type="button" class="btn small" id="dFillNo">Не надо</button></span></div>
     <div class="photo-row"><a class="urlopen" id="dUrlOpen" target="_blank" rel="noopener" hidden>Открыть рецепт ↗</a></div>
     <label class="fld"><span>Подпись</span><input type="text" id="dNote" class="plain" maxlength="50" autocomplete="off" placeholder="Например, «150 г»"></label>
-    <label class="fld"><span>Порций из этого состава</span><input type="number" id="dServ" min="1" max="40" required style="width:70px"><em>порц.</em></label>
+    <label class="fld"><span>Порций из этого состава</span><input type="number" id="dServ" min="1" max="40" required><em>порц.</em></label>
+    </div>
+    <div class="mgroup">
     <div class="mlabel">Состав всего блюда</div>
     <div id="dIng"></div>
     <datalist id="prodList"></datalist>
     <div class="ingbtns"><button type="button" class="btn small" id="dAddIng">＋ продукт</button><button type="button" class="btn small" id="dScanBtn"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2"/><path d="M8 8v8M11 8v8M14 8v8M17 8v8"/></svg> Сканировать штрихкод</button><button type="button" class="btn small" id="dStepsBtn">＋ Добавить шаги приготовления</button></div>
+    </div>
     <label class="fld steps" id="dStepsBox" hidden><span>Шаги приготовления</span><textarea id="dSteps" rows="7" placeholder="1. Нарезать лук&#10;2. Обжарить фарш&#10;3. …"></textarea></label>
-    <div class="mrow"><span class="mlabel" style="margin:0">КБЖУ</span><div class="seg2" id="dMode"><button type="button" data-m="tot">на всё блюдо</button><button type="button" data-m="one">на 1 порцию</button></div></div>
+    <div class="mgroup">
+    <div class="mrow"><span class="mlabel">КБЖУ</span><div class="seg2" id="dMode"><button type="button" data-m="tot">на всё блюдо</button><button type="button" data-m="one">на 1 порцию</button></div></div>
     <div class="fgrid4">
       <label class="fld"><span>Ккал</span><input type="number" id="dK" min="0" required></label>
       <label class="fld"><span>Белки, г</span><input type="number" id="dP" min="0"></label>
@@ -574,20 +604,22 @@
       <label class="fld"><span>Углев., г</span><input type="number" id="dC" min="0"></label>
     </div>
     <div class="nsum auto" id="dAuto"></div>
+    </div>
+    <div class="mgroup">
     <label class="eqrow"><input type="checkbox" id="dEqual"><span><b>Равные порции</b><small>женщине и мужчине поровну — например, по стаканчику йогурта</small></span></label>
     <div class="nsum" id="dPortion"></div>
-    <div class="mact"><button type="button" class="btn ghostred" id="dDelete" hidden></button><span style="flex:1"></span><button type="button" class="btn" id="dishCancel">Отмена</button><button type="submit" class="btn primary" id="dSave">Добавить блюдо</button></div>
+    </div>
+    <div class="mact"><button type="button" class="btn ghostred" id="dDelete" hidden></button><span class="spacer"></span><button type="button" class="btn" id="dishCancel">Отмена</button><button type="submit" class="btn primary" id="dSave">Добавить блюдо</button></div>
   </form>
 </div>
-<div class="modal" id="catModal" hidden style="z-index:60">
+<div class="modal" id="catModal" hidden>
   <form class="mbox" id="catForm">
-    <button type="button" class="mclose" data-close="catCancel" aria-label="Закрыть">✕</button>
-    <h3 id="cTitle">Новая категория</h3>
-    <p class="muted" id="cSub">Категория появится слева, в неё можно вносить блюда через «＋ Новое блюдо».</p>
+    <div class="mgroup"><div class="mhead"><h3 id="cTitle">Новая категория</h3><button type="button" class="mclose inl" data-close="catCancel" aria-label="Закрыть">✕</button></div>
+    <p class="muted" id="cSub">Категория появится слева, в неё можно вносить блюда через «＋ Новое блюдо».</p></div>
     <label class="fld"><span>Название</span><input type="text" id="cName" class="plain" maxlength="30" required autocomplete="off" placeholder="Например, «Рыба»"></label>
-    <div class="mlabel">Цвет</div>
-    <div class="swatches" id="cColors"></div>
-    <div id="cKinds"><div class="mlabel">Как блюда этой категории ставятся в план</div>
+    <div class="mgroup"><div class="mlabel">Цвет</div>
+    <div class="swatches" id="cColors"></div></div>
+    <div id="cKinds" class="mgroup"><div class="mlabel">Как блюда этой категории ставятся в план</div>
     <div class="kinds">
       <label><input type="radio" name="cKind" value="main" checked><span>Обычное блюдо<small>как мясные блюда, завтраки, салаты: в списке весь состав блюда</small></span></label>
       <label><input type="radio" name="cKind" value="pot"><span>Кастрюля<small>как супы: по умолчанию 8 порций, продукты в списке подписываются «для …»</small></span></label>
@@ -597,26 +629,28 @@
 </div>
 <div class="modal sheet" id="pickModal" hidden>
   <div class="mbox wide" id="pBox"><div class="grabber" id="pGrab"><span></span></div>
-    <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3 id="pTitle">Выбери блюдо</h3><button type="button" class="mclose inl" id="pClose" aria-label="Закрыть">✕</button></div>
-    <div class="muted" id="pHint" style="margin:6px 2px 0;font-size:12px">Отметь одно или несколько блюд</div>
-    <div id="pList" style="margin-top:10px"></div>
+    <div class="sbody">
+    <div class="mgroup">
+      <div class="mhead"><h3 id="pTitle">Выбери блюдо</h3><button type="button" class="mclose inl" id="pClose" aria-label="Закрыть">✕</button></div>
+      <div class="muted phint" id="pHint">Отметь одно или несколько блюд</div>
+    </div>
+    <div id="pList"></div>
     <div class="pactions"><button type="button" class="btn small addcat" id="pNewDish">＋ Новое блюдо</button><button type="button" class="btn small addcat" id="pNewCat">＋ Новая категория</button></div>
+    </div>
     <div class="pfoot" id="pFoot" hidden><button type="button" class="btn primary" id="pAdd">Добавить</button></div>
   </div>
 </div>
 <div class="modal" id="hiddenModal" hidden>
   <div class="mbox">
-    <button type="button" class="mclose" data-close="hidClose" aria-label="Закрыть">✕</button>
-    <h3>Скрытые блюда</h3>
-    <p class="muted">Блюда, которые сейчас неактуальны. Верни нужное — оно снова появится в списке блюд.</p>
+    <div class="mgroup"><div class="mhead"><h3>Скрытые блюда</h3><button type="button" class="mclose inl" data-close="hidClose" aria-label="Закрыть">✕</button></div>
+    <p class="muted">Блюда, которые сейчас неактуальны. Верни нужное — оно снова появится в списке блюд.</p></div>
     <div id="hidList"></div>
-    <div class="mact"><button type="button" class="btn" id="hidAll">Вернуть все</button><span style="flex:1"></span><button type="button" class="btn primary" id="hidClose">Готово</button></div>
+    <div class="mact"><button type="button" class="btn" id="hidAll">Вернуть все</button><span class="spacer"></span><button type="button" class="btn primary" id="hidClose">Готово</button></div>
   </div>
 </div>
 <div class="modal" id="scanModal" hidden>
   <div class="mbox scan">
-    <button type="button" class="mclose" data-close="scanClose" aria-label="Закрыть">✕</button>
-    <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Штрихкод продукта</h3><button type="button" class="btn small" id="scanClose">Закрыть</button></div>
+    <div class="mhead"><h3>Штрихкод продукта</h3><button type="button" class="mclose inl" id="scanClose" aria-label="Закрыть">✕</button></div>
     <div class="scanv" id="scanV"><video id="scanVideo" playsinline muted></video></div>
     <div class="scanst" id="scanSt">Наведи камеру на штрихкод на упаковке</div>
     <form class="scanman" id="scanMan"><input id="scanCode" inputmode="numeric" pattern="[0-9]*" placeholder="или введи цифры штрихкода" autocomplete="off"><button class="btn" type="submit">Найти</button></form>
@@ -624,68 +658,80 @@
 </div>
 <div class="modal" id="introModal" hidden>
   <div class="mbox intro">
-    <button type="button" class="mclose" id="iSkip" aria-label="Закрыть">✕</button>
-    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><h3>Собери свои блюда</h3><p>Добавь блюда, которые готовишь: состав, ссылку на рецепт и шаги. Калории и БЖУ посчитаются по составу.</p></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и регулярными покупками.</p></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — «Добавить в семью»: отправь ссылку близкому, и доска станет общей.</p></div><div class="isl" data-i="4" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.8-4.7-8.9-10A4.8 4.8 0 0 1 12 7.3a4.8 4.8 0 0 1 8.9 3.2c-1.1 5.3-8.9 10-8.9 10z"/></svg></div><h3>И последнее — от меня</h3><p>Доску я делаю сама — без рекламы и платных функций. Если она экономит тебе время у плиты и в магазине, буду очень рада поддержке на Boosty: даже символический донат помогает делать её лучше 💜</p><a class="btn isup" id="iSupport" target="_blank" rel="noopener" hidden>Поддержать проект</a></div>
+    <div class="mhead end"><button type="button" class="mclose inl" id="iSkip" aria-label="Закрыть">✕</button></div>
+    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><div class="itext"><h3>Собери свои блюда</h3><p>Добавь блюда, которые готовишь: состав, ссылку на рецепт и шаги. Калории и БЖУ посчитаются по составу.</p></div></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><div class="itext"><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><div class="itext"><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и регулярными покупками.</p></div></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><div class="itext"><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — «Добавить в семью»: отправь ссылку близкому, и доска станет общей.</p></div></div><div class="isl" data-i="4" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.8-4.7-8.9-10A4.8 4.8 0 0 1 12 7.3a4.8 4.8 0 0 1 8.9 3.2c-1.1 5.3-8.9 10-8.9 10z"/></svg></div><div class="itext"><h3>И последнее — от меня</h3><p>Доску я делаю сама — без рекламы и платных функций. Если она экономит тебе время у плиты и в магазине, буду очень рада поддержке на Boosty: даже символический донат помогает делать её лучше 💜</p><a class="btn isup" id="iSupport" target="_blank" rel="noopener" hidden>Поддержать проект</a></div></div>
     <div class="idots" id="iDots"><i data-i="0" class=on></i><i data-i="1"></i><i data-i="2"></i><i data-i="3"></i><i data-i="4"></i></div>
-    <div class="mact" style="margin-top:6px"><button type="button" class="btn" id="iPrev" hidden>Назад</button><span style="flex:1"></span><button type="button" class="btn primary" id="iNext">Далее</button></div>
+    <div class="mact"><button type="button" class="btn" id="iPrev" hidden>Назад</button><span class="spacer"></span><button type="button" class="btn primary" id="iNext">Далее</button></div>
   </div>
 </div>
 <div class="modal" id="installModal" hidden>
   <div class="mbox inst">
-    <button type="button" class="mclose" data-close="iClose" aria-label="Закрыть">✕</button>
-    <svg class="inst-ic" viewBox="0 0 100 100" width="64" height="64" aria-hidden="true"><defs><linearGradient id="igr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cf0"/><stop offset="1" stop-color="#3fa9f5"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#igr)"/><g transform="translate(20.6 20.6) scale(.588)"><rect x="6" y="6" width="40" height="40" rx="10" fill="#fff"/><rect x="54" y="6" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="6" y="54" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="54" y="54" width="40" height="40" rx="10" fill="#fff"/><path d="M26 33s-10-6-11.4-12.6A5.6 5.6 0 0 1 26 18a5.6 5.6 0 0 1 11.4 2.4C36 27 26 33 26 33z" fill="#7b5cf0"/><path d="M74 61l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L74 74.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="#3fa9f5"/></g></svg>
-    <h3>Добавь доску на экран</h3>
-    <p class="muted" id="iLead">Она будет открываться как приложение: со своей иконкой, на весь экран и даже без интернета.</p>
+    <div class="mhead grid3"><span></span><svg class="inst-ic" viewBox="0 0 100 100" width="64" height="64" aria-hidden="true"><defs><linearGradient id="igr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cf0"/><stop offset="1" stop-color="#3fa9f5"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#igr)"/><g transform="translate(20.6 20.6) scale(.588)"><rect x="6" y="6" width="40" height="40" rx="10" fill="#fff"/><rect x="54" y="6" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="6" y="54" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="54" y="54" width="40" height="40" rx="10" fill="#fff"/><path d="M26 33s-10-6-11.4-12.6A5.6 5.6 0 0 1 26 18a5.6 5.6 0 0 1 11.4 2.4C36 27 26 33 26 33z" fill="#7b5cf0"/><path d="M74 61l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L74 74.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="#3fa9f5"/></g></svg><button type="button" class="mclose inl" data-close="iClose" aria-label="Закрыть">✕</button></div>
+    <div class="mgroup">
+      <h3>Добавь доску на экран</h3>
+      <p class="muted" id="iLead">Она будет открываться как приложение: со своей иконкой, на весь экран и даже без интернета.</p>
+    </div>
     <ol class="inst-steps" id="iSteps"></ol>
     <p class="inote" id="iInvite" hidden>Тебя пригласили в семейную доску. Когда нажмёшь «Понятно», ссылка-приглашение скопируется. Открой доску с экрана «Домой», войди и в профиле нажми <b>«У меня есть приглашение»</b> — вставь ссылку.</p>
-    <div class="mact" style="flex-direction:column;gap:8px"><button type="button" class="btn primary" id="iInstall" hidden>Установить</button><button type="button" class="btn" id="iClose">Понятно</button></div>
+    <div class="mact stack"><button type="button" class="btn primary" id="iInstall" hidden>Установить</button><button type="button" class="btn" id="iClose">Понятно</button></div>
   </div>
 </div>
 <div class="modal" id="helpModal" hidden>
   <div class="mbox wide help">
-    <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3>Как пользоваться доской</h3><button type="button" class="mclose inl" id="hClose" aria-label="Закрыть">✕</button></div>
-    <div class="hfoot" style="margin:2px 0 10px"><button type="button" class="btn small" id="hIntro">Показать обучение</button><a class="btn small" id="hMail" href="#">Написать отзыв</a></div>
+    <div class="mhead"><h3>Как пользоваться доской</h3><button type="button" class="mclose inl" id="hClose" aria-label="Закрыть">✕</button></div>
+    <div class="hfoot"><button type="button" class="btn small" id="hIntro">Показать обучение</button><a class="btn small" id="hMail" href="#">Написать отзыв</a></div>
     <div class="htext">
-      <button type="button" class="btn small" id="instHelp" style="margin:4px 0 6px" hidden>Как добавить доску на экран</button>
-      <h4>1. Профиль и норма</h4>
+      <button type="button" class="btn small" id="instHelp" hidden>Как добавить доску на экран</button>
+      
+      <section class="tsec"><h4>1. Профиль и норма</h4>
       <p>Нажми на имя слева вверху. Там: имя, для кого считать порции (женщина или мужчина), калории и БЖУ на день — в граммах или процентах. Внизу окна — «Добавить в семью», «Выйти» и «Удалить аккаунт». Мужская порция считается примерно в 1,3 раза больше женской. На список покупок это не влияет: он всегда на двоих.</p>
-      <h4>2. Блюда</h4>
+      </section>
+      <section class="tsec"><h4>2. Блюда</h4>
       <p>В «Редактировать блюда» — блюда по категориям. Нажми на плашку категории, чтобы свернуть или раскрыть её; ✎ у заголовка — название и цвет, внизу — «＋ Новая категория». Нажми на блюдо, чтобы открыть его рецепт и состав; ✕ скрывает блюдо (вернуть — «Посмотреть скрытые блюда»).</p>
-      <h4>3. Новое блюдо</h4>
+      </section>
+      <section class="tsec"><h4>3. Новое блюдо</h4>
       <p>«＋ Новое блюдо»: категория, название, подпись, сколько порций выходит, состав <b>всего блюда</b>. КБЖУ считаются по составу автоматически (таблица доски + foodstruct.com), их можно поправить вручную. «Равные порции» — если мужчина и женщина едят одинаково, например по стаканчику йогурта.</p>
       <p>В блюдо можно добавить ссылку на рецепт и шаги приготовления. Если вставить ссылку, доска предложит заполнить блюдо автоматически: название, состав и шаги. Это работает на сайтах, где рецепт размечен стандартно (например, menunedeli.ru), — проверь количества после заполнения.</p>
       <p>В плане одно блюдо — это весь его состав: он целиком идёт в список покупок. Если поставить блюдо в неделю ещё раз, доска посчитает это остатками, пока не закончатся порции (по 2 на приём).</p>
-      <h4>4. Планирование</h4>
+      </section>
+      <section class="tsec"><h4>4. Планирование</h4>
       <p>Блюдо в плане можно перенести: удержи на нём палец, пока оно не «поднимется», и перетащи на другой приём пищи или на день в полоске «Пн … Вс».</p>
       <p>Нажми на ячейку дня — завтрак, обед, перекус, ужин — и отметь одно или несколько блюд. Листай дни свайпом. Свайп дальше воскресенья сразу открывает понедельник следующей недели. Полоску «Пн … Вс» тоже можно листать: влево — следующая неделя, вправо — эта. Калории дня = сумма поставленных блюд (порция того, кто выбран в профиле).</p>
       <p>Если блюдо стоит в неделе несколько раз, доска сама считает повторы остатками, пока не закончатся порции: кастрюля супа на 8 порций — это 4 приёма на двоих. На карточке видно «готовим · 8 порц.» и «остатки · ещё 2 порц.», а продукты в список попадают только для дня, когда готовишь. Круговые стрелки на блюде меняют это вручную: «готовим заново» или «точно остатки»; повторное нажатие возвращает авто.</p>
       <p>Над днями — «Эта неделя / Следующая неделя». В понедельник прошедшая неделя исчезает, следующая становится текущей.</p>
-      <h4>5. Закупки</h4>
+      </section>
+      <section class="tsec"><h4>5. Закупки</h4>
       <p>Кнопка 🛒 у дня делает его днём закупки — такой день отмечен фиолетовой рамкой, а в полоске «Пн … Вс» — точкой под днём. Каждая закупка покупает продукты на дни после неё до следующей закупки включительно: сам день закупки относится к прошлой закупке.</p>
-      <h4>6. Покупки</h4>
+      </section>
+      <section class="tsec"><h4>6. Покупки</h4>
       <p>Список на выбранную закупку собирается сам: весь состав поставленных блюд, округлённый до упаковок, с подписью, для чего продукт. Если с прошлой закупки осталась упаковка, повторно она не покупается. Продукты разложены по категориям, включая «Специи» и «Бытовую химию». Специи, которые уже есть дома, можно убрать ✕ — только из этой закупки, в следующую они вернутся. Если продукта хватит с прошлой закупки, он попадёт в плашку «Хватит остатков» — перед магазином проверь его на полке.</p>
       <p>Внизу — «Регулярные покупки» (то, что берёшь каждый раз: молоко, хлеб) и «Разовые покупки» (только в эту закупку). Нажми «Добавить…», впиши продукт и нажми «Ввод». Регулярный продукт не повторяется, если он уже есть в списке от блюд.</p>
       <p>«Скопировать список» — текст с категориями, чтобы отправить в мессенджер или вставить в заметки.</p>
-      <h4>7. Питание</h4>
+      </section>
+      <section class="tsec"><h4>7. Питание</h4>
       <p>Чёрный блок — средние калории и БЖУ за запланированные дни выбранной недели в сравнении с нормой. Шкала — средние калории в день.</p>
-      <h4>8. Аккаунт и семья</h4>
+      </section>
+      <section class="tsec"><h4>8. Аккаунт и семья</h4>
       <p>План, блюда и покупки хранятся в облаке и появляются на всех устройствах, где ты вошла. Без интернета доска тоже работает и отправит изменения, когда сеть появится.</p>
       <p>«Добавить в семью» в профиле даёт ссылку-приглашение: кто по ней войдёт, будет видеть и менять ту же доску, что и ты. Общие — план, покупки и блюда; норма, имя и для кого считать порции у каждого свои. Если ссылку открыли в браузере, а входят в приложении с экрана «Домой», — вставь её в профиле через «У меня есть приглашение». «Выйти из семьи» оставляет тебе копию доски, дальше она только твоя.</p>
-    </div>
+      </section>
+        </div>
   </div>
 </div>
 <div class="gate" id="authGate">
   <div class="gbox">
+    <div class="ghead">
     <svg class="gicon" viewBox="0 0 100 100" width="76" height="76" aria-hidden="true"><defs><linearGradient id="ggr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cf0"/><stop offset="1" stop-color="#3fa9f5"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#ggr)"/><g transform="translate(20.6 20.6) scale(.588)"><rect x="6" y="6" width="40" height="40" rx="10" fill="#fff"/><rect x="54" y="6" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="6" y="54" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="54" y="54" width="40" height="40" rx="10" fill="#fff"/><path d="M26 33s-10-6-11.4-12.6A5.6 5.6 0 0 1 26 18a5.6 5.6 0 0 1 11.4 2.4C36 27 26 33 26 33z" fill="#7b5cf0"/><path d="M74 61l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L74 74.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="#3fa9f5"/></g></svg>
-    <h2>Доска меню</h2>
-    <p class="gsub" id="gSub">Войди, чтобы план и блюда были на всех устройствах</p>
+      <div class="gtitle"><h2>Доска меню</h2>
+      <p class="gsub" id="gSub">Войди, чтобы план и блюда были на всех устройствах</p></div>
+    </div>
     <div class="gload" id="gLoad">Загружаю…</div>
-    <div id="gForms" hidden>
+    <div id="gForms" class="gstack" hidden>
       <button type="button" class="btn gbig gwhite" id="gGoogle">Войти через Google</button>
       <button type="button" class="btn gbig gwhite" id="gMailBtn">Войти по почте</button>
-      <div id="gMail" hidden>
+      <div id="gMail" class="gstack" hidden>
         <div class="gtabs" id="gTabs"><button type="button" class="on" data-m="in">Вход</button><button type="button" data-m="up">Регистрация</button></div>
-        <form id="gForm" novalidate>
+        <form id="gForm" class="gstack" novalidate>
           <input type="email" id="gEmail" placeholder="Почта" autocomplete="email" autocapitalize="none" spellcheck="false">
           <input type="password" id="gPass" placeholder="Пароль, от 6 символов" autocomplete="current-password">
           <label class="gconsent" id="gConsentWrap" hidden><input type="checkbox" id="gConsent"><span>Согласна с <a href="#" class="gPrivacyLink">политикой конфиденциальности</a>: доска хранит мою почту и мои списки продуктов</span></label>
@@ -700,43 +746,44 @@
 </div>
 <div class="modal" id="privacyModal" hidden>
   <div class="mbox">
-    <button type="button" class="mclose" data-close="privacyClose" aria-label="Закрыть">✕</button>
-    <h3>Политика конфиденциальности</h3>
+    <div class="mhead"><h3>Политика конфиденциальности</h3><button type="button" class="mclose inl" data-close="privacyClose" aria-label="Закрыть">✕</button></div>
     <div class="ptext">
       <p>«Доска меню» — личный проект, не компания. Приложение бесплатное.</p>
-      <h4>Что хранится</h4>
+      
+      <section class="tsec"><h4>Что хранится</h4>
       <p>Почта, которую ты указала при регистрации (или которую передал Google при входе), и содержимое доски: план на неделю, блюда, списки покупок, норма калорий и имена, которые ты вписала сама.</p>
-      <h4>Где хранится</h4>
+      </section>
+      <section class="tsec"><h4>Где хранится</h4>
       <p>В облачной базе Google Firebase. Доступ к доске есть только у тебя и у тех, кому ты отправила ссылку-приглашение «Добавить в семью».</p>
-      <h4>Что не делается</h4>
+      </section>
+      <section class="tsec"><h4>Что не делается</h4>
       <p>Данные не продаются и не передаются третьим лицам, рекламы и трекеров в приложении нет.</p>
-      <h4>Удаление</h4>
+      </section>
+      <section class="tsec"><h4>Удаление</h4>
       <p>Кнопка «Удалить аккаунт» в настройках стирает аккаунт и доску из облака без возможности восстановить. Вопросы — письмом автору.</p>
-    </div>
+      </section>
+        </div>
     <div class="mact"><button type="button" class="btn primary" id="privacyClose">Понятно</button></div>
   </div>
 </div>
 <div class="modal" id="askModal" hidden>
   <div class="mbox">
-    <button type="button" class="mclose" id="askX" aria-label="Закрыть">✕</button>
-    <h3 id="askTitle"></h3>
-    <p class="muted" id="askText"></p>
+    <div class="mgroup"><div class="mhead"><h3 id="askTitle"></h3><button type="button" class="mclose inl" id="askX" aria-label="Закрыть">✕</button></div>
+    <p class="muted" id="askText"></p></div>
     <div class="mact"><button type="button" class="btn" id="askNo">Отмена</button><button type="button" class="btn primary" id="askYes"></button></div>
   </div>
 </div>
 <div class="modal" id="joinModal" hidden>
   <div class="mbox">
-    <button type="button" class="mclose" id="joinNo" aria-label="Не сейчас">✕</button>
-    <h3>Присоединиться к семье?</h3>
-    <p class="muted">Тебя пригласили в общую доску. План, блюда и покупки станут общими. Твой нынешний план на этом аккаунте заменится общим.</p>
+    <div class="mgroup"><div class="mhead"><h3>Присоединиться к семье?</h3><button type="button" class="mclose inl" id="joinNo" aria-label="Не сейчас">✕</button></div>
+    <p class="muted">Тебя пригласили в общую доску. План, блюда и покупки станут общими. Твой нынешний план на этом аккаунте заменится общим.</p></div>
     <div class="mact"><button type="button" class="btn" id="joinLater">Не сейчас</button><button type="button" class="btn primary" id="joinYes">Присоединиться</button></div>
   </div>
 </div>
 <div class="modal" id="syncModal" hidden>
   <div class="mbox">
-    <button type="button" class="mclose" id="syncLater" aria-label="Решить позже">✕</button>
-    <h3>Какой план оставить?</h3>
-    <p class="muted">В облаке уже есть доска, и на этом устройстве тоже есть свой план. Объединить их нельзя — выбери, какой оставить, второй заменится.</p>
+    <div class="mgroup"><div class="mhead"><h3>Какой план оставить?</h3><button type="button" class="mclose inl" id="syncLater" aria-label="Решить позже">✕</button></div>
+    <p class="muted">В облаке уже есть доска, и на этом устройстве тоже есть свой план. Объединить их нельзя — выбери, какой оставить, второй заменится.</p></div>
     <div class="mact"><button type="button" class="btn" id="syncLocal">С этого устройства</button><button type="button" class="btn primary" id="syncCloud">Из облака</button></div>
   </div>
 </div>
@@ -909,15 +956,6 @@ function ensureNorms(){
   state.norm=state.norms[state.sex];
 }
 // Удалённое насовсем блюдо уходит и из плана (включая отложенные записи)
-// Цвет текста поверх цветной заливки: тёмный на светлых цветах, белый на тёмных
-function inkOn(hex){
-  const v=/^var\((--[\w-]+)\)$/.exec(hex||''); if(v) hex=getComputedStyle(document.documentElement).getPropertyValue(v[1]).trim();
-  if(/^#[\da-f]{3}$/i.test(hex||'')) hex='#'+hex.slice(1).split('').map(c=>c+c).join('');
-  const m=/^#?([\da-f]{6})$/i.exec(hex||''); if(!m) return '#fff';
-  const n=parseInt(m[1],16), L=c=>{ c/=255; return c<=.03928?c/12.92:((c+.055)/1.055)**2.4; };
-  const lum=.2126*L(n>>16)+.7152*L((n>>8)&255)+.0722*L(n&255);
-  return lum>.42 ? '#111214' : '#fff';
-}
 function dropFromPlan(ids){
   const set=new Set([].concat(ids));
   for(const w of Object.values(state.weeks)) for(const p of w.plan) for(const k of SK){
@@ -1103,7 +1141,7 @@ function fmtQty(v,u){
 /* ---------- palette ---------- */
 function renderPalette(){
   const el = document.getElementById('palette');
-  let h='<div class="section-title">Редактировать блюда</div>';
+  let h='<div class="section-title">Редактировать блюда</div><div class="pbody">';
   const none=!Object.keys(BY).length;
   if(none) h+=`<div class="pempty"><b>Здесь будут твои блюда</b><span>Добавь первое: название, состав и сколько порций выходит. Калории и БЖУ посчитаются сами.</span></div>`;
   for(const k of (none?[]:catOrderKeys())){ const c=CATS[k];
@@ -1120,14 +1158,14 @@ function renderPalette(){
           </div>`;
       }
     }
-    if(!col && !list.length) h+=`<div class="hint" style="padding:0 4px 8px">Пока пусто — добавь блюдо через «＋ Новое блюдо»</div>`;
+    if(!col && !list.length) h+=`<div class="hint mhint">Пока пусто — добавь блюдо через «＋ Новое блюдо»</div>`;
     if(!col) h+=`</div>`;
     h+=`</div>`;
   }
-  h+=`<button class="btn small addcat adddish" id="addDishBtn2">＋ Новое блюдо</button><button class="btn small addcat" id="addCatBtn">＋ Новая категория</button>`;
+  h+=`<div class="paladd"><button class="btn small addcat adddish" id="addDishBtn2">＋ Новое блюдо</button><button class="btn small addcat" id="addCatBtn">＋ Новая категория</button></div>`;
   const rem=state.removed.filter(id=>DISHES.some(d=>d.id===id));
   if(rem.length) h+=`<button type="button" class="restore" id="restoreDishes">Посмотреть скрытые блюда · ${rem.length}</button>`;
-  el.innerHTML=h;
+  el.innerHTML=h+'</div>';
   document.getElementById('addCatBtn').addEventListener('click',()=>openCatModal());
   document.getElementById('addDishBtn2').addEventListener('click',()=>openNewDish());
   const rd=document.getElementById('restoreDishes'); if(rd) rd.addEventListener('click',openHidden);
@@ -1522,7 +1560,7 @@ function renderShop(){
   const all=computeTrips(trips,carry0,prev0);
   const tr=trips.find(t=>t.id===activeTrip);
   const {items,covered,filled,days,prev}=all[activeTrip];
-  h+=`<div class="tabs">${trips.map(t=>`<button class="tab${t.id===activeTrip?' on':''}" data-t="${t.id}">${CART_SVG}${t.t} <small title="${t.range.replace('на ','')}">${t.cnt}</small></button>`).join('')}</div>`;
+  h+=`<div class="tabs">${trips.map(t=>`<button class="tab${t.id===activeTrip?' on':''}" data-t="${t.id}"><span class="tl">${CART_SVG}${t.t}</span><small title="${t.range.replace('на ','')}">${t.cnt}</small></button>`).join('')}</div>`;
   h+=`<div class="cols">`;
   const inMain=n=>{ const x=n.toLowerCase().trim(); return items.some(i=>{ const y=i.name.toLowerCase(); return y===x || y.startsWith(x+' ') || y.startsWith(x+','); }); };
   const extras=((W().extras||{})[activeTrip])||[];
@@ -1637,9 +1675,9 @@ function renderStats(){
   let dots=''; for(let i=0;i<=40;i++){ const a=Math.PI*(1-i/40); dots+=`<circle cx="${(120+80*Math.cos(a)).toFixed(1)}" cy="${(118-80*Math.sin(a)).toFixed(1)}" r="1" fill="#7fa0ff" opacity=".55"/>`; }
   const stat=(k,label,val,norm,unit,col)=>`<div class="nstat" style="--mc:${col}"><div class="k"><i></i>${label}</div><div class="v">${fmt(val)}<small>${norm!=null?` / ${norm.toLocaleString('ru')}${unit}`:unit}</small></div>${norm!=null?`<div class="bar"><b style="width:${val==null?0:Math.min(100,val/norm*100).toFixed(0)}%"></b></div>`:''}</div>`;
   document.getElementById('nutri').innerHTML=`
-    <div>
-      <div class="nhead"><h3>Питание</h3><span class="ndate">${rangeLabel(activeWeek)}</span></div>
-      <div class="nsub">${days.length?`Среднее за ${days.length} ${plural(days.length,'запланированный день','запланированных дня','запланированных дней')}`:`Пока нет запланированных дней`}</div>
+    <div class="nwrap">
+      <div class="ntop"><div class="nhead"><h3>Питание</h3><span class="ndate">${rangeLabel(activeWeek)}</span></div>
+      <div class="nsub">${days.length?`Среднее за ${days.length} ${plural(days.length,'запланированный день','запланированных дня','запланированных дней')}`:`Пока нет запланированных дней`}</div></div>
       <div class="nstats">
         <div class="nstat" style="--mc:#9a9ea6"><div class="k"><i></i>Дней</div><div class="v">${days.length}<small> / 7</small></div><div class="bar"><b style="width:${(days.length/7*100).toFixed(0)}%"></b></div></div>
         ${stat('kcal','Калории',A.kcal,n.kcal,'','#9b84ff')}
@@ -1664,10 +1702,10 @@ function renderGauge(){
   let dots=''; for(let i=0;i<=40;i++){ const a=Math.PI*(1-i/40); dots+=`<circle cx="${(120+80*Math.cos(a)).toFixed(1)}" cy="${(118-80*Math.sin(a)).toFixed(1)}" r="1" fill="#7fa0ff" opacity=".55"/>`; }
   el.innerHTML=`
     <div class="ngauge">
-      <svg viewBox="0 0 240 124"><defs><radialGradient id="gg" cx="50%" cy="100%" r="75%"><stop offset="0" stop-color="#8a7dff" stop-opacity=".8"/><stop offset=".45" stop-color="#6f8bff" stop-opacity=".3"/><stop offset=".8" stop-color="#5a7cff" stop-opacity=".07"/><stop offset="1" stop-color="#5a7cff" stop-opacity="0"/></radialGradient></defs>
+      <svg viewBox="0 0 240 120"><defs><radialGradient id="gg" cx="50%" cy="100%" r="75%"><stop offset="0" stop-color="#8a7dff" stop-opacity=".8"/><stop offset=".45" stop-color="#6f8bff" stop-opacity=".3"/><stop offset=".8" stop-color="#5a7cff" stop-opacity=".07"/><stop offset="1" stop-color="#5a7cff" stop-opacity="0"/></radialGradient></defs>
       <path d="M44 118 A76 76 0 0 1 196 118 Z" fill="url(#gg)"/>${dots}${ticks}</svg>
-      <div class="gv">${k==null?'—':Math.round(k).toLocaleString('ru')}/${n.kcal.toLocaleString('ru')} <small>ккал</small></div>
-      <div class="gday">${DAYS[curDay]}, ${dt.getDate()}.${pad(dt.getMonth()+1)}${empty?' · пока пусто':''}</div>
+      <div class="gtxt"><div class="gv">${k==null?'—':Math.round(k).toLocaleString('ru')}/${n.kcal.toLocaleString('ru')} <small>ккал</small></div>
+      <div class="gday">${DAYS[curDay]}, ${dt.getDate()}.${pad(dt.getMonth()+1)}${empty?' · пока пусто':''}</div></div>
     </div>`;
 }
 function renderNorm(){
@@ -1835,7 +1873,7 @@ let openDishEditor, openNewDish;
   let cat=null, mode='tot', editId=null, auto=true;
   const short=k=>CATS[k].t.split(' · ')[0];
   function catBtns(){
-    dCat.innerHTML=catOrderKeys().map(k=>[k,CATS[k]]).map(([k,c])=>`<button type="button" data-c="${k}" class="${k===cat?'on':''}" style="--mc:${c.c};--mt:${inkOn(c.c)}"><i></i>${esc(short(k))}</button>`).join('');
+    dCat.innerHTML=catOrderKeys().map(k=>[k,CATS[k]]).map(([k,c])=>`<button type="button" data-c="${k}" class="${k===cat?'on':''}" style="--mc:${c.c}"><i></i>${esc(short(k))}</button>`).join('');
     dCat.innerHTML+=`<button type="button" class="addcat-pill" id="dAddCat">＋ Добавить категорию</button>`;
     m.querySelectorAll('#dCat button[data-c]').forEach(b=>b.addEventListener('click',()=>{cat=b.dataset.c;dCat.classList.remove('need');catBtns();calc();}));
     document.getElementById('dAddCat').addEventListener('click',()=>openCatModal(k=>{ cat=k; catBtns(); calc(); }));
