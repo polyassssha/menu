@@ -44,6 +44,8 @@
     --accent:#6d4fd6; --accent-soft:#efebfd; --ok:#1f9d6c; --warn:#e0703f;
   }
   :root{color-scheme:light}
+  /* скрытое атрибутом hidden скрыто всегда — даже если у класса свой display */
+  [hidden]{display:none!important}
   *{box-sizing:border-box}
   input,select,textarea{color:var(--ink);-webkit-text-fill-color:var(--ink)}
   input::placeholder{color:var(--faint);-webkit-text-fill-color:var(--faint)}
@@ -291,6 +293,11 @@
   .pt-del,.ex-del,.st-del{margin-left:auto;padding:0 4px}
   .isup{display:inline-flex;margin-top:12px;text-decoration:none;color:var(--accent);border-color:var(--accent)}
   .isup[hidden]{display:none}
+  .inote{font-size:12px;line-height:1.45;color:var(--ink);background:var(--soft);border-radius:12px;padding:10px 12px;margin:4px 0 10px;text-align:left}
+  .inote[hidden]{display:none}
+  .pempty{background:var(--soft);border-radius:14px;padding:18px 16px;text-align:center;margin-bottom:10px}
+  .pempty b{display:block;font-size:14px;font-weight:600;margin-bottom:4px}
+  .pempty span{display:block;font-size:12px;color:var(--muted);line-height:1.45}
   .ab-note{font-size:11px;color:var(--muted);padding:6px 0 0}
   .restore{display:block;width:100%;margin:4px 0 0;padding:11px 12px;border:0;border-radius:12px;background:transparent;color:var(--muted);font:500 12.5px Inter,sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .restore:active{background:var(--soft);color:var(--ink)}
@@ -304,6 +311,8 @@
   .pwho{flex:1;min-width:0}
   .pwho b{display:block;font-size:17px;font-weight:600;line-height:1.25}
   .pwho small{display:block;color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pwho small.sync{font-size:11px;margin-top:1px}
+  .pwho small.sync.ok{color:var(--ok)} .pwho small.sync.bad{color:var(--warn)}
   .phead .mclose{align-self:flex-start}
   .psec{border-top:1px solid var(--line);margin-top:16px;padding-top:14px}
   .ptitle{font-size:13.5px;font-weight:600;margin:0 2px 10px}
@@ -317,6 +326,12 @@
   .prow{display:flex;gap:8px;margin-top:14px}
   .prow .btn{flex:1;justify-content:center;padding:10px}
   .prow[hidden]{display:none}
+  .pjoin{display:block;margin:10px auto 0}
+  .pjoin[hidden]{display:none}
+  .pjoinrow{display:flex;gap:6px;margin-top:10px}
+  .pjoinrow[hidden]{display:none}
+  .pjoinrow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
+  .pjoinrow input:focus{border-color:var(--accent);background:#fff}
   .gate{position:fixed;inset:0;z-index:200;background:var(--frame);display:flex;align-items:center;justify-content:center;padding:24px 20px;overflow-y:auto;overscroll-behavior:contain}
   .gate[hidden]{display:none}
   body:has(.gate:not([hidden])){overflow:hidden}
@@ -329,7 +344,8 @@
   #gMail{margin-top:14px}
   .gnote{font-size:11.5px;color:var(--muted);margin:14px 0 0;line-height:1.45}
   .gnote a{color:var(--accent)}
-  #syncModal{z-index:205}
+  #syncModal,#joinModal{z-index:205}
+  #installModal{z-index:206}
   .gtabs{display:flex;gap:4px;background:var(--soft);border-radius:12px;padding:4px;margin-bottom:14px}
   .gtabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 0;font:500 13px Inter,sans-serif;color:var(--muted);cursor:pointer}
   .gtabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
@@ -477,7 +493,7 @@
   <form class="mbox prof" id="normForm">
     <div class="phead">
       <span class="ava pava" id="profAva"></span>
-      <div class="pwho"><b id="profName">Профиль</b><small id="accWho">Без входа в аккаунт</small></div>
+      <div class="pwho"><b id="profName">Профиль</b><small id="accWho">Без входа в аккаунт</small><small class="sync" id="syncState"></small></div>
       <button type="button" class="mclose inl" id="normCancel" aria-label="Закрыть">✕</button>
     </div>
 
@@ -505,8 +521,10 @@
 
     <div class="psec" id="famSec">
       <div class="ptitle">Семья</div>
-      <div class="pnote" style="margin-top:0">Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.</div>
+      <div class="pnote" style="margin-top:0" id="famInfo">Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.</div>
       <button type="button" class="btn pbig" id="inviteBtn">Добавить в семью</button>
+      <button type="button" class="glink pjoin" id="haveInvite">У меня есть приглашение</button>
+      <div class="pjoinrow" id="joinRow" hidden><input type="text" id="joinInput" class="plain" placeholder="Вставь ссылку-приглашение" autocomplete="off" autocapitalize="none" spellcheck="false"><button type="button" class="btn primary" id="joinGo">Вступить</button></div>
     </div>
 
     <div class="pbottom">
@@ -593,7 +611,7 @@
 <div class="modal" id="introModal" hidden>
   <div class="mbox intro">
     <button type="button" class="mclose" id="iSkip" aria-label="Закрыть">✕</button>
-    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><h3>Собери свои блюда</h3><p>Выбери готовые или добавь свои: состав, ссылку на рецепт и шаги. Калории и БЖУ посчитаются по составу.</p></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и регулярными покупками.</p></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — «Добавить в семью»: отправь ссылку близкому, и доска станет общей.</p></div><div class="isl" data-i="4" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.8-4.7-8.9-10A4.8 4.8 0 0 1 12 7.3a4.8 4.8 0 0 1 8.9 3.2c-1.1 5.3-8.9 10-8.9 10z"/></svg></div><h3>И последнее — от меня</h3><p>Доску я делаю сама — без рекламы и платных функций. Если она экономит тебе время у плиты и в магазине, буду очень рада поддержке на Boosty: даже символический донат помогает делать её лучше 💜</p><a class="btn isup" id="iSupport" target="_blank" rel="noopener" hidden>Поддержать проект</a></div>
+    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><h3>Собери свои блюда</h3><p>Добавь блюда, которые готовишь: состав, ссылку на рецепт и шаги. Калории и БЖУ посчитаются по составу.</p></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и регулярными покупками.</p></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — «Добавить в семью»: отправь ссылку близкому, и доска станет общей.</p></div><div class="isl" data-i="4" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.8-4.7-8.9-10A4.8 4.8 0 0 1 12 7.3a4.8 4.8 0 0 1 8.9 3.2c-1.1 5.3-8.9 10-8.9 10z"/></svg></div><h3>И последнее — от меня</h3><p>Доску я делаю сама — без рекламы и платных функций. Если она экономит тебе время у плиты и в магазине, буду очень рада поддержке на Boosty: даже символический донат помогает делать её лучше 💜</p><a class="btn isup" id="iSupport" target="_blank" rel="noopener" hidden>Поддержать проект</a></div>
     <div class="idots" id="iDots"><i data-i="0" class=on></i><i data-i="1"></i><i data-i="2"></i><i data-i="3"></i><i data-i="4"></i></div>
     <div class="mact" style="margin-top:6px"><button type="button" class="btn" id="iPrev" hidden>Назад</button><span style="flex:1"></span><button type="button" class="btn primary" id="iNext">Далее</button></div>
   </div>
@@ -605,6 +623,7 @@
     <h3>Добавь доску на экран</h3>
     <p class="muted" id="iLead">Она будет открываться как приложение: со своей иконкой, на весь экран и даже без интернета.</p>
     <ol class="inst-steps" id="iSteps"></ol>
+    <p class="inote" id="iInvite" hidden>Тебя пригласили в семейную доску. Когда нажмёшь «Понятно», ссылка-приглашение скопируется. Открой доску с экрана «Домой», войди и в профиле нажми <b>«У меня есть приглашение»</b> — вставь ссылку.</p>
     <div class="mact" style="flex-direction:column;gap:8px"><button type="button" class="btn primary" id="iInstall" hidden>Установить</button><button type="button" class="btn" id="iClose">Понятно</button></div>
   </div>
 </div>
@@ -681,6 +700,14 @@
     <div class="mact"><button type="button" class="btn primary" id="privacyClose">Понятно</button></div>
   </div>
 </div>
+<div class="modal" id="joinModal" hidden>
+  <div class="mbox">
+    <button type="button" class="mclose" id="joinNo" aria-label="Не сейчас">✕</button>
+    <h3>Присоединиться к семье?</h3>
+    <p class="muted">Тебя пригласили в общую доску. План, блюда и покупки станут общими. Твой нынешний план на этом аккаунте заменится общим.</p>
+    <div class="mact"><button type="button" class="btn" id="joinLater">Не сейчас</button><button type="button" class="btn primary" id="joinYes">Присоединиться</button></div>
+  </div>
+</div>
 <div class="modal" id="syncModal" hidden>
   <div class="mbox">
     <button type="button" class="mclose" id="syncLater" aria-label="Решить позже">✕</button>
@@ -691,7 +718,7 @@
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="data.js"></script>
+<script src="refs.js"></script>
 <script>
 let pickSel=[], openInstallHelp=()=>{}, afterIntro=null, scanFill=null;
 // Ссылка на страницу поддержки (Boosty и т.п.). Пусто — кнопки нет.
@@ -714,9 +741,7 @@ const SHOP = [
   ['meat','Мясо'],['dairy','Молочка и яйца'],['grain','Крупы, макароны, хлеб'],
   ['veg','Овощи и зелень'],['fruit','Фрукты'],['other','Прочее'],['pantry','Специи'],['chem','Бытовая химия']
 ];
-DISHES.push(
-  {id:'dr1',gen:'кофе с молоком',cat:'drink',name:'Кофе с молоком',kcal:60,p:3,f:3,c:5,ing:[['Молоко',300,'мл','dairy','кофе с молоком'],['Кофе',null,'','pantry']]},
-);
+const DISHES = [];   // блюда пользователя — собираются из state.custom в applyDishes()
 let BY = Object.fromEntries(DISHES.map(d=>[d.id,d]));
 const DAYS = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const SLOTS = [['b','Завтрак'],['l','Обед'],['s','Перекус'],['d','Ужин']];
@@ -767,6 +792,7 @@ function initWeeks(){
     if(saved.myFoods) state.myFoods = saved.myFoods;
     if(saved.leftMigr) state.leftMigr = saved.leftMigr;
     if(saved.photoMigr) state.photoMigr = saved.photoMigr;
+    if(saved.presetMigr) state.presetMigr = saved.presetMigr;
     if(saved._ts) state._ts = saved._ts;
     if(Array.isArray(saved.catOrder)) state.catOrder = saved.catOrder;
     if(saved.names) state.names = Object.assign({f:'',m:''}, saved.names);
@@ -842,7 +868,6 @@ function toEditable(d){
     tot:{kcal:d.kcal/wf*sv,p:(d.p||0)/wf*sv,f:(d.f||0)/wf*sv,c:(d.c||0)/wf*sv},
     batch:d.ing.map(([n,q,u,c,fw])=>[n,q==null?null:Math.round(q*k*100)/100,u,c,fw]),batch_:true};
 }
-const BASE_COPY = JSON.parse(JSON.stringify(DISHES));
 function applyCustomCats(){
   for(const k of Object.keys(CATS)) if(CATS[k].customCat) delete CATS[k];
   for(const cc of state.customCats) CATS[cc.k]={t:cc.t,c:cc.color,bg:`color-mix(in srgb, ${cc.color} 9%, #fff)`,kind:cc.kind,customCat:true};
@@ -858,7 +883,23 @@ function applyDishes(){
   // фото больше не поддерживаются — чистим старые записи, чтобы не занимали память
   if(!state.photoMigr){ for(const c of state.custom) delete c.photo; for(const o of Object.values(state.overrides)) delete o.photo; state.photoMigr=1; }
   DISHES.splice(0,DISHES.length);
-  for(const b of BASE_COPY){ const o=state.overrides[b.id]; DISHES.push(buildDish(o||toEditable(JSON.parse(JSON.stringify(b))))); }
+  // Перенос старой доски: блюда «по умолчанию» становятся своими (id c…), план и скрытые — следом.
+  // Новая доска (ещё ни разу не сохранялась) начинается без блюд.
+  if(!state.presetMigr){
+    if(state._ts){
+      const map={};
+      for(const b of LEGACY_DISHES){
+        const nid='c'+b.id, o=state.overrides[b.id];
+        const rec=o ? JSON.parse(JSON.stringify(o)) : toEditable(JSON.parse(JSON.stringify(b)));
+        rec.id=nid; rec.legacy=1; delete rec.batch_; map[b.id]=nid;   // legacy: перенесено, ещё не правилось
+        if(!state.custom.some(c=>c.id===nid)) state.custom.push(rec);
+        delete state.overrides[b.id];
+      }
+      for(const w of Object.values(state.weeks)) for(const p of w.plan) for(const k of SK) for(const it of (p[k]||[])) if(map[it.id]) it.id=map[it.id];
+      state.removed=state.removed.map(id=>map[id]||id);
+    }
+    state.presetMigr=1;
+  }
   for(const c of state.custom) DISHES.push(buildDish(c.batch?c:toEditable(c)));
   for(const d of DISHES) d.ing=d.ing.filter(x=>x[0].trim().toLowerCase()!=='соль');
   BY = Object.fromEntries(DISHES.filter(d=>!state.removed.includes(d.id) && CATS[d.cat]).map(d=>[d.id,d]));
@@ -893,7 +934,8 @@ const MB = window.MB = {
   ready,                       // данные с диска уже подняты — можно сравнивать с облаком
   hasOwnData(){                // есть ли на устройстве что-то, что жалко потерять
     const planned=Object.values(state.weeks).some(w=>w.plan.some(p=>SK.some(k=>(p[k]||[]).length)));
-    return planned || state.custom.length>0 || Object.keys(state.overrides).length>0;
+    // перенесённые блюда «по умолчанию», которые не правили, своими данными не считаются
+    return planned || state.custom.some(c=>!c.legacy) || Object.keys(state.overrides).length>0;
   },
   getState:()=>JSON.stringify(state),
   getTs:()=>state._ts||0,
@@ -969,7 +1011,9 @@ function fmtQty(v,u){
 function renderPalette(){
   const el = document.getElementById('palette');
   let h='<div class="section-title">Редактировать блюда</div>';
-  for(const k of catOrderKeys()){ const c=CATS[k];
+  const none=!Object.keys(BY).length;
+  if(none) h+=`<div class="pempty"><b>Здесь будут твои блюда</b><span>Добавь первое: название, состав и сколько порций выходит. Калории и БЖУ посчитаются сами.</span></div>`;
+  for(const k of (none?[]:catOrderKeys())){ const c=CATS[k];
     const list=DISHES.filter(x=>x.cat===k && BY[x.id]);
     const col=!!state.collapsed[k];
     h+=`<div class="mod${col?' col':''}" style="--mc:${c.c};--mb:${c.bg}"><h2 class="mh" data-cat="${k}"><span class="mt">${esc(c.t)}</span><button class="ib cat-ren" data-cat="${k}" title="Изменить название и цвет">✎</button>${c.customCat?`<button class="ib cat-del" data-cat="${k}" title="Удалить категорию">✕</button>`:''}<small>${list.length}</small><span class="chev">⌄</span></h2>`;
@@ -1799,6 +1843,7 @@ function openPicker(di,s){
   document.getElementById('pTitle').textContent=`${DAYS[di]} · ${lab}`;
   document.getElementById('pList').innerHTML=catOrderKeys().map(k=>{ const c=CATS[k], list=DISHES.filter(d=>d.cat===k&&BY[d.id]); if(!list.length) return '';
     return `<div class="pcat" style="--mc:${c.c}"><h5>${esc(c.t)}</h5><div class="pgrid">${list.map(d=>`<button type="button" class="pdish" data-id="${d.id}">${esc(d.name)}<small>~${Math.round(pv(d,'kcal'))} ккал</small></button>`).join('')}</div></div>`; }).join('');
+  if(!Object.keys(BY).length) document.getElementById('pList').innerHTML='<div class="pempty"><b>Пока нет ни одного блюда</b><span>Добавь первое кнопкой «＋ Новое блюдо» ниже — оно сразу встанет в этот приём пищи.</span></div>';
   pickSel=[]; const foot=document.getElementById('pFoot'), addB=document.getElementById('pAdd');
   const sync=()=>{ foot.hidden=!pickSel.length; addB.textContent = pickSel.length===1 ? 'Добавить блюдо' : `Добавить ${pickSel.length} ${plural(pickSel.length,'блюдо','блюда','блюд')}`; };
   m.querySelectorAll('.pdish').forEach(b=>b.addEventListener('click',()=>{ const id=b.dataset.id, i=pickSel.indexOf(id);
@@ -1931,8 +1976,13 @@ let openScanner=()=>{};
     steps.innerHTML=s.map(x=>`<li><span>${x}</span></li>`).join('');
     inst.hidden=!deferred;
   }
-  openInstallHelp=()=>{ fill(); m.hidden=false; };
-  const close=()=>{ m.hidden=true; try{ localStorage.setItem('meal-board-install-seen','1'); }catch(e){} };
+  const pendingJoin=()=>{ try{ return localStorage.getItem('meal-board-join'); }catch(e){ return null; } };
+  openInstallHelp=()=>{ fill(); document.getElementById('iInvite').hidden=!(iOS && pendingJoin()); m.hidden=false; };
+  const close=()=>{
+    m.hidden=true; try{ localStorage.setItem('meal-board-install-seen','1'); }catch(e){}
+    const j=pendingJoin();
+    if(iOS && j && navigator.clipboard) navigator.clipboard.writeText(location.origin+location.pathname+'?join='+encodeURIComponent(j)).then(()=>toast('Ссылка-приглашение скопирована'),()=>{});
+  };
   document.getElementById('iClose').addEventListener('click',close);
   m.addEventListener('click',e=>{ if(e.target===m) close(); });
   inst.addEventListener('click',async()=>{ if(!deferred) return; deferred.prompt(); try{ await deferred.userChoice; }catch(e){} deferred=null; close(); });
@@ -1940,7 +1990,8 @@ let openScanner=()=>{};
   const hb=document.getElementById('instHelp'); if(hb){ hb.hidden=standalone; hb.addEventListener('click',()=>{ document.getElementById('helpModal').hidden=true; openInstallHelp(); }); }
   let seen=false; try{ seen=!!localStorage.getItem('meal-board-install-seen'); }catch(e){}
   // на телефоне в браузере показываем при каждом открытии (пока доска не добавлена на экран), на компьютере — один раз
-  if(!standalone && (iOS || android || !seen)) MB.whenIn(()=>setTimeout(()=>{ if(!document.getElementById('introModal').hidden){ afterIntro=()=>openInstallHelp(); return; } if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700));
+  // до входа: человек ставит доску на экран и входит уже в приложении (на iPhone у приложения своё хранилище)
+  if(!standalone && (iOS || android || !seen)) setTimeout(openInstallHelp,400);
 })();
 
 </script>
@@ -1961,6 +2012,15 @@ const CFG = {
 const V='https://www.gstatic.com/firebasejs/10.12.2/';
 const AUTH_FLAG='meal-board-auth';      // на этом устройстве уже входили — можно пускать офлайн
 const SYNC_KEY='meal-board-synced';     // «uid:доска», с которой это устройство уже сверялось
+const JOIN_KEY='meal-board-join';       // приглашение ждёт входа: переживает перезагрузку и переход на Google
+// ссылку-приглашение запоминаем сразу, ещё до входа, и убираем из адреса
+(()=>{ const j=new URLSearchParams(location.search).get('join');
+  if(j){ try{ localStorage.setItem(JOIN_KEY,j); }catch(e){} history.replaceState({},'',location.pathname); } })();
+// строка состояния облака в профиле
+function setSync(text, kind){ const el=document.getElementById('syncState'); if(el){ el.textContent=text||''; el.className='sync'+(kind?' '+kind:''); } }
+function setFamily(n){ const el=document.getElementById('famInfo'); if(!el) return;
+  el.textContent = n>1 ? `Доска общая: в семье ${n} ${n<5?'человека':'человек'}. Всё, что меняет один, сразу видят остальные.`
+                       : 'Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.'; }
 const $=id=>document.getElementById(id);
 const gate=$('authGate'), gLoad=$('gLoad'), gForms=$('gForms'), gErr=$('gErr'), gSub=$('gSub');
 const showErr=m=>{ gErr.textContent=m||''; };
@@ -2060,18 +2120,28 @@ if(fb){
     let bid = us.exists() && us.data().boardId ? us.data().boardId : u.uid;
     if(!us.exists()) await setDoc(uref,{ boardId:bid, email:u.email||'', createdAt:Date.now(), consentAt:Date.now() });
 
-    // приглашение «в семью»: ?join=<id доски>
-    let joined=false;
-    const join=new URLSearchParams(location.search).get('join');
-    if(join){
-      history.replaceState({},'',location.pathname);
-      if(join!==bid && confirm('Присоединиться к общей доске? Твой нынешний план заменится общим.')){
+    // приглашение «в семью»
+    let joined=false, join=null;
+    try{ join=localStorage.getItem(JOIN_KEY); }catch(e){}
+    if(join && join===bid){ MB.toast('Ты уже в этой доске. Ссылку отправь тому, кого добавляешь'); forgetJoin(); }
+    else if(join){
+      if(await askJoin()){
         try{
           await updateDoc(doc(db,'boards',join),{ members:arrayUnion(u.uid) });
           await updateDoc(uref,{ boardId:join });
-          bid=join; joined=true;
-        }catch(e){ alert('Не получилось присоединиться: ссылка устарела или доска удалена.'); }
-      }
+          bid=join; joined=true; forgetJoin();
+          MB.toast('Готово — теперь у вас общая доска');
+        }catch(e){
+          const c=String((e&&e.code)||'');
+          if(c.includes('unavailable')||c.includes('network')) throw e;   // нет сети — спросим ещё раз, когда появится
+          forgetJoin();
+          joinError(c.includes('not-found')
+            ? 'Доска по этой ссылке не найдена в облаке. Пусть тот, кто приглашал, откроет доску с интернетом (чтобы она сохранилась в облаке) и пришлёт ссылку ещё раз.'
+            : c.includes('permission')
+              ? 'Облако не пустило в доску. Проверь, что правила Firestore опубликованы (Firestore → Rules → Publish).'
+              : 'Не получилось присоединиться ('+(c||'ошибка')+'). Попробуй открыть ссылку ещё раз.');
+        }
+      } else forgetJoin();
     }
 
     const ref=doc(db,'boards',bid);
@@ -2102,8 +2172,29 @@ if(fb){
       else if(MB.getTs() > (d.ts||0) || dirty) await push();
     }
     try{ localStorage.setItem(SYNC_KEY, mark); }catch(e){}
+    setSync('Синхронизировано','ok');
     if(unsub) unsub();
-    unsub=onSnapshot(ref, snap=>{ if(snap.exists()) pull(snap.data()); }, ()=>{});
+    unsub=onSnapshot(ref, snap=>{ if(!snap.exists()) return; const sd=snap.data(); setFamily((sd.members||[]).length); setSync('Синхронизировано','ok'); pull(sd); },
+      e=>{ setSync(String(e&&e.code).includes('permission')?'Облако не пускает — проверь правила Firestore':'Нет связи с облаком','bad'); });
+  }
+
+  function forgetJoin(){ try{ localStorage.removeItem(JOIN_KEY); }catch(e){} }
+  function askJoin(){
+    return new Promise(res=>{
+      const m=$('joinModal'); m.hidden=false;
+      const done=v=>{ m.hidden=true; $('joinYes').onclick=$('joinLater').onclick=$('joinNo').onclick=null; res(v); };
+      $('joinYes').onclick=()=>done(true);
+      $('joinLater').onclick=$('joinNo').onclick=()=>done(false);
+    });
+  }
+  function joinError(text){ setSync('Не удалось войти в семью','bad'); MB.toast(text); setTimeout(()=>alertBox(text),50); }
+  function alertBox(text){
+    // свой «алерт»: системный во встроенных браузерах мессенджеров может не показаться
+    const m=$('privacyModal'), box=m.querySelector('.ptext'), h=m.querySelector('h3'), keep=[h.textContent, box.innerHTML];
+    h.textContent='Не получилось'; box.innerHTML='<p>'+text.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))+'</p>';
+    m.hidden=false;
+    const restore=()=>{ h.textContent=keep[0]; box.innerHTML=keep[1]; $('privacyClose').removeEventListener('click',restore); };
+    $('privacyClose').addEventListener('click',restore);
   }
 
   function tryConnect(){
@@ -2112,7 +2203,8 @@ if(fb){
     connecting=true;
     connect(u).catch(e=>{
       if(unsub){ unsub(); unsub=null; } bref=null;
-      if(e && e.code==='later'){ MB.toast('Хорошо, спрошу при следующем открытии. Пока доска работает только на этом устройстве'); return; }
+      if(e && e.code==='later'){ setSync('Синхронизация отложена','bad'); MB.toast('Хорошо, спрошу при следующем открытии. Пока доска работает только на этом устройстве'); return; }
+      setSync(String(e&&e.code).includes('permission')?'Облако не пускает — проверь правила Firestore':'Нет связи с облаком','bad');
       if(!warned){ warned=true; MB.toast(String(e&&e.code).includes('permission') ? 'Облако не пускает: проверь правила Firestore' : 'Нет связи с облаком — доска работает на этом устройстве'); }
     }).finally(()=>{ connecting=false; });
   }
@@ -2177,6 +2269,20 @@ if(fb){
   }));
 
   /* ───────── настройки: семья, выход, удаление ───────── */
+  $('haveInvite').addEventListener('click',()=>{ $('joinRow').hidden=false; $('haveInvite').hidden=true; $('joinInput').focus(); });
+  $('joinGo').addEventListener('click',()=>{
+    const v=$('joinInput').value.trim(); if(!v){ $('joinInput').focus(); return; }
+    let id=v; try{ const q=new URL(v).searchParams.get('join'); if(q) id=q; }catch(e){}
+    id=id.replace(/[^\w-]/g,'');
+    if(!id){ MB.toast('Это не похоже на ссылку-приглашение'); return; }
+    if(!auth.currentUser){ MB.toast('Сначала войди в аккаунт'); return; }
+    if(id===boardId){ MB.toast('Ты уже в этой доске'); return; }
+    try{ localStorage.setItem(JOIN_KEY,id); }catch(e){}
+    $('normModal').hidden=true; $('joinInput').value=''; $('joinRow').hidden=true; $('haveInvite').hidden=false;
+    // переподключаемся: connect() увидит приглашение и спросит подтверждение
+    if(unsub){ unsub(); unsub=null; } bref=null; postponed=false; warned=false;
+    tryConnect();
+  });
   $('inviteBtn').addEventListener('click',()=>{
     if(!boardId){ MB.toast('Нет связи с облаком — пригласить пока нельзя'); return; }
     const link=location.origin+location.pathname+'?join='+encodeURIComponent(boardId);
