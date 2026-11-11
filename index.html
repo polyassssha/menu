@@ -169,7 +169,6 @@
   .ib.ci svg{display:block}
   .chip.left{background:#fafafb}
   .chip.left .t{color:#5b5f67}
-  .wkjump{display:none}
   .chip .lo{display:block;font-weight:400;font-size:10.5px;color:var(--muted);margin-top:1px}
   .chip .lo.cook{color:color-mix(in srgb,var(--c) 70%,#555)}
   .ib{border:0;background:transparent;cursor:pointer;font-size:11.5px;padding:2px 5px;border-radius:6px;color:var(--faint)}
@@ -279,7 +278,6 @@
   .eqrow input:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
   .mact{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
   .pt-del,.ex-del,.st-del{margin-left:auto;padding:0 4px}
-  .item em.tag{font-style:normal;font-size:10.5px;color:var(--muted);background:#eef0f3;border-radius:6px;padding:1px 6px;margin-left:6px;white-space:nowrap}
   .addbox{margin-top:12px;background:var(--soft);border-radius:12px;padding:12px}
   .ab-h{font-size:12.5px;font-weight:600;margin-bottom:8px}
   .ab-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
@@ -385,15 +383,17 @@
     .weekbar{margin-bottom:8px}
     .week{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
     .week::-webkit-scrollbar{display:none}
-    .wkjump{display:flex!important;flex:0 0 100%;scroll-snap-align:start;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:1px dashed #cfd2d8;border-radius:16px;color:var(--muted);min-height:200px}
-    .wkjump b{color:var(--ink);font-weight:600;font-size:15px}
-    .wkjump span{font-size:22px;color:var(--accent)}
     .day{flex:0 0 100%;scroll-snap-align:start;grid-template-columns:repeat(2,minmax(0,1fr));padding:8px;gap:6px;align-content:start}
     .daychips{display:flex;gap:4px;margin-top:8px;background:var(--card);border-radius:14px;padding:4px}
     .dchip{flex:1;border:0;background:transparent;border-radius:10px;padding:8px 0 7px;font:500 12.5px/1 Inter,sans-serif;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
     .dchip::after{content:"";width:4px;height:4px;border-radius:50%;background:transparent}
     .dchip.on{background:var(--accent);color:#fff}
     .dchip.has::after{background:var(--accent)}
+    .daychips{touch-action:pan-y;transition:transform .2s,opacity .2s;will-change:transform}
+    .daychips.slide-l,.week.slide-l{animation:dcl .26s ease-out}
+    .daychips.slide-r,.week.slide-r{animation:dcr .26s ease-out}
+    @keyframes dcl{from{transform:translateX(60px);opacity:.3}to{transform:none;opacity:1}}
+    @keyframes dcr{from{transform:translateX(-60px);opacity:.3}to{transform:none;opacity:1}}
     .dchip.on.has::after{background:#fff}
     .dlabel{grid-column:1/-1;flex-direction:row;align-items:center;gap:10px;padding:2px 4px 4px}
     .dlabel b{font-size:20px}
@@ -571,14 +571,14 @@
       <p>«＋ Новое блюдо»: категория, название, подпись, сколько порций выходит, состав <b>всего блюда</b>. КБЖУ считаются по составу автоматически (таблица доски + foodstruct.com), их можно поправить вручную. «Равные порции» — если мужчина и женщина едят одинаково, например по стаканчику йогурта.</p>
       <p>В блюдо можно добавить ссылку на рецепт, фото и шаги приготовления. Если вставить ссылку, доска предложит заполнить блюдо автоматически: название, состав и шаги. Это работает на сайтах, где рецепт размечен стандартно (например, menunedeli.ru), — проверь количества после заполнения.</p>
       <h4>4. Планирование</h4>
-      <p>Нажми на ячейку дня — завтрак, обед, перекус, ужин — и отметь одно или несколько блюд. Листай дни свайпом; после воскресенья откроется следующая неделя. Калории дня = сумма поставленных блюд (порция того, кто выбран в профиле).</p>
+      <p>Нажми на ячейку дня — завтрак, обед, перекус, ужин — и отметь одно или несколько блюд. Листай дни свайпом. Свайп дальше воскресенья сразу открывает понедельник следующей недели. Полоску «Пн … Вс» тоже можно листать: влево — следующая неделя, вправо — эта. Калории дня = сумма поставленных блюд (порция того, кто выбран в профиле).</p>
       <p>Если блюдо стоит в неделе несколько раз, доска сама считает повторы остатками, пока не закончатся порции: кастрюля супа на 8 порций — это 4 приёма на двоих. На карточке видно «готовим · 8 порц.» и «остатки · ещё 2 порц.», а продукты в список попадают только для дня, когда готовишь. Круговые стрелки на блюде меняют это вручную: «готовим заново» или «точно остатки»; повторное нажатие возвращает авто.</p>
       <p>Над днями — «Эта неделя / Следующая неделя». В понедельник прошедшая неделя исчезает, следующая становится текущей.</p>
       <h4>5. Закупки</h4>
       <p>Кнопка 🛒 у дня делает его днём закупки — такой день отмечен фиолетовой полосой слева. Каждая закупка покупает продукты на дни после неё до следующей закупки включительно: сам день закупки относится к прошлой закупке.</p>
       <h4>6. Покупки</h4>
       <p>Список на выбранную закупку собирается сам: весь состав поставленных блюд, округлённый до упаковок, с подписью, для чего продукт. Если с прошлой закупки осталась упаковка, повторно она не покупается. Продукты разложены по категориям, включая «Специи» и «Бытовую химию». Специи, которые обычно есть дома, можно скрыть ✕. Если продукта хватит с прошлой закупки, он попадёт в плашку «Хватит остатков» — перед магазином проверь его на полке.</p>
-      <p>Внизу списка — «Добавить в список»: впиши продукт, проверь категорию (доска угадывает её сама) и выбери «Разово, в эту закупку» или «Покупать всегда». Такие продукты помечены «разово» или «если закончилось». Постоянный продукт не повторяется, если он уже есть в списке от блюд.</p>
+      <p>Внизу списка — «Добавить в список»: впиши продукт, проверь категорию (доска угадывает её сама) и выбери «Разово, в эту закупку» или «Покупать всегда». Постоянный продукт не повторяется, если он уже есть в списке от блюд.</p>
       <p>«Скопировать список» — текст с категориями. В Заметках: вставь, выдели и нажми ⇧⌘L (Mac) или кнопку с галочкой (iPhone).</p>
       <h4>7. Питание</h4>
       <p>Чёрный блок — средние калории и БЖУ за запланированные дни выбранной недели в сравнении с нормой. Шкала — средние калории в день.</p>
@@ -949,16 +949,46 @@ function renderDayChips(){
   el.innerHTML=DAYS.map((d,i)=>`<button type="button" class="dchip${i===curDay?' on':''}${W().shopDays.includes(i)?' has':''}" data-i="${i}" title="${W().shopDays.includes(i)?'День закупки':''}">${d}</button>`).join('');
   el.querySelectorAll('.dchip').forEach(b=>b.addEventListener('click',()=>{ curDay=+b.dataset.i; scrollToDay(true); renderDayChips(); }));
 }
-const weekOff=()=>activeWeek===nextKey?1:0; // на следующей неделе первая карточка — переход назад
-function switchWeek(k,day){ activeWeek=k; pickTrip(); curDay=day; renderAll(); requestAnimationFrame(()=>scrollToDay(false)); }
+function switchWeek(k,day,dir){ activeWeek=k; pickTrip(); curDay=day; renderAll(); requestAnimationFrame(()=>scrollToDay(false));
+  for(const id of ['daychips','week']){ const el=document.getElementById(id); el.classList.remove('slide-l','slide-r'); void el.offsetWidth; el.classList.add(dir>0?'slide-l':'slide-r'); } }
+// Свайп дальше воскресенья — сразу понедельник следующей недели; назад с понедельника — воскресенье этой
+(function(){
+  const w=document.getElementById('week'); let x0=null,y0=0,edge=0,mine=false,dx=0;
+  w.addEventListener('touchstart',e=>{ x0=e.touches[0].clientX; y0=e.touches[0].clientY; mine=false; dx=0; const max=w.scrollWidth-w.clientWidth;
+    edge = (w.scrollLeft>=max-24 && activeWeek===curKey) ? -1 : (w.scrollLeft<=24 && activeWeek===nextKey) ? 1 : 0; },{passive:true});
+  // на крайнем дне жест «дальше» забираем себе, чтобы страница не дёргалась
+  w.addEventListener('touchmove',e=>{ if(x0==null||!edge) return; dx=e.touches[0].clientX-x0; const dy=e.touches[0].clientY-y0;
+    if(!mine){ if(Math.abs(dx)<8) return; if(Math.abs(dy)>Math.abs(dx) || Math.sign(dx)!==edge){ edge=0; return; } mine=true; }
+    if(e.cancelable) e.preventDefault(); w.style.transition='none'; w.style.transform=`translateX(${dx*0.6}px)`; w.style.opacity=String(Math.max(.4,1-Math.abs(dx)/300)); },{passive:false});
+  const end=()=>{ if(x0==null) return; x0=null; w.style.transition=''; w.style.transform=''; w.style.opacity='';
+    if(mine && Math.abs(dx)>45){ if(edge<0) switchWeek(nextKey,0,1); else switchWeek(curKey,6,-1); } mine=false; };
+  w.addEventListener('touchend',end); w.addEventListener('touchcancel',end);
+})();
+// Полоску дней можно листать: влево — следующая неделя, вправо — эта
+(function(){
+  const el=document.getElementById('daychips'); let x0=null,y0=0,moved=false;
+  el.addEventListener('touchstart',e=>{ x0=e.touches[0].clientX; y0=e.touches[0].clientY; moved=false; el.style.transition='none'; },{passive:true});
+  el.addEventListener('touchmove',e=>{ if(x0==null) return; const dx=e.touches[0].clientX-x0, dy=e.touches[0].clientY-y0;
+    if(!moved && Math.abs(dx)<8) return; if(!moved && Math.abs(dy)>Math.abs(dx)){ x0=null; return; }
+    moved=true; e.preventDefault();
+    const can = dx<0 ? activeWeek===curKey : activeWeek===nextKey;   // на краю — тянется туго
+    el.style.transform=`translateX(${can?dx:dx/5}px)`; el.style.opacity=can?String(Math.max(.35,1-Math.abs(dx)/260)):'1'; },{passive:false});
+  const end=e=>{ if(x0==null){ el.style.transform=''; el.style.opacity=''; return; } const dx=(e.changedTouches?e.changedTouches[0].clientX:x0)-x0; x0=null;
+    el.style.transition=''; el.style.transform=''; el.style.opacity='';
+    if(!moved) return;
+    el.dataset.swiped='1'; setTimeout(()=>delete el.dataset.swiped,350);
+    if(dx<-45 && activeWeek===curKey) switchWeek(nextKey,0,1);
+    else if(dx>45 && activeWeek===nextKey) switchWeek(curKey,(new Date().getDay()+6)%7,-1); };
+  el.addEventListener('touchend',end); el.addEventListener('touchcancel',end);
+  el.addEventListener('click',e=>{ if(el.dataset.swiped){ e.stopPropagation(); e.preventDefault(); } },true);
+})();
 function scrollToDay(smooth){
-  const w=document.getElementById('week'); const d=w.children[curDay+weekOff()]; if(!d) return;
+  const w=document.getElementById('week'); const d=w.children[curDay]; if(!d) return;
   if(getComputedStyle(w).flexDirection==='row') w.scrollTo({left:d.offsetLeft-w.offsetLeft,behavior:smooth?'smooth':'auto'});
 }
 function renderWeek(){
   const el = document.getElementById('week');
-  const rng=k=>rangeLabel(k);
-  let h= activeWeek===nextKey ? `<div class="wkjump" data-k="${curKey}"><span>←</span><b>Эта неделя</b><small>${rng(curKey)}</small></div>` : '';
+  let h='';
   W().plan.forEach((p,di)=>{
     const k = dayKcal(p);
     const cls = k==null?'':(k<=normK()*1.1?'ok':'hi');
@@ -978,12 +1008,11 @@ function renderWeek(){
     }
     h+=`</div>`;
   });
-  if(activeWeek===curKey) h+=`<div class="wkjump" data-k="${nextKey}"><b>Следующая неделя</b><small>${rng(nextKey)}</small><span>→</span></div>`;
   const keepScroll=el.scrollLeft;
   el.innerHTML=h;
   el.scrollLeft=keepScroll;
   renderDayChips();
-  if(!el.dataset.sw){ el.dataset.sw=1; let t; el.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(()=>{ if(getComputedStyle(el).flexDirection!=='row') return; const i=Math.round(el.scrollLeft/(el.clientWidth+8))-weekOff(); if(i>6 && activeWeek===curKey){ switchWeek(nextKey,0); return; } if(i<0 && activeWeek===nextKey){ switchWeek(curKey,6); return; } if(i!==curDay && i>=0 && i<=6){ curDay=i; renderDayChips(); } },80); }); requestAnimationFrame(()=>scrollToDay(false)); }
+  if(!el.dataset.sw){ el.dataset.sw=1; let t; el.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(()=>{ if(getComputedStyle(el).flexDirection!=='row') return; const i=Math.round(el.scrollLeft/(el.clientWidth+8)); if(i!==curDay && i>=0 && i<=6){ curDay=i; renderDayChips(); } },80); }); requestAnimationFrame(()=>scrollToDay(false)); }
 
   el.querySelectorAll('.shoptg').forEach(b=>b.addEventListener('click',()=>{
     const d=+b.dataset.d, sd=W().shopDays, i=sd.indexOf(d);
@@ -1198,9 +1227,9 @@ function renderShop(){
       h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(i.name)}<em>${esc(i.note?` (${i.note})`:soupNote(i))}</em>${sub?`<i>${sub}</i>`:''}</span><span class="q">${qtyText(i)}</span>${c==='pantry'?`<button class="ib pt-del" data-n="${esc(i.name)}" title="Не показывать — это обычно есть дома">✕</button>`:''}</label>`;
     }
     for(const n of exs){ const ck=activeTrip+'|extra|'+n, done=!!W().checked[ck];
-      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}<em class="tag">разово</em></span><button class="ib ex-del" data-n="${esc(n)}" title="Убрать">✕</button></label>`; }
+      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib ex-del" data-n="${esc(n)}" title="Убрать">✕</button></label>`; }
     for(const n of sts){ const ck=activeTrip+'|staple|'+n, done=!!W().checked[ck];
-      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}<em class="tag">если закончилось</em></span><button class="ib st-del" data-n="${esc(n)}" title="Убрать из постоянных">✕</button></label>`; }
+      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib st-del" data-n="${esc(n)}" title="Убрать из постоянных">✕</button></label>`; }
     if(hidden.length) h+=`<button class="restore" id="restorePantry">Вернуть скрытые (${hidden.length}): ${esc(hidden.map(i=>i.name.toLowerCase()).join(', '))}</button>`;
     h+=`</div>`;
   }
@@ -1264,7 +1293,7 @@ function copyList(items,tr,notes,covered,extras,stShown){
     for(const [c,title] of SHOP){
       const ic=n=>{ const cc=(state.itemCats||{})[n.toLowerCase()]; return cc&&SHOP.some(x=>x[0]===cc)?cc:guessCat(n); };
       const list=items.filter(i=>i.cat===c && !W().checked[tr.id+'|'+i.key] && !(c==='pantry' && state.hiddenPantry.includes(i.name)));
-      const more=[...ex.filter(n=>ic(n)===c), ...st.filter(n=>ic(n)===c).map(n=>n+' (если закончилось)')];
+      const more=[...ex.filter(n=>ic(n)===c), ...st.filter(n=>ic(n)===c)];
       if(!list.length && !more.length) continue;
       t+=`\n${title}\n`+[...list.map(i=>'— '+line(i)), ...more.map(n=>'— '+n)].join('\n')+'\n';
     }
