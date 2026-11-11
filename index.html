@@ -328,6 +328,7 @@
   .prow[hidden]{display:none}
   .pjoin{display:block;margin:10px auto 0}
   .pjoin[hidden]{display:none}
+  .pleave{color:var(--warn)}
   .pjoinrow{display:flex;gap:6px;margin-top:10px}
   .pjoinrow[hidden]{display:none}
   .pjoinrow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
@@ -344,7 +345,7 @@
   #gMail{margin-top:14px}
   .gnote{font-size:11.5px;color:var(--muted);margin:14px 0 0;line-height:1.45}
   .gnote a{color:var(--accent)}
-  #syncModal,#joinModal{z-index:205}
+  #syncModal,#joinModal,#askModal{z-index:205}
   #installModal{z-index:206}
   .gtabs{display:flex;gap:4px;background:var(--soft);border-radius:12px;padding:4px;margin-bottom:14px}
   .gtabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 0;font:500 13px Inter,sans-serif;color:var(--muted);cursor:pointer}
@@ -524,6 +525,7 @@
       <div class="pnote" style="margin-top:0" id="famInfo">Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.</div>
       <button type="button" class="btn pbig" id="inviteBtn">Добавить в семью</button>
       <button type="button" class="glink pjoin" id="haveInvite">У меня есть приглашение</button>
+      <button type="button" class="glink pjoin pleave" id="leaveFam" hidden>Выйти из семьи</button>
       <div class="pjoinrow" id="joinRow" hidden><input type="text" id="joinInput" class="plain" placeholder="Вставь ссылку-приглашение" autocomplete="off" autocapitalize="none" spellcheck="false"><button type="button" class="btn primary" id="joinGo">Вступить</button></div>
     </div>
 
@@ -654,7 +656,7 @@
       <p>Чёрный блок — средние калории и БЖУ за запланированные дни выбранной недели в сравнении с нормой. Шкала — средние калории в день.</p>
       <h4>8. Аккаунт и семья</h4>
       <p>План, блюда и покупки хранятся в облаке и появляются на всех устройствах, где ты вошла. Без интернета доска тоже работает и отправит изменения, когда сеть появится.</p>
-      <p>«Добавить в семью» в профиле даёт ссылку-приглашение: кто по ней войдёт, будет видеть и менять ту же доску, что и ты.</p>
+      <p>«Добавить в семью» в профиле даёт ссылку-приглашение: кто по ней войдёт, будет видеть и менять ту же доску, что и ты. Общие — план, покупки и блюда; норма, имя и для кого считать порции у каждого свои. Если ссылку открыли в браузере, а входят в приложении с экрана «Домой», — вставь её в профиле через «У меня есть приглашение». «Выйти из семьи» оставляет тебе копию доски, дальше она только твоя.</p>
     </div>
   </div>
 </div>
@@ -698,6 +700,14 @@
       <p>Кнопка «Удалить аккаунт» в настройках стирает аккаунт и доску из облака без возможности восстановить. Вопросы — письмом автору.</p>
     </div>
     <div class="mact"><button type="button" class="btn primary" id="privacyClose">Понятно</button></div>
+  </div>
+</div>
+<div class="modal" id="askModal" hidden>
+  <div class="mbox">
+    <button type="button" class="mclose" id="askX" aria-label="Закрыть">✕</button>
+    <h3 id="askTitle"></h3>
+    <p class="muted" id="askText"></p>
+    <div class="mact"><button type="button" class="btn" id="askNo">Отмена</button><button type="button" class="btn primary" id="askYes"></button></div>
   </div>
 </div>
 <div class="modal" id="joinModal" hidden>
@@ -770,7 +780,11 @@ function rangeLabel(k){
   return a.getMonth()===b.getMonth() ? `${a.getDate()}–${b.getDate()} ${MON[b.getMonth()]}` : `${a.getDate()} ${MON[a.getMonth()]} – ${b.getDate()} ${MON[b.getMonth()]}`;
 }
 
-let state = {weeks:{}, staples:['Молоко','Хлеб'], norm:{kcal:1440,p:109,f:54,c:130,mode:'g'}, catOrder:[], persons:2, names:{f:'',m:''}, catNames:{}, catColors:{}, customCats:[], overrides:{}, sex:'f', norms:null, collapsed:{}, custom:[], removed:[]};
+// Личное у каждого аккаунта (не уходит в общую доску семьи): для кого порции, имя, норма,
+// какие категории свёрнуты. Всё остальное — план, покупки, блюда — общее.
+const PERSONAL = ['sex','norm','norms','names','collapsed'];
+const freshState = ()=>({weeks:{}, staples:['Молоко','Хлеб'], norm:{kcal:1440,p:109,f:54,c:130,mode:'g'}, catOrder:[], persons:2, names:{f:'',m:''}, catNames:{}, catColors:{}, customCats:[], overrides:{}, sex:'f', norms:null, collapsed:{}, custom:[], removed:[]});
+let state = freshState();
 let curKey, nextKey, activeWeek, activeTrip;
 const KEY = 'meal-board-v1';
 let saved = null;
@@ -794,6 +808,7 @@ function initWeeks(){
     if(saved.photoMigr) state.photoMigr = saved.photoMigr;
     if(saved.presetMigr) state.presetMigr = saved.presetMigr;
     if(saved._ts) state._ts = saved._ts;
+    if(saved._pts) state._pts = saved._pts;
     if(Array.isArray(saved.catOrder)) state.catOrder = saved.catOrder;
     if(saved.names) state.names = Object.assign({f:'',m:''}, saved.names);
     if(Array.isArray(saved.customCats)) state.customCats = saved.customCats;
@@ -879,31 +894,59 @@ function ensureNorms(){
   if(!state.norms.m) state.norms.m={...MAN_NORM};
   state.norm=state.norms[state.sex];
 }
+// Удалённое насовсем блюдо уходит и из плана (включая отложенные записи)
+function dropFromPlan(ids){
+  const set=new Set([].concat(ids));
+  for(const w of Object.values(state.weeks)) for(const p of w.plan) for(const k of SK){
+    if(p[k]) p[k]=p[k].filter(x=>!set.has(x.id));
+    if(p._lost&&p._lost[k]) p._lost[k]=p._lost[k].filter(x=>!set.has(x.id));
+  }
+}
 function applyDishes(){
   // фото больше не поддерживаются — чистим старые записи, чтобы не занимали память
   if(!state.photoMigr){ for(const c of state.custom) delete c.photo; for(const o of Object.values(state.overrides)) delete o.photo; state.photoMigr=1; }
   DISHES.splice(0,DISHES.length);
   // Перенос старой доски: блюда «по умолчанию» становятся своими (id c…), план и скрытые — следом.
   // Новая доска (ещё ни разу не сохранялась) начинается без блюд.
-  if(!state.presetMigr){
-    if(state._ts){
+  // Блюда «по умолчанию» → собственные блюда (id c…). Новая доска (ни разу не сохранялась) — без блюд.
+  // v2 ещё и чинит доски, где после сбоя синхронизации эти блюда пропали: возвращает недостающие
+  // (с твоими правками, если они сохранились), не трогая уже существующие.
+  if(state.presetMigr!==2){
+    const isLegacyId=id=>/^c(b|l|g|s|dr)\d+$/.test(id);
+    const restore = state._ts && (state.presetMigr!==1 || !state.custom.some(c=>isLegacyId(c.id)));
+    if(restore){
       const map={};
       for(const b of LEGACY_DISHES){
         const nid='c'+b.id, o=state.overrides[b.id];
-        const rec=o ? JSON.parse(JSON.stringify(o)) : toEditable(JSON.parse(JSON.stringify(b)));
-        rec.id=nid; rec.legacy=1; delete rec.batch_; map[b.id]=nid;   // legacy: перенесено, ещё не правилось
-        if(!state.custom.some(c=>c.id===nid)) state.custom.push(rec);
+        map[b.id]=nid;
+        if(!state.custom.some(c=>c.id===nid)){
+          const rec=o ? JSON.parse(JSON.stringify(o)) : toEditable(JSON.parse(JSON.stringify(b)));
+          rec.id=nid; rec.legacy=1; delete rec.batch_;
+          state.custom.push(rec);
+        }
         delete state.overrides[b.id];
       }
-      for(const w of Object.values(state.weeks)) for(const p of w.plan) for(const k of SK) for(const it of (p[k]||[])) if(map[it.id]) it.id=map[it.id];
+      for(const w of Object.values(state.weeks)) for(const p of w.plan) for(const k of SK){
+        for(const it of (p[k]||[])) if(map[it.id]) it.id=map[it.id];
+        for(const it of ((p._lost&&p._lost[k])||[])) if(map[it.id]) it.id=map[it.id];
+      }
       state.removed=state.removed.map(id=>map[id]||id);
     }
-    state.presetMigr=1;
+    state.presetMigr=2;
   }
   for(const c of state.custom) DISHES.push(buildDish(c.batch?c:toEditable(c)));
   for(const d of DISHES) d.ing=d.ing.filter(x=>x[0].trim().toLowerCase()!=='соль');
   BY = Object.fromEntries(DISHES.filter(d=>!state.removed.includes(d.id) && CATS[d.cat]).map(d=>[d.id,d]));
-  for(const w of Object.values(state.weeks)) for(const p of w.plan){ if(!p.s) p.s=[]; for(const s of SK) p[s]=p[s].filter(x=>BY[x.id]); }
+  for(const w of Object.values(state.weeks)) for(const p of w.plan){
+    if(!p.s) p.s=[];
+    for(const s of SK){
+      const all=[...(p[s]||[]), ...((p._lost&&p._lost[s])||[])];
+      p[s]=all.filter(x=>BY[x.id]);
+      const lost=all.filter(x=>!BY[x.id]);
+      if(lost.length) (p._lost=p._lost||{})[s]=lost;
+      else if(p._lost){ delete p._lost[s]; if(!Object.keys(p._lost).length) delete p._lost; }
+    }
+  }
 }
 initWeeks(); ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip();
 let saveFailed=false;
@@ -921,9 +964,11 @@ function writeLocal(json){
 // save(true) — служебная запись (запуск, сворачивание, смена недели): время не трогает,
 // иначе любое открытие телефона «новее» облака и затирает правки с другого устройства.
 let wiped=false;   // после выхода/удаления аккаунта больше ничего не сохраняем
+let lastPersonal=null;
 function save(silent){
   if(wiped) return;
   if(!silent) state._ts=Date.now();
+  const pj=MB.getPersonal(); if(lastPersonal!==null && pj!==lastPersonal) state._pts=Date.now(); lastPersonal=pj;
   const json=JSON.stringify(state); writeLocal(json);
   if(!silent && MB.onSave) MB.onSave(json, state._ts);
 }
@@ -937,7 +982,19 @@ const MB = window.MB = {
     // перенесённые блюда «по умолчанию», которые не правили, своими данными не считаются
     return planned || state.custom.some(c=>!c.legacy) || Object.keys(state.overrides).length>0;
   },
-  getState:()=>JSON.stringify(state),
+  // общая часть — для доски семьи (без личных настроек)
+  getState(){ const o={}; for(const k of Object.keys(state)) if(!PERSONAL.includes(k) && k!=='_pts') o[k]=state[k]; return JSON.stringify(o); },
+  // личная часть — в запись аккаунта
+  getPersonal(){ const o={}; for(const k of PERSONAL) if(k in state) o[k]=state[k]; return JSON.stringify(o); },
+  getPts:()=>state._pts||0,
+  applyPersonal(json, pts){
+    try{
+      const d=typeof json==='string'?JSON.parse(json):json; if(!d||typeof d!=='object') return;
+      for(const k of PERSONAL) if(k in d) state[k]=d[k];
+      if(!state.names) state.names={f:'',m:''};
+      ensureNorms(); state._pts=pts||Date.now(); writeLocal(JSON.stringify(state)); renderAll();
+    }catch(e){}
+  },
   getTs:()=>state._ts||0,
   toast:m=>toast(m),
   // применить данные из облака, сохранив их отметку времени (иначе устройства будут
@@ -946,7 +1003,14 @@ const MB = window.MB = {
     try{
       const d=typeof json==='string'?JSON.parse(json):json;
       if(!d || typeof d!=='object' || !d.weeks) return false;
-      saved=d; initWeeks(); ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip();
+      // облачная версия ЗАМЕНЯЕТ местную целиком: раньше она накладывалась сверху,
+      // и местные служебные отметки (например, «блюда уже перенесены») переживали замену
+      const keep={}; for(const k of [...PERSONAL,'_pts']) if(k in state) keep[k]=JSON.parse(JSON.stringify(state[k]));
+      for(const k of Object.keys(state)) delete state[k];
+      Object.assign(state, freshState());
+      const sh={...d}; for(const k of PERSONAL) delete sh[k];   // чужие нормы и порции из старых версий не берём
+      saved=sh; initWeeks(); Object.assign(state, keep);
+      ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip();
       curDay=null; renderAll();
       state._ts = ts || d._ts || Date.now();
       writeLocal(JSON.stringify(state));
@@ -957,6 +1021,7 @@ const MB = window.MB = {
   _in:false, _q:[],
   whenIn(f){ if(this._in) f(); else this._q.push(f); },
   loggedIn(){ if(this._in) return; this._in=true; const q=this._q; this._q=[]; q.forEach(f=>{ try{ f(); }catch(e){} }); },
+  touch(){ save(); },   // сохранить как правку: новая отметка времени и отправка в облако
   wipeLocal(){
     wiped=true;
     try{ localStorage.removeItem(KEY); }catch(e){}
@@ -994,7 +1059,11 @@ document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==
   };
   document.querySelectorAll('.modal,.gate').forEach(patch);
 })();
-document.addEventListener('click',e=>{ const b=e.target.closest('.mclose[data-close]'); if(b){ const c=document.getElementById(b.dataset.close); if(c) c.click(); } });
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.mclose'); if(!b) return;
+  if(b.dataset.close){ const c=document.getElementById(b.dataset.close); if(c) c.click(); }
+  else if(!b.onclick){ const m=b.closest('.modal'); if(m) m.hidden=true; }   // запасной путь: ✕ всегда закрывает своё окно
+});
 const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -1042,7 +1111,7 @@ function renderPalette(){
   el.querySelectorAll('.cat-del').forEach(b=>b.addEventListener('click',e=>{
     e.stopPropagation(); const k=b.dataset.cat;
     if(!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent='Удалить?'; setTimeout(()=>{ if(b.isConnected){ b.classList.remove('armed'); b.textContent='✕'; } },3000); return; }
-    state.customCats=state.customCats.filter(c=>c.k!==k); state.custom=state.custom.filter(d=>d.cat!==k);
+    state.customCats=state.customCats.filter(c=>c.k!==k); dropFromPlan(state.custom.filter(d=>d.cat===k).map(d=>d.id)); state.custom=state.custom.filter(d=>d.cat!==k);
     applyCustomCats(); applyCatNames(); applyDishes(); save(); renderAll(); toast('Категория удалена');
   }));
   el.querySelectorAll('.mod').forEach(md=>md.addEventListener('click',e=>{ if(e.target.closest('.dish,.cat-ren,.cat-del,input')) return; if(e.target.closest('.mbody')) return; const k=md.querySelector('.mh').dataset.cat; state.collapsed[k]=!state.collapsed[k]; save(); renderPalette(); }));
@@ -1069,7 +1138,7 @@ function openHidden(){
     list.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>{ state.removed=state.removed.filter(x=>x!==b.dataset.back); applyDishes(); save(); renderAll(); draw(); toast('Блюдо вернулось в список'); }));
     list.querySelectorAll('[data-kill]').forEach(b=>b.addEventListener('click',()=>{
       if(!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent='Удалить навсегда?'; return; }
-      const id=b.dataset.kill; state.custom=state.custom.filter(x=>x.id!==id); state.removed=state.removed.filter(x=>x!==id); applyDishes(); save(); renderAll(); draw(); toast('Блюдо удалено'); }));
+      const id=b.dataset.kill; dropFromPlan(id); state.custom=state.custom.filter(x=>x.id!==id); state.removed=state.removed.filter(x=>x!==id); applyDishes(); save(); renderAll(); draw(); toast('Блюдо удалено'); }));
   };
   draw(); if(state.removed.some(id=>DISHES.some(d=>d.id===id))) m.hidden=false;
 }
@@ -1800,7 +1869,7 @@ let openDishEditor, openNewDish;
   }));
   dDelete.addEventListener('click',()=>{
     if(!editId) return;
-    if(editId.startsWith('c')) state.custom=state.custom.filter(c=>c.id!==editId); else delete state.overrides[editId];
+    if(editId.startsWith('c')){ dropFromPlan(editId); state.custom=state.custom.filter(c=>c.id!==editId); } else delete state.overrides[editId];
     applyDishes(); save(); renderAll(); m.hidden=true; toast(editId.startsWith('c')?'Блюдо удалено':'Рецепт восстановлен');
   });
   dishCancel.addEventListener('click',()=>m.hidden=true);
@@ -2019,8 +2088,18 @@ const JOIN_KEY='meal-board-join';       // приглашение ждёт вх�
 // строка состояния облака в профиле
 function setSync(text, kind){ const el=document.getElementById('syncState'); if(el){ el.textContent=text||''; el.className='sync'+(kind?' '+kind:''); } }
 function setFamily(n){ const el=document.getElementById('famInfo'); if(!el) return;
-  el.textContent = n>1 ? `Доска общая: в семье ${n} ${n<5?'человека':'человек'}. Всё, что меняет один, сразу видят остальные.`
-                       : 'Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки.'; }
+  el.textContent = n>1 ? `Доска общая: в семье ${n} ${n<5?'человека':'человек'}. План, блюда и покупки общие, а норма и порции — у каждого свои.`
+                       : 'Пригласи близкого человека — у вас будет одна доска на двоих: план, блюда и покупки. Норма и порции у каждого останутся свои.';
+  const lv=document.getElementById('leaveFam'); if(lv) lv.hidden=!(n>1); }
+function askConfirm(title, text, ok){
+  return new Promise(res=>{
+    const $=id=>document.getElementById(id), m=$('askModal');
+    $('askTitle').textContent=title; $('askText').textContent=text; $('askYes').textContent=ok;
+    const done=v=>{ m.hidden=true; $('askYes').onclick=$('askNo').onclick=$('askX').onclick=null; res(v); };
+    $('askYes').onclick=()=>done(true); $('askNo').onclick=$('askX').onclick=()=>done(false);
+    m.hidden=false;
+  });
+}
 const $=id=>document.getElementById(id);
 const gate=$('authGate'), gLoad=$('gLoad'), gForms=$('gForms'), gErr=$('gErr'), gSub=$('gSub');
 const showErr=m=>{ gErr.textContent=m||''; };
@@ -2080,6 +2159,7 @@ if(fb){
   getRedirectResult(auth).catch(e=>showErr(human(e)));
 
   /* ───────── синхронизация ───────── */
+  let uref=null, unsubU=null, lastPersonalSent=null, forcePull=false;
   let bref=null, boardId=null, unsub=null, muted=false, timer=null, dirty=false, connecting=false, warned=false, postponed=false;
 
   function push(){
@@ -2090,14 +2170,23 @@ if(fb){
       .then(()=>{ if(ref===bref) dirty=false; })
       .catch(()=>{ /* без сети — отправим при следующем открытии: время правки сохранено локально */ });
   }
-  MB.onSave=()=>{ dirty=true; if(muted||!bref) return; clearTimeout(timer); timer=setTimeout(push,1200); };
+  function pushPersonal(){
+    if(!uref) return;
+    const pj=MB.getPersonal(); if(pj===lastPersonalSent) return;
+    lastPersonalSent=pj;
+    setDoc(uref,{ personal:pj, pts:MB.getPts()||Date.now() },{merge:true}).catch(()=>{ lastPersonalSent=null; });
+  }
+  MB.onSave=()=>{ dirty=true; if(muted) return; pushPersonal(); if(!bref) return; clearTimeout(timer); timer=setTimeout(push,1200); };
   MB.onFlush=()=>{ if(timer) push(); };
 
+  const needsUpgrade=json=>{ try{ return JSON.parse(json).presetMigr!==2; }catch(e){ return false; } };
   function pull(d, force){
     if(!d || !d.data) return;
     if(!force && (d.ts||0) <= MB.getTs()) return;
     muted=true; try{ MB.applyRemote(d.data, d.ts); } finally { muted=false; }
     dirty=false;
+    // в облаке была доска старого формата или после сбоя: мы её починили — отправляем обратно
+    if(needsUpgrade(d.data) && bref) setTimeout(()=>MB.touch(),0);
   }
 
   // при первой встрече устройства с доской: оставить облачный план или местный
@@ -2115,10 +2204,22 @@ if(fb){
     await MB.ready;                       // сначала поднимаем данные с диска
     // Любая ошибка чтения (нет сети) прерывает подключение: ничего не записываем
     // вслепую, иначе можно затереть общую доску или отвязать человека от семьи.
-    const uref=doc(db,'users',u.uid);
-    const us=await getDoc(uref);
+    const myRef=doc(db,'users',u.uid);
+    const us=await getDoc(myRef);
     let bid = us.exists() && us.data().boardId ? us.data().boardId : u.uid;
-    if(!us.exists()) await setDoc(uref,{ boardId:bid, email:u.email||'', createdAt:Date.now(), consentAt:Date.now() });
+    if(!us.exists()) await setDoc(myRef,{ boardId:bid, email:u.email||'', createdAt:Date.now(), consentAt:Date.now() });
+    uref=myRef;
+    // личные настройки: в облаке новее — берём, у нас новее (или в облаке их ещё нет) — отправляем
+    const ud=us.exists()?us.data():{};
+    if(ud.personal && (ud.pts||0) > MB.getPts()){ MB.applyPersonal(ud.personal, ud.pts); lastPersonalSent=ud.personal; }
+    else { lastPersonalSent=null; pushPersonal(); }
+    if(unsubU) unsubU();
+    unsubU=onSnapshot(myRef, snap=>{
+      if(!snap.exists()) return; const x=snap.data();
+      if(x.personal && (x.pts||0) > MB.getPts()){ lastPersonalSent=x.personal; MB.applyPersonal(x.personal, x.pts); }
+      // на другом своём устройстве вступила в семью или вышла из неё — переподключаемся
+      if(x.boardId && boardId && x.boardId!==boardId && !connecting){ if(unsub){ unsub(); unsub=null; } bref=null; forcePull=true; tryConnect(); }
+    }, ()=>{});
 
     // приглашение «в семью»
     let joined=false, join=null;
@@ -2128,7 +2229,7 @@ if(fb){
       if(await askJoin()){
         try{
           await updateDoc(doc(db,'boards',join),{ members:arrayUnion(u.uid) });
-          await updateDoc(uref,{ boardId:join });
+          await updateDoc(myRef,{ boardId:join });
           bid=join; joined=true; forgetJoin();
           MB.toast('Готово — теперь у вас общая доска');
         }catch(e){
@@ -2150,6 +2251,7 @@ if(fb){
     const mark=u.uid+':'+bid;
     const first=(()=>{ try{ return localStorage.getItem(SYNC_KEY)!==mark; }catch(e){ return true; } })();
 
+    if(forcePull){ forcePull=false; joined=true; }   // доску сменили на другом своём устройстве — облако главное
     let side=null;
     if(d && d.data && !joined && first && MB.hasOwnData()){
       side=await chooseSide();
@@ -2172,6 +2274,7 @@ if(fb){
       else if(MB.getTs() > (d.ts||0) || dirty) await push();
     }
     try{ localStorage.setItem(SYNC_KEY, mark); }catch(e){}
+    if(d && d.data && needsUpgrade(d.data) && MB.getTs()<=(d.ts||0)) MB.touch();   // облако — в старом формате, а у нас уже починено
     setSync('Синхронизировано','ok');
     if(unsub) unsub();
     unsub=onSnapshot(ref, snap=>{ if(!snap.exists()) return; const sd=snap.data(); setFamily((sd.members||[]).length); setSync('Синхронизировано','ok'); pull(sd); },
@@ -2269,6 +2372,22 @@ if(fb){
   }));
 
   /* ───────── настройки: семья, выход, удаление ───────── */
+  $('leaveFam').addEventListener('click',async()=>{
+    const u=auth.currentUser; if(!u||!bref){ MB.toast('Нет связи с облаком — выйти из семьи пока нельзя'); return; }
+    if(!await askConfirm('Выйти из семьи?','У тебя останется копия нынешнего плана, блюд и покупок — дальше они будут только твоими. У остальных общая доска не изменится.','Выйти из семьи')) return;
+    try{
+      const old=bref, newId=u.uid+'-'+Date.now().toString(36), nref=doc(db,'boards',newId);
+      await setDoc(nref,{ members:[u.uid], data:MB.getState(), ts:Date.now(), by:u.uid });
+      const bs=await getDoc(old); const rest=((bs.exists()&&bs.data().members)||[]).filter(x=>x!==u.uid);
+      await updateDoc(old,{ members:rest });
+      if(unsub){ unsub(); unsub=null; } bref=null; boardId=newId;
+      await updateDoc(doc(db,'users',u.uid),{ boardId:newId });
+      try{ localStorage.setItem(SYNC_KEY, u.uid+':'+newId); }catch(e){}
+      $('normModal').hidden=true; setFamily(1);
+      boardId=null; tryConnect();
+      MB.toast('Ты вышла из семьи — теперь доска только твоя');
+    }catch(e){ MB.toast('Не получилось выйти из семьи: '+human(e)); }
+  });
   $('haveInvite').addEventListener('click',()=>{ $('joinRow').hidden=false; $('haveInvite').hidden=true; $('joinInput').focus(); });
   $('joinGo').addEventListener('click',()=>{
     const v=$('joinInput').value.trim(); if(!v){ $('joinInput').focus(); return; }
@@ -2299,7 +2418,7 @@ if(fb){
     if(!confirm('Выйти из аккаунта? План останется в облаке, а с этого устройства сотрётся.')) return;
     if(dirty) await Promise.race([push(), new Promise(r=>setTimeout(r,4000))]);
     if(dirty && !confirm('Последние изменения не успели отправиться в облако (нет связи). Всё равно выйти?')) return;
-    if(unsub){ unsub(); unsub=null; } bref=null;
+    if(unsub){ unsub(); unsub=null; } bref=null; if(unsubU){ unsubU(); unsubU=null; } uref=null;
     await signOut(auth);
     forgetDevice(); location.reload();
   });
