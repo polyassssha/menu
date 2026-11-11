@@ -567,7 +567,7 @@
 <div class="modal" id="introModal" hidden>
   <div class="mbox intro">
     <button type="button" class="iskip" id="iSkip">Пропустить</button>
-    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><h3>Собери свои блюда</h3><p>Выбери готовые или добавь свои: состав, ссылку на рецепт, фото и шаги. Калории и БЖУ посчитаются по составу.</p></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и постоянными продуктами.</p></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — копия данных, чтобы ничего не потерять.</p></div>
+    <div class="isl" data-i="0"><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 15c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M12 9V7M10 5h4"/></svg></div><h3>Собери свои блюда</h3><p>Выбери готовые или добавь свои: состав, ссылку на рецепт и шаги. Калории и БЖУ посчитаются по составу.</p></div><div class="isl" data-i="1" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Разложи по неделе</h3><p>Нажми на приём пищи и отметь одно или несколько блюд. Если блюдо повторяется — это остатки из кастрюли, пока порции не закончатся.</p></div><div class="isl" data-i="2" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg></div><h3>Отметь дни закупок</h3><p>Нажми «🛒 +» у дня. Список покупок соберётся сам: с упаковками, остатками с прошлой закупки и регулярными покупками.</p></div><div class="isl" data-i="3" hidden><div class="iic"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></div><h3>Настрой профиль</h3><p>Нажми на аватар: имя, норма калорий и для кого считать порции. Там же — «Добавить в семью»: отправь ссылку близкому, и доска станет общей.</p></div>
     <div class="idots" id="iDots"><i data-i="0" class=on></i><i data-i="1"></i><i data-i="2"></i><i data-i="3"></i></div>
     <div class="mact" style="margin-top:6px"><button type="button" class="btn" id="iPrev" hidden>Назад</button><span style="flex:1"></span><button type="button" class="btn primary" id="iNext">Далее</button></div>
   </div>
@@ -884,6 +884,10 @@ const MB = window.MB = {
       return true;
     }catch(e){ return false; }
   },
+  // то, что показывается только после входа (обучение, подсказка про экран «Домой»)
+  _in:false, _q:[],
+  whenIn(f){ if(this._in) f(); else this._q.push(f); },
+  loggedIn(){ if(this._in) return; this._in=true; const q=this._q; this._q=[]; q.forEach(f=>{ try{ f(); }catch(e){} }); },
   wipeLocal(){
     wiped=true;
     try{ localStorage.removeItem(KEY); }catch(e){}
@@ -1866,7 +1870,7 @@ let openScanner=()=>{};
   // поддержать проект — вставь сюда ссылку на Boosty, кнопка появится сама
   if(SUPPORT_URL){ const sb=document.getElementById('supportBtn'); sb.href=SUPPORT_URL; sb.hidden=false; }
   let seen=false; try{ seen=!!localStorage.getItem('meal-board-intro-seen'); }catch(e){}
-  if(!seen){ show(0); m.hidden=false; }
+  if(!seen) MB.whenIn(()=>{ show(0); m.hidden=false; });
 })();
 // Первое открытие в браузере: подсказка, как добавить доску на экран «Домой» / рабочий стол
 (function(){
@@ -1898,7 +1902,7 @@ let openScanner=()=>{};
   const hb=document.getElementById('instHelp'); if(hb){ hb.hidden=standalone; hb.addEventListener('click',()=>{ document.getElementById('helpModal').hidden=true; openInstallHelp(); }); }
   let seen=false; try{ seen=!!localStorage.getItem('meal-board-install-seen'); }catch(e){}
   // на телефоне в браузере показываем при каждом открытии (пока доска не добавлена на экран), на компьютере — один раз
-  if(!standalone && (iOS || android || !seen)) setTimeout(()=>{ if(!document.getElementById('introModal').hidden){ afterIntro=()=>openInstallHelp(); return; } if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700);
+  if(!standalone && (iOS || android || !seen)) MB.whenIn(()=>setTimeout(()=>{ if(!document.getElementById('introModal').hidden){ afterIntro=()=>openInstallHelp(); return; } if(document.querySelector('.modal:not([hidden])')) return; openInstallHelp(); },700));
 })();
 
 </script>
@@ -1933,7 +1937,7 @@ $('privacyClose').addEventListener('click',()=>privacy.hidden=true);
 $('privacyBtn').addEventListener('click',()=>privacy.hidden=false);
 
 // если сеть медленная, а вход на устройстве уже был — не держим человека на заставке
-const slow=setTimeout(()=>{ if(wasSigned()) closeGate(); }, 6000);
+const slow=setTimeout(()=>{ if(wasSigned()){ closeGate(); MB.loggedIn(); } }, 6000);
 
 let fb=null;
 try{
@@ -1941,7 +1945,7 @@ try{
   fb={app,auth,store};
 }catch(e){
   clearTimeout(slow);
-  if(wasSigned()) closeGate();
+  if(wasSigned()){ closeGate(); MB.loggedIn(); }
   else gLoad.textContent='Не получается связаться с сервером. Проверь интернет и открой доску ещё раз.';
 }
 
@@ -2179,7 +2183,7 @@ if(fb){
     clearTimeout(slow);
     if(u){
       try{ localStorage.setItem(AUTH_FLAG,'1'); }catch(e){}
-      closeGate();
+      closeGate(); MB.loggedIn();
       const who=$('accWho');
       if(who) who.textContent=(u.email||'Аккаунт')+' — план и блюда синхронизируются на всех устройствах, где ты вошла.';
       tryConnect();
