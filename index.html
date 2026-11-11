@@ -287,14 +287,19 @@
   .gbox{width:100%;max-width:320px;margin:auto;text-align:center;display:flex;flex-direction:column;align-items:stretch}
   .gbox h2{display:block;margin:14px 0 2px;font-size:22px;font-weight:600;text-align:center}
   .gsub{color:var(--muted);font-size:13px;margin:0 0 18px}
-  .glogo{width:62px;height:62px;margin:0 auto;border-radius:16px;background:var(--accent);display:grid;place-items:center}
+  .gicon{display:block;margin:0 auto;border-radius:18px;box-shadow:0 8px 22px rgba(109,79,214,.28)}
+  .gwhite{background:var(--card);border:1px solid var(--line);color:var(--ink);font-weight:500}
+  .gbig+.gbig{margin-top:8px}
+  #gMail{margin-top:14px}
+  .gnote{font-size:11.5px;color:var(--muted);margin:14px 0 0;line-height:1.45}
+  .gnote a{color:var(--accent)}
+  #syncModal{z-index:205}
   .gtabs{display:flex;gap:4px;background:var(--soft);border-radius:12px;padding:4px;margin-bottom:14px}
   .gtabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 0;font:500 13px Inter,sans-serif;color:var(--muted);cursor:pointer}
   .gtabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
   .gate input[type=email],.gate input[type=password]{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font:400 15px Inter,sans-serif;background:var(--card);color:var(--ink);outline:none;margin-bottom:8px}
   .gate input:focus{border-color:var(--accent)}
   .gbig{width:100%;justify-content:center;padding:12px;font-size:14px}
-  .gor{color:var(--muted);font-size:11.5px;margin:12px 0}
   .gconsent{display:flex;gap:8px;align-items:center;justify-content:center;text-align:left;font-size:12px;color:var(--muted);margin:6px 0 12px;line-height:1.4}
   .gconsent[hidden]{display:none}
   .gconsent input{flex:none;width:18px;height:18px;accent-color:var(--accent)}
@@ -608,22 +613,25 @@
 </div>
 <div class="gate" id="authGate">
   <div class="gbox">
-    <div class="glogo"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h16a8 8 0 0 1-8 8 8 8 0 0 1-8-8z"/><path d="M3 21h18"/><path d="M9 6c0-1 1-1.5 1-2.5S9 2 9 2"/><path d="M13 6c0-1 1-1.5 1-2.5S13 2 13 2"/></svg></div>
+    <svg class="gicon" viewBox="0 0 100 100" width="76" height="76" aria-hidden="true"><defs><linearGradient id="ggr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7b5cf0"/><stop offset="1" stop-color="#3fa9f5"/></linearGradient></defs><rect width="100" height="100" rx="23" fill="url(#ggr)"/><g transform="translate(20.6 20.6) scale(.588)"><rect x="6" y="6" width="40" height="40" rx="10" fill="#fff"/><rect x="54" y="6" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="6" y="54" width="40" height="40" rx="10" fill="#fff" opacity=".55"/><rect x="54" y="54" width="40" height="40" rx="10" fill="#fff"/><path d="M26 33s-10-6-11.4-12.6A5.6 5.6 0 0 1 26 18a5.6 5.6 0 0 1 11.4 2.4C36 27 26 33 26 33z" fill="#7b5cf0"/><path d="M74 61l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L74 74.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z" fill="#3fa9f5"/></g></svg>
     <h2>Доска меню</h2>
     <p class="gsub" id="gSub">Войди, чтобы план и блюда были на всех устройствах</p>
     <div class="gload" id="gLoad">Загружаю…</div>
     <div id="gForms" hidden>
-      <div class="gtabs" id="gTabs"><button type="button" class="on" data-m="in">Вход</button><button type="button" data-m="up">Регистрация</button></div>
-      <button type="button" class="btn gbig" id="gGoogle">Войти через Google</button>
-      <div class="gor">или по почте</div>
-      <form id="gForm" novalidate>
-        <input type="email" id="gEmail" placeholder="Почта" autocomplete="email" autocapitalize="none" spellcheck="false">
-        <input type="password" id="gPass" placeholder="Пароль" autocomplete="current-password">
-        <label class="gconsent" id="gConsentWrap" hidden><input type="checkbox" id="gConsent"><span>Согласна с <a href="#" id="gPrivacyLink">политикой конфиденциальности</a>: доска хранит мою почту и мои списки продуктов</span></label>
-        <button type="submit" class="btn primary gbig" id="gSubmit">Войти</button>
-      </form>
-      <button type="button" class="glink" id="gReset">Забыла пароль</button>
-      <div class="gerr" id="gErr"></div>
+      <button type="button" class="btn gbig gwhite" id="gGoogle">Войти через Google</button>
+      <button type="button" class="btn gbig gwhite" id="gMailBtn">Войти по почте</button>
+      <div id="gMail" hidden>
+        <div class="gtabs" id="gTabs"><button type="button" class="on" data-m="in">Вход</button><button type="button" data-m="up">Регистрация</button></div>
+        <form id="gForm" novalidate>
+          <input type="email" id="gEmail" placeholder="Почта" autocomplete="email" autocapitalize="none" spellcheck="false">
+          <input type="password" id="gPass" placeholder="Пароль, от 6 символов" autocomplete="current-password">
+          <label class="gconsent" id="gConsentWrap" hidden><input type="checkbox" id="gConsent"><span>Согласна с <a href="#" class="gPrivacyLink">политикой конфиденциальности</a>: доска хранит мою почту и мои списки продуктов</span></label>
+          <button type="submit" class="btn primary gbig" id="gSubmit">Войти</button>
+        </form>
+        <button type="button" class="glink" id="gReset">Забыла пароль</button>
+      </div>
+      <p class="gnote" id="gNote">Входя, ты соглашаешься с <a href="#" class="gPrivacyLink">политикой конфиденциальности</a></p>
+      <div class="gerr" id="gErr" role="alert"></div>
     </div>
   </div>
 </div>
@@ -635,13 +643,20 @@
       <h4>Что хранится</h4>
       <p>Почта, которую ты указала при регистрации (или которую передал Google при входе), и содержимое доски: план на неделю, блюда, списки покупок, норма калорий и имена, которые ты вписала сама.</p>
       <h4>Где хранится</h4>
-      <p>В Google Firebase, серверы в Европе. Доступ к доске есть только у тебя и у тех, кому ты отправила ссылку-приглашение «Добавить в семью».</p>
+      <p>В облачной базе Google Firebase. Доступ к доске есть только у тебя и у тех, кому ты отправила ссылку-приглашение «Добавить в семью».</p>
       <h4>Что не делается</h4>
       <p>Данные не продаются и не передаются третьим лицам, рекламы и трекеров в приложении нет.</p>
       <h4>Удаление</h4>
       <p>Кнопка «Удалить аккаунт» в настройках стирает аккаунт и доску из облака без возможности восстановить. Вопросы — письмом автору.</p>
     </div>
     <div class="mact"><button type="button" class="btn primary" id="privacyClose">Понятно</button></div>
+  </div>
+</div>
+<div class="modal" id="syncModal" hidden>
+  <div class="mbox">
+    <h3>Какой план оставить?</h3>
+    <p class="muted">В облаке уже есть доска, и на этом устройстве тоже есть свой план. Объединить их нельзя — выбери, какой оставить, второй заменится.</p>
+    <div class="mact"><button type="button" class="btn" id="syncLocal">С этого устройства</button><button type="button" class="btn primary" id="syncCloud">Из облака</button></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -725,6 +740,7 @@ function initWeeks(){
     if(saved.itemCats) state.itemCats = saved.itemCats;
     if(saved.leftMigr) state.leftMigr = saved.leftMigr;
     if(saved.photoMigr) state.photoMigr = saved.photoMigr;
+    if(saved._ts) state._ts = saved._ts;
     if(Array.isArray(saved.catOrder)) state.catOrder = saved.catOrder;
     if(saved.names) state.names = Object.assign({f:'',m:''}, saved.names);
     if(Array.isArray(saved.customCats)) state.customCats = saved.customCats;
@@ -833,13 +849,25 @@ function writeLocal(json){
   try{ localStorage.setItem(KEY, json); if(localStorage.getItem(KEY)==null) throw 0; saveFailed=false; }
   catch(e){ if(!saveFailed){ saveFailed=true; setTimeout(()=>toast('⚠︎ Телефон не даёт сохранить данные — проверь, не включён ли частный доступ в Safari'),300); } }
 }
-function save(){
-  state._ts=Date.now(); const json=JSON.stringify(state); writeLocal(json);
-  if(MB.onSave) MB.onSave(json, state._ts);
+// save() — после действия пользователя: двигает время правки и отправляет в облако.
+// save(true) — служебная запись (запуск, сворачивание, смена недели): время не трогает,
+// иначе любое открытие телефона «новее» облака и затирает правки с другого устройства.
+let wiped=false;   // после выхода/удаления аккаунта больше ничего не сохраняем
+function save(silent){
+  if(wiped) return;
+  if(!silent) state._ts=Date.now();
+  const json=JSON.stringify(state); writeLocal(json);
+  if(!silent && MB.onSave) MB.onSave(json, state._ts);
 }
 // Мост к облаку: модуль с Firebase подключается отдельно и работает через него
+let readyResolve; const ready=new Promise(r=>readyResolve=r);
 const MB = window.MB = {
-  onSave:null,
+  onSave:null, onFlush:null,
+  ready,                       // данные с диска уже подняты — можно сравнивать с облаком
+  hasOwnData(){                // есть ли на устройстве что-то, что жалко потерять
+    const planned=Object.values(state.weeks).some(w=>w.plan.some(p=>SK.some(k=>(p[k]||[]).length)));
+    return planned || state.custom.length>0 || Object.keys(state.overrides).length>0;
+  },
   getState:()=>JSON.stringify(state),
   getTs:()=>state._ts||0,
   toast:m=>toast(m),
@@ -857,14 +885,16 @@ const MB = window.MB = {
     }catch(e){ return false; }
   },
   wipeLocal(){
+    wiped=true;
     try{ localStorage.removeItem(KEY); }catch(e){}
-    try{ indexedDB.deleteDatabase('meal-board'); }catch(e){}
+    const del=()=>{ try{ indexedDB.deleteDatabase('meal-board'); }catch(e){} };
+    if(idbP) idbP.then(db=>{ db.close(); del(); },del); else del();
   }
 };
 // просим браузер не стирать данные приложения и сохраняем при сворачивании
 try{ navigator.storage && navigator.storage.persist && navigator.storage.persist(); }catch(e){}
-addEventListener('pagehide',()=>save());
-document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') save(); });
+addEventListener('pagehide',()=>{ save(true); if(MB.onFlush) MB.onFlush(); });
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'){ save(true); if(MB.onFlush) MB.onFlush(); } });
 const uid = ()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
@@ -1758,13 +1788,13 @@ function openPicker(di,s){
 })();
 function renderAll(){ markLeftovers(); renderNorm(); renderWeekTabs(); renderStats(); renderPalette(); renderWeek(); renderShop(); }
 // если доска открыта при смене недели — перестроить
-document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(); renderAll(); } });
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible' && keyOf(mondayOf(new Date()))!==curKey){ initWeeks(); pickTrip(); save(true); renderAll(); } });
 const lsTs=(()=>{ try{ return (JSON.parse(localStorage.getItem(KEY)||'null')||{})._ts||0; }catch(e){ return 0; } })();
 renderAll();
 idbGet().then(json=>{
   let d=null; try{ d=json?JSON.parse(json):null; }catch(e){}
-  if(d && (d._ts||0)>lsTs){ saved=d; initWeeks(); ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip(); curDay=null; renderAll(); }
-  save();
+  if(d && (d._ts||0)>Math.max(lsTs, state._ts||0)){ saved=d; initWeeks(); ensureNorms(); applyCustomCats(); applyCatNames(); applyDishes(); pickTrip(); curDay=null; renderAll(); }
+  save(true); readyResolve();
 });
 if('serviceWorker' in navigator && window.isSecureContext && location.protocol!=='file:') navigator.serviceWorker.register('sw.js').catch(()=>{});
 // Сканер штрихкодов: камера → код → база Open Food Facts (КБЖУ на 100 г)
@@ -1875,8 +1905,9 @@ let openScanner=()=>{};
 
 <script type="module">
 // ─── Аккаунты и облачная синхронизация (Firebase) ───────────────────────────
-// Данные доски лежат одним JSON в документе boards/{id}. Все, кого пригласили
-// «в семью», записаны в members и видят один и тот же документ.
+// Доска лежит одним JSON в документе boards/{id}. Все, кого пригласили «в семью»,
+// записаны в members и работают с одним документом. При расхождении побеждает
+// более поздняя правка (state._ts — время последнего действия пользователя).
 const CFG = {
   apiKey: "AIzaSyBKFfxjw-ZlsEk5TwrDcdC6j5maQYbJ18k",
   authDomain: "menu-planner-polina.firebaseapp.com",
@@ -1886,22 +1917,32 @@ const CFG = {
   appId: "1:975708172052:web:1e85b39b9bb6d97dfd5c01"
 };
 const V='https://www.gstatic.com/firebasejs/10.12.2/';
-const gate=document.getElementById('authGate'), gLoad=document.getElementById('gLoad'),
-      gForms=document.getElementById('gForms'), gErr=document.getElementById('gErr'),
-      gSub=document.getElementById('gSub');
-const AUTH_FLAG='meal-board-auth';
+const AUTH_FLAG='meal-board-auth';      // на этом устройстве уже входили — можно пускать офлайн
+const SYNC_KEY='meal-board-synced';     // «uid:доска», с которой это устройство уже сверялось
+const $=id=>document.getElementById(id);
+const gate=$('authGate'), gLoad=$('gLoad'), gForms=$('gForms'), gErr=$('gErr'), gSub=$('gSub');
 const showErr=m=>{ gErr.textContent=m||''; };
-const openGate=()=>{ gLoad.hidden=true; gForms.hidden=false; };
+const openGate=()=>{ gate.hidden=false; gLoad.hidden=true; gForms.hidden=false; };
 const closeGate=()=>{ gate.hidden=true; };
+const wasSigned=()=>{ try{ return !!localStorage.getItem(AUTH_FLAG); }catch(e){ return false; } };
+
+// политика конфиденциальности открывается и с экрана входа, и из настроек
+const privacy=$('privacyModal');
+document.querySelectorAll('.gPrivacyLink').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); privacy.hidden=false; }));
+$('privacyClose').addEventListener('click',()=>privacy.hidden=true);
+$('privacyBtn').addEventListener('click',()=>privacy.hidden=false);
+
+// если сеть медленная, а вход на устройстве уже был — не держим человека на заставке
+const slow=setTimeout(()=>{ if(wasSigned()) closeGate(); }, 6000);
 
 let fb=null;
 try{
-  const [app,auth,store] = await Promise.all([ import(V+'firebase-app.js'), import(V+'firebase-auth.js'), import(V+'firebase-firestore.js') ]);
+  const [app,auth,store]=await Promise.all([ import(V+'firebase-app.js'), import(V+'firebase-auth.js'), import(V+'firebase-firestore.js') ]);
   fb={app,auth,store};
 }catch(e){
-  // нет сети или Google недоступен: если вход уже был — пускаем работать офлайн
-  if(localStorage.getItem(AUTH_FLAG)){ closeGate(); }
-  else { gLoad.textContent='Не получается связаться с сервером. Проверь интернет и открой доску ещё раз.'; }
+  clearTimeout(slow);
+  if(wasSigned()) closeGate();
+  else gLoad.textContent='Не получается связаться с сервером. Проверь интернет и открой доску ещё раз.';
 }
 
 if(fb){
@@ -1911,170 +1952,240 @@ if(fb){
           sendPasswordResetEmail, deleteUser, setPersistence, browserLocalPersistence } = fb.auth;
   const { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc, onSnapshot, arrayUnion } = fb.store;
 
-  const app = initializeApp(CFG);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+  const app=initializeApp(CFG), auth=getAuth(app), db=getFirestore(app);
+  auth.languageCode='ru';
   try{ await setPersistence(auth, browserLocalPersistence); }catch(e){}
-  try{ await getRedirectResult(auth); }catch(e){ showErr(human(e)); }
-
-  let bref=null, unsub=null, muted=false, timer=null, boardId=null;
 
   function human(e){
-    const c=(e&&e.code)||'';
-    if(c.includes('invalid-credential')||c.includes('wrong-password')||c.includes('user-not-found')) return 'Неверная почта или пароль';
-    if(c.includes('email-already-in-use')) return 'Такая почта уже зарегистрирована — выбери «Вход»';
-    if(c.includes('weak-password')) return 'Пароль короче 6 символов';
-    if(c.includes('invalid-email')) return 'Проверь адрес почты';
-    if(c.includes('too-many-requests')) return 'Слишком много попыток, подожди пару минут';
-    if(c.includes('network')) return 'Нет связи с сервером';
-    if(c.includes('popup-closed')||c.includes('cancelled-popup')) return '';
-    return (e&&e.message)||'Что-то пошло не так';
+    const c=String((e&&e.code)||'');
+    if(c.includes('invalid-credential')||c.includes('wrong-password')||c.includes('user-not-found')||c.includes('invalid-login')) return 'Неверная почта или пароль. Если аккаунта ещё нет — открой «Регистрация».';
+    if(c.includes('email-already-in-use')) return 'Эта почта уже зарегистрирована — открой «Вход». Если регистрировалась через Google, войди через Google.';
+    if(c.includes('weak-password')) return 'Пароль должен быть не короче 6 символов';
+    if(c.includes('invalid-email')||c.includes('missing-email')) return 'Проверь адрес почты';
+    if(c.includes('missing-password')) return 'Впиши пароль';
+    if(c.includes('too-many-requests')) return 'Слишком много попыток — подожди пару минут';
+    if(c.includes('network-request-failed')) return 'Нет связи с сервером — проверь интернет';
+    if(c.includes('popup-blocked')) return 'Браузер не открыл окно Google. Разреши всплывающие окна или войди по почте.';
+    if(c.includes('popup-closed')||c.includes('cancelled-popup')||c.includes('user-cancelled')) return '';
+    if(c.includes('unauthorized-domain')) return 'Этот адрес не разрешён для входа (настройка Firebase → Authorized domains)';
+    if(c.includes('operation-not-allowed')) return 'Этот способ входа выключен в настройках Firebase';
+    if(c.includes('web-storage-unsupported')) return 'Браузер запрещает хранить данные — выключи частный режим';
+    if(c.includes('permission-denied')) return 'Нет доступа к облаку — проверь правила Firestore';
+    return 'Не получилось войти' + (c ? ' ('+c.replace('auth/','')+')' : '') + '. Попробуй войти по почте.';
   }
 
-  /* ── синхронизация ── */
+  // вернулись со страницы Google после переадресации — ошибку покажем, но не ждём её
+  getRedirectResult(auth).catch(e=>showErr(human(e)));
+
+  /* ───────── синхронизация ───────── */
+  let bref=null, boardId=null, unsub=null, muted=false, timer=null, dirty=false, connecting=false, warned=false;
+
   function push(){
-    if(!bref) return;
-    setDoc(bref,{ data:MB.getState(), ts:MB.getTs(), by:auth.currentUser?auth.currentUser.uid:'' },{merge:true})
-      .catch(()=>{ /* офлайн — Firestore допишет сам, когда появится сеть */ });
+    if(!bref) return Promise.resolve();
+    clearTimeout(timer); timer=null;
+    const ref=bref;
+    return setDoc(ref,{ data:MB.getState(), ts:MB.getTs()||Date.now(), by:auth.currentUser?auth.currentUser.uid:'' },{merge:true})
+      .then(()=>{ if(ref===bref) dirty=false; })
+      .catch(()=>{ /* без сети — отправим при следующем открытии: время правки сохранено локально */ });
   }
-  MB.onSave = ()=>{ if(muted||!bref) return; clearTimeout(timer); timer=setTimeout(push,1200); };
+  MB.onSave=()=>{ dirty=true; if(muted||!bref) return; clearTimeout(timer); timer=setTimeout(push,1200); };
+  MB.onFlush=()=>{ if(timer) push(); };
 
-  function pull(d){
-    if(!d || !d.data || (d.ts||0) <= MB.getTs()) return;
-    muted=true; MB.applyRemote(d.data, d.ts); muted=false;
+  function pull(d, force){
+    if(!d || !d.data) return;
+    if(!force && (d.ts||0) <= MB.getTs()) return;
+    muted=true; try{ MB.applyRemote(d.data, d.ts); } finally { muted=false; }
+    dirty=false;
+  }
+
+  // при первой встрече устройства с доской: оставить облачный план или местный
+  function chooseSide(){
+    return new Promise(res=>{
+      const m=$('syncModal'); m.hidden=false;
+      const done=v=>{ m.hidden=true; $('syncCloud').onclick=$('syncLocal').onclick=null; res(v); };
+      $('syncCloud').onclick=()=>done('cloud');
+      $('syncLocal').onclick=()=>done('local');
+    });
   }
 
   async function connect(u){
+    await MB.ready;                       // сначала поднимаем данные с диска
+    // Любая ошибка чтения (нет сети) прерывает подключение: ничего не записываем
+    // вслепую, иначе можно затереть общую доску или отвязать человека от семьи.
     const uref=doc(db,'users',u.uid);
-    let udata=null;
-    try{ const snap=await getDoc(uref); udata=snap.exists()?snap.data():null; }catch(e){}
-    boardId = (udata&&udata.boardId) || u.uid;
-    if(!udata) await setDoc(uref,{ boardId, email:u.email||'', createdAt:Date.now(), consentAt:Date.now() });
+    const us=await getDoc(uref);
+    let bid = us.exists() && us.data().boardId ? us.data().boardId : u.uid;
+    if(!us.exists()) await setDoc(uref,{ boardId:bid, email:u.email||'', createdAt:Date.now(), consentAt:Date.now() });
 
-    // приглашение «в семью»: ?join=<id>
+    // приглашение «в семью»: ?join=<id доски>
+    let joined=false;
     const join=new URLSearchParams(location.search).get('join');
-    if(join && join!==boardId){
-      if(confirm('Присоединиться к общей доске? Твой нынешний план заменится общим.')){
+    if(join){
+      history.replaceState({},'',location.pathname);
+      if(join!==bid && confirm('Присоединиться к общей доске? Твой нынешний план заменится общим.')){
         try{
           await updateDoc(doc(db,'boards',join),{ members:arrayUnion(u.uid) });
           await updateDoc(uref,{ boardId:join });
-          boardId=join;
-        }catch(e){ alert('Не получилось присоединиться: ссылка устарела или доска удалена'); }
+          bid=join; joined=true;
+        }catch(e){ alert('Не получилось присоединиться: ссылка устарела или доска удалена.'); }
       }
     }
-    if(join) history.replaceState({},'',location.pathname);
 
-    bref=doc(db,'boards',boardId);
-    let d=null;
-    try{ const bs=await getDoc(bref); d=bs.exists()?bs.data():null; }catch(e){}
-    if(!d){ await setDoc(bref,{ members:[u.uid], data:MB.getState(), ts:MB.getTs()||Date.now() }); }
-    else {
-      if(!(d.members||[]).includes(u.uid)) { try{ await updateDoc(bref,{members:arrayUnion(u.uid)}); }catch(e){} }
-      if((d.ts||0) > MB.getTs()) pull(d);
-      else if(MB.getTs() > (d.ts||0)) push();
+    const ref=doc(db,'boards',bid);
+    const bs=await getDoc(ref);
+    const d=bs.exists()?bs.data():null;
+    const mark=u.uid+':'+bid;
+    const first=(()=>{ try{ return localStorage.getItem(SYNC_KEY)!==mark; }catch(e){ return true; } })();
+
+    bref=ref; boardId=bid;
+    if(!d){
+      await setDoc(ref,{ members:[u.uid], data:MB.getState(), ts:MB.getTs()||Date.now(), by:u.uid });
+      dirty=false;
+    } else {
+      if(!(d.members||[]).includes(u.uid)) await updateDoc(ref,{ members:arrayUnion(u.uid) });
+      if(!d.data) await push();
+      else if(joined) pull(d,true);
+      else if(first){
+        // устройство впервые видит эту доску: пустой телефон просто берёт облако,
+        // а если на нём уже есть свой план — спрашиваем, какой оставить
+        if(!MB.hasOwnData()) pull(d,true);
+        else if(await chooseSide()==='cloud') pull(d,true);
+        else await push();
+      }
+      else if((d.ts||0) > MB.getTs()) pull(d);
+      else if(MB.getTs() > (d.ts||0) || dirty) await push();
     }
+    try{ localStorage.setItem(SYNC_KEY, mark); }catch(e){}
     if(unsub) unsub();
-    unsub=onSnapshot(bref, snap=>{ if(snap.exists()) pull(snap.data()); }, ()=>{});
+    unsub=onSnapshot(ref, snap=>{ if(snap.exists()) pull(snap.data()); }, ()=>{});
   }
 
-  /* ── экран входа ── */
+  function tryConnect(){
+    const u=auth.currentUser;
+    if(!u || bref || connecting) return;
+    connecting=true;
+    connect(u).catch(e=>{
+      if(unsub){ unsub(); unsub=null; } bref=null;
+      if(!warned){ warned=true; MB.toast(String(e&&e.code).includes('permission') ? 'Облако не пускает: проверь правила Firestore' : 'Нет связи с облаком — доска работает на этом устройстве'); }
+    }).finally(()=>{ connecting=false; });
+  }
+  addEventListener('online', tryConnect);
+  document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') tryConnect(); });
+
+  /* ───────── экран входа ───────── */
   let mode='in';
-  const gTabs=document.getElementById('gTabs'), gForm=document.getElementById('gForm'),
-        gEmail=document.getElementById('gEmail'), gPass=document.getElementById('gPass'),
-        gSubmit=document.getElementById('gSubmit'), gConsentWrap=document.getElementById('gConsentWrap'),
-        gConsent=document.getElementById('gConsent');
+  const gTabs=$('gTabs'), gForm=$('gForm'), gEmail=$('gEmail'), gPass=$('gPass'),
+        gSubmit=$('gSubmit'), gConsentWrap=$('gConsentWrap'), gConsent=$('gConsent'),
+        gMail=$('gMail'), gMailBtn=$('gMailBtn'), gNote=$('gNote');
   function setMode(m){
     mode=m; showErr('');
     gTabs.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
     gSubmit.textContent = m==='in' ? 'Войти' : 'Зарегистрироваться';
     gConsentWrap.hidden = m==='in';
+    gNote.hidden = m==='up' && !gMail.hidden;      // при регистрации согласие — галочкой
     gPass.autocomplete = m==='in' ? 'current-password' : 'new-password';
   }
   gTabs.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) setMode(b.dataset.m); });
-  const privacy=document.getElementById('privacyModal');
-  document.getElementById('gPrivacyLink').addEventListener('click',e=>{ e.preventDefault(); privacy.hidden=false; });
-  document.getElementById('privacyClose').addEventListener('click',()=>privacy.hidden=true);
-  document.getElementById('privacyBtn').addEventListener('click',()=>privacy.hidden=false);
+  gMailBtn.addEventListener('click',()=>{ gMail.hidden=false; gMailBtn.hidden=true; setMode(mode); gEmail.focus(); });
+  [gEmail,gPass].forEach(i=>i.addEventListener('input',()=>showErr('')));
 
   let busy=false;
-  const withBusy=async fn=>{ if(busy) return; busy=true; gSubmit.disabled=true; showErr('');
-    try{ await fn(); }catch(e){ showErr(human(e)); } finally{ busy=false; gSubmit.disabled=false; } };
+  const lock=on=>{ busy=on; gSubmit.disabled=on; $('gGoogle').disabled=on; };
+  async function withBusy(fn){
+    if(busy) return; lock(true); showErr('');
+    try{ await fn(); }catch(e){ showErr(human(e)); } finally{ lock(false); }
+  }
 
   gForm.addEventListener('submit',e=>{ e.preventDefault(); withBusy(async()=>{
     const em=gEmail.value.trim(), pw=gPass.value;
-    if(!em || !pw){ showErr('Заполни почту и пароль'); return; }
+    if(!em){ showErr('Впиши почту'); gEmail.focus(); return; }
+    if(!pw){ showErr('Впиши пароль'); gPass.focus(); return; }
     if(mode==='up'){
+      if(pw.length<6){ showErr('Пароль должен быть не короче 6 символов'); return; }
       if(!gConsent.checked){ showErr('Отметь согласие с политикой конфиденциальности'); return; }
       await createUserWithEmailAndPassword(auth, em, pw);
     } else await signInWithEmailAndPassword(auth, em, pw);
   }); });
 
-  document.getElementById('gGoogle').addEventListener('click',()=>withBusy(async()=>{
+  // Google: всплывающее окно. Переадресацию Safari ломает (данные входа остаются
+  // на домене firebaseapp.com), поэтому она — только запасной путь.
+  $('gGoogle').addEventListener('click',()=>{
     const prov=new GoogleAuthProvider();
-    const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
-    if(standalone) return signInWithRedirect(auth, prov);
-    try{ await signInWithPopup(auth, prov); }
-    catch(e){
-      const c=(e&&e.code)||'';
-      if(c.includes('popup-blocked')||c.includes('operation-not-supported')||c.includes('popup-closed')) return signInWithRedirect(auth, prov);
-      throw e;
-    }
-  }));
+    prov.setCustomParameters({ prompt:'select_account' });
+    withBusy(async()=>{
+      try{ await signInWithPopup(auth, prov); }
+      catch(e){
+        const c=String((e&&e.code)||'');
+        if(c.includes('popup-blocked')||c.includes('operation-not-supported')){ await signInWithRedirect(auth, prov); return; }
+        throw e;
+      }
+    });
+  });
 
-  document.getElementById('gReset').addEventListener('click',()=>withBusy(async()=>{
+  $('gReset').addEventListener('click',()=>withBusy(async()=>{
     const em=gEmail.value.trim();
-    if(!em){ showErr('Впиши почту — пришлю ссылку для смены пароля'); return; }
+    if(!em){ showErr('Впиши почту — пришлю ссылку для нового пароля'); gEmail.focus(); return; }
     await sendPasswordResetEmail(auth, em);
-    gSub.textContent='Письмо со ссылкой ушло на '+em;
-    showErr('');
+    gSub.textContent='Письмо со ссылкой отправлено на '+em+' (проверь и «Спам»)';
   }));
 
-  /* ── настройки: семья, выход, удаление ── */
-  document.getElementById('inviteBtn').addEventListener('click',()=>{
-    if(!boardId){ MB.toast('Сначала дождись входа'); return; }
-    const link=location.origin+location.pathname+'?join='+boardId;
-    const done=()=>MB.toast('Ссылка скопирована — отправь её тому, кого добавляешь');
-    if(navigator.share){ navigator.share({title:'Доска меню',text:'Заходи в мою доску меню',url:link}).catch(()=>{}); return; }
-    navigator.clipboard.writeText(link).then(done,()=>{ prompt('Скопируй ссылку:', link); });
+  /* ───────── настройки: семья, выход, удаление ───────── */
+  $('inviteBtn').addEventListener('click',()=>{
+    if(!boardId){ MB.toast('Нет связи с облаком — пригласить пока нельзя'); return; }
+    const link=location.origin+location.pathname+'?join='+encodeURIComponent(boardId);
+    if(navigator.share){ navigator.share({ title:'Доска меню', text:'Присоединяйся к моей доске меню', url:link }).catch(()=>{}); return; }
+    navigator.clipboard.writeText(link).then(()=>MB.toast('Ссылка скопирована — отправь её тому, кого добавляешь'),()=>prompt('Скопируй ссылку:', link));
   });
-  document.getElementById('signOutBtn').addEventListener('click',async()=>{
-    if(!confirm('Выйти из аккаунта на этом устройстве?')) return;
-    localStorage.removeItem(AUTH_FLAG);
+
+  function forgetDevice(){
+    try{ localStorage.removeItem(AUTH_FLAG); localStorage.removeItem(SYNC_KEY); }catch(e){}
+    MB.wipeLocal();
+  }
+
+  $('signOutBtn').addEventListener('click',async()=>{
+    if(!confirm('Выйти из аккаунта? План останется в облаке, а с этого устройства сотрётся.')) return;
+    if(dirty) await Promise.race([push(), new Promise(r=>setTimeout(r,4000))]);
+    if(dirty && !confirm('Последние изменения не успели отправиться в облако (нет связи). Всё равно выйти?')) return;
     if(unsub){ unsub(); unsub=null; } bref=null;
-    await signOut(auth); location.reload();
+    await signOut(auth);
+    forgetDevice(); location.reload();
   });
-  document.getElementById('delAccBtn').addEventListener('click',async()=>{
-    if(!auth.currentUser) return;
-    if(!confirm('Удалить аккаунт и доску из облака? Данные на этом устройстве тоже сотрутся. Отменить это нельзя.')) return;
-    const u=auth.currentUser;
+
+  $('delAccBtn').addEventListener('click',async()=>{
+    const u=auth.currentUser; if(!u) return;
+    // Firebase удаляет аккаунт, только если вход был недавно. Проверяем заранее,
+    // чтобы не стереть доску и не застрять с наполовину удалённым аккаунтом.
+    const last=Date.parse((u.metadata&&u.metadata.lastSignInTime)||0)||0;
+    if(Date.now()-last > 4*60*1000){
+      alert('Чтобы удалить аккаунт, нужно подтвердить, что это ты: выйди, войди заново и сразу нажми «Удалить аккаунт».');
+      return;
+    }
+    if(!confirm('Удалить аккаунт и доску из облака? С этого устройства данные тоже сотрутся. Отменить нельзя.')) return;
     try{
       if(bref){
         const bs=await getDoc(bref); const d=bs.exists()?bs.data():null;
         const rest=((d&&d.members)||[]).filter(x=>x!==u.uid);
-        if(rest.length) await updateDoc(bref,{members:rest}); else await deleteDoc(bref);
+        if(rest.length) await updateDoc(bref,{ members:rest }); else await deleteDoc(bref);
       }
       await deleteDoc(doc(db,'users',u.uid));
       if(unsub){ unsub(); unsub=null; } bref=null;
-      localStorage.removeItem(AUTH_FLAG);
       await deleteUser(u);
-      MB.wipeLocal(); location.reload();
-    }catch(e){
-      if(String(e&&e.code).includes('requires-recent-login')) alert('Для удаления нужно войти заново: выйди из аккаунта, войди снова и повтори.');
-      else alert('Не получилось удалить: '+human(e));
-    }
+      forgetDevice(); location.reload();
+    }catch(e){ alert('Не получилось удалить: '+human(e)); }
   });
 
-  /* ── вход/выход ── */
-  onAuthStateChanged(auth, async u=>{
+  /* ───────── вход / выход ───────── */
+  onAuthStateChanged(auth, u=>{
+    clearTimeout(slow);
     if(u){
-      localStorage.setItem(AUTH_FLAG,'1');
+      try{ localStorage.setItem(AUTH_FLAG,'1'); }catch(e){}
       closeGate();
-      const who=document.getElementById('accWho');
-      if(who) who.textContent = (u.email||'Аккаунт')+' · план и блюда синхронизируются на всех устройствах, где ты вошла';
-      try{ await connect(u); }catch(e){ MB.toast('Облако недоступно — доска работает офлайн'); }
+      const who=$('accWho');
+      if(who) who.textContent=(u.email||'Аккаунт')+' — план и блюда синхронизируются на всех устройствах, где ты вошла.';
+      tryConnect();
     } else {
-      localStorage.removeItem(AUTH_FLAG);
-      if(unsub){ unsub(); unsub=null; } bref=null;
+      if(unsub){ unsub(); unsub=null; } bref=null; boardId=null;
+      try{ localStorage.removeItem(AUTH_FLAG); }catch(e){}
       setMode('in'); openGate();
     }
   });
