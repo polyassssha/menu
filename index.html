@@ -103,11 +103,9 @@
   .col{display:flex;flex-direction:column;gap:8px}
   .sticky{position:sticky;top:8px;max-height:calc(100vh - 16px);overflow:auto;scrollbar-width:thin}
   .section-title{font-size:17px;font-weight:400;letter-spacing:-.01em}
-  .section-sub{font-size:12px;color:var(--muted);margin:3px 0 14px}
 
   /* palette */
-  #palette{padding:8px}
-  #palette .section-title,#palette .section-sub{margin-left:10px;margin-right:10px}
+  #palette{padding:8px}#palette .section-title{margin-left:10px;margin-right:10px}
   #palette .section-title{margin-top:10px}
   .mod{border:1px solid var(--line);border-radius:8px;padding:0;margin-bottom:8px;background:var(--mb);cursor:pointer}
   .mod .mh{margin:0;padding:11px 10px 11px 12px}
@@ -119,11 +117,6 @@
   .mh small{color:var(--faint);font-weight:400;font-size:11px}
   .mh .mt{flex:1;min-width:0}
   .mh{position:relative}
-  .mh .grip{position:absolute;left:-9px;top:50%;transform:translateY(-50%);color:var(--faint);font-size:9px;letter-spacing:-2px;cursor:grab;opacity:0}
-  .mh:hover .grip{opacity:1}
-  .mh[draggable=true]{cursor:pointer}
-  .mod.drop-before{box-shadow:0 -3px 0 var(--accent)}
-  .mod.drop-after{box-shadow:0 3px 0 var(--accent)}
   .mh .cat-ren{opacity:0;padding:0 4px;font-size:11px}
   .mh:hover .cat-ren{opacity:1}
   .mh .cat-del{opacity:0;padding:0 4px;font-size:11px}
@@ -153,23 +146,20 @@
   .dish .m{color:var(--muted);font-size:11px;margin-top:2px}
   .dish .ing{display:none;color:var(--faint);font-size:11px;margin-top:5px}
   .dish:hover .ing,.dish.sel .ing{display:block}
-  .palette-drop{outline:2px dashed var(--warn);outline-offset:-6px}
   .week{display:flex;flex-direction:column;gap:8px}
   .day{display:grid;grid-template-columns:96px repeat(4,minmax(0,1fr));gap:8px;background:var(--card);border-radius:16px;padding:8px;border:1px solid transparent}
   .day.shopday{border-color:#d6cdf6;box-shadow:inset 3px 0 0 var(--accent)}
-  @media (max-width:760px){ .day.shopday{box-shadow:inset 2px 0 0 var(--accent);padding-left:10px} }
+ .day.shopday{box-shadow:inset 2px 0 0 var(--accent);padding-left:10px} 
+
   .dlabel{display:flex;flex-direction:column;justify-content:center;padding-left:6px}
   .dlabel b{font-size:22px;font-weight:400;letter-spacing:-.02em;line-height:1}
   .date{display:block;font-weight:400;font-size:11px;color:var(--faint);margin-top:3px;letter-spacing:0}
   .kcal{font-size:11.5px;color:var(--muted);margin-top:6px}
   .kcal.ok{color:var(--ok)} .kcal.hi{color:var(--warn)}
   .shoptg{margin-top:7px;width:max-content;border:1px solid var(--line);background:#fff;color:var(--faint);border-radius:8px;padding:3px 8px;font:500 11px Inter,sans-serif;cursor:pointer}
-  @media (hover:hover){ .shoptg:not(.on):hover{border-color:#c9ccd3;color:var(--muted)} }
   .shoptg.on{background:#fff;border-color:var(--accent);color:var(--accent)}
   svg.cart{width:13px;height:13px;vertical-align:-2px;margin-right:4px}
   .slot{min-height:80px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:5px;transition:background .12s,border-color .12s}
-  .slot.can{cursor:copy;border-color:#c9bdf8}
-  .slot.over{background:var(--accent-soft);border-color:var(--accent)}
   .slot .lab{font-size:11px;color:var(--muted)}
   .hint{font-size:11.5px;color:#c3c6cc}
   .chip{position:relative;display:flex;align-items:flex-start;gap:4px;background:#fff;border:1px solid color-mix(in srgb,var(--c) 38%,#fff);border-radius:9px;padding:6px 44px 6px 9px;min-height:30px;font-size:12px;font-weight:500;cursor:grab}
@@ -179,14 +169,12 @@
   .ib.ci svg{display:block}
   .chip.left{background:#fafafb}
   .chip.left .t{color:#5b5f67}
+  .wkjump{display:none}
   .chip .lo{display:block;font-weight:400;font-size:10.5px;color:var(--muted);margin-top:1px}
   .chip .lo.cook{color:color-mix(in srgb,var(--c) 70%,#555)}
   .ib{border:0;background:transparent;cursor:pointer;font-size:11.5px;padding:2px 5px;border-radius:6px;color:var(--faint)}
   .ib:hover{background:var(--soft);color:var(--ink)}
   .ib.on{color:var(--accent);background:var(--accent-soft)}
-  .gauge svg{display:block;width:100%;height:auto;margin-top:10px}
-  .gauge .gv{text-align:center;font-size:22px;margin-top:-6px;letter-spacing:-.02em}
-  .gauge .gv small{font-size:12px;color:var(--muted)}
 
   /* shop */
   .shop .shead{display:flex;justify-content:space-between;align-items:baseline}
@@ -218,10 +206,6 @@
   .item em{font-style:normal;color:var(--accent);font-size:11px}
   .item i{display:block;font-style:normal;color:var(--faint);font-size:10.5px;margin-top:1px}
   .item .st-del{margin-left:auto;padding:0 4px}
-  .st-sub{color:var(--faint);font-size:11px}
-  .st-add{display:flex;gap:6px;margin-top:10px}
-  .st-add input{flex:1;min-width:0;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font:400 12.5px Inter,sans-serif;background:var(--soft);outline:none}
-  .st-add input:focus{border-color:var(--accent);background:#fff}
   .btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 14px;font:500 12.5px Inter,sans-serif;cursor:pointer}
   .btn:hover{border-color:#b9bcc2}
   .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -279,8 +263,8 @@
   .fgrid4 .fld{flex-wrap:wrap;gap:2px}
   .fgrid4 .fld span{flex-basis:100%}
   .fgrid4 .fld input{width:100%;text-align:left}
-  .mob-only{display:none}
-  @media (max-width:760px){ .desk-only{display:none!important} .mob-only{display:inline} #palette .section-title{margin:6px 6px 12px} }
+ #palette .section-title{margin:6px 6px 12px}
+
   .ingrow{display:grid;grid-template-columns:minmax(0,2.2fr) 70px 70px minmax(0,1.6fr) 28px;gap:5px;margin-bottom:5px}
   .ingrow input,.ingrow select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font:400 12.5px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ingrow input:focus,.ingrow select:focus{border-color:var(--accent);background:#fff}
@@ -294,14 +278,22 @@
   .eqrow input:checked{background:var(--accent);border-color:var(--accent)}
   .eqrow input:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
   .mact{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
-  .pt-del,.ex-del{margin-left:auto;padding:0 4px}
+  .pt-del,.ex-del,.st-del{margin-left:auto;padding:0 4px}
+  .item em.tag{font-style:normal;font-size:10.5px;color:var(--muted);background:#eef0f3;border-radius:6px;padding:1px 6px;margin-left:6px;white-space:nowrap}
+  .addbox{margin-top:12px;background:var(--soft);border-radius:12px;padding:12px}
+  .ab-h{font-size:12.5px;font-weight:600;margin-bottom:8px}
+  .ab-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+  .ab-row input{flex:1 1 160px;min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font:400 13px Inter,sans-serif;background:#fff;color:var(--ink);outline:none}
+  .ab-row input:focus{border-color:var(--accent)}
+  .ab-row select{flex:0 1 auto;border:1px solid var(--line);border-radius:9px;padding:8px;font:400 12.5px Inter,sans-serif;background:#fff;color:var(--ink)}
+  .ab-row .btn{flex:1 1 auto;justify-content:center}
+  .ab-note{font-size:11px;color:var(--muted)}
   .restore{border:0;background:transparent;color:var(--accent);font:500 11.5px Inter,sans-serif;cursor:pointer;padding:6px 0 0}
-  @media (hover:none){
     .mh .cat-ren,.mh .cat-del{opacity:.55}
-    .mh .grip{display:none}
     .dish-tools{opacity:1}
     .dish:hover{box-shadow:none}
-  }
+  
+
   .modal.sheet{place-items:end center;padding:0}
   .modal.sheet{background:rgba(10,11,13,.55)}
   .modal.sheet .mbox{border-radius:20px 20px 0 0;max-height:72vh;overflow:auto;overscroll-behavior:contain;max-width:640px;padding-top:6px;transition:max-height .2s,transform .2s}
@@ -341,6 +333,11 @@
   .ned em{font-style:normal;margin-right:2px;white-space:nowrap}
   .ned input{width:58px;min-width:0;border:1px solid var(--line);border-radius:7px;padding:5px 6px;font:400 12px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .ned input:focus{border-color:var(--accent);background:#fff}
+  .hid{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:9px 10px 9px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;box-shadow:inset 3px 0 0 var(--c)}
+  .hid b{display:block;font-weight:500;font-size:13px}
+  .hid small{font-size:11px;color:var(--muted)}
+  .hid-b{display:flex;gap:6px;flex:none}
+  #hidList{max-height:55vh;overflow:auto;overscroll-behavior:contain}
   .mbox.scan{max-width:420px}
   .scanv{position:relative;border-radius:12px;overflow:hidden;background:#0d0e10;aspect-ratio:4/3;margin:10px 0}
   .scanv video{width:100%;height:100%;object-fit:cover;display:block}
@@ -368,29 +365,18 @@
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:10px 18px;border-radius:12px;font-weight:500;opacity:0;transition:opacity .2s;pointer-events:none}
   .toast.show{opacity:1}
 
-  @media (min-width:1280px){
-    .frame{max-width:2300px}
-    .layout>section{grid-column:span 7}
-    .layout>#shopWrap{grid-column:10 / -1;grid-row:1 / span 2;position:sticky;top:8px;max-height:calc(100vh - 16px);overflow:auto}
-    .cols{columns:1}
-  }
-  @media (max-width:1240px){
-    .layout>aside:first-child{grid-column:span 3} .layout>section{grid-column:span 9} .layout>#shopWrap{grid-column:4 / -1}
-    .row1 .weekcard{grid-column:span 9} .row1 .tripcard{grid-column:span 3}
-  }
-  @media (max-width:980px){
     .row1 .weekcard,.row1 .tripcard,.layout>aside:first-child,.layout>section,.layout>#shopWrap{grid-column:1 / -1;grid-row:auto}
     .tripcard{min-height:0}
     #palette.sticky{position:static;max-height:none}
     #palette .mbody{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:0 5px}
     .tb-right{margin-left:auto}
-  }
-  @media (max-width:860px){
+  
+
     .day{grid-template-columns:repeat(2,minmax(0,1fr))}
     .dlabel{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:10px;align-items:baseline;flex-wrap:wrap}
     .dlabel .shoptg,.dlabel .kcal{margin-top:0}
-  }
-  @media (max-width:760px){
+  
+
     .frame{margin:0;border-radius:0;padding:8px;gap:8px}
     .card{padding:14px}
     #palette{padding:8px}
@@ -399,6 +385,9 @@
     .weekbar{margin-bottom:8px}
     .week{flex-direction:row;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
     .week::-webkit-scrollbar{display:none}
+    .wkjump{display:flex!important;flex:0 0 100%;scroll-snap-align:start;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:1px dashed #cfd2d8;border-radius:16px;color:var(--muted);min-height:200px}
+    .wkjump b{color:var(--ink);font-weight:600;font-size:15px}
+    .wkjump span{font-size:22px;color:var(--accent)}
     .day{flex:0 0 100%;scroll-snap-align:start;grid-template-columns:repeat(2,minmax(0,1fr));padding:8px;gap:6px;align-content:start}
     .daychips{display:flex;gap:4px;margin-top:8px;background:var(--card);border-radius:14px;padding:4px}
     .dchip{flex:1;border:0;background:transparent;border-radius:10px;padding:8px 0 7px;font:500 12.5px/1 Inter,sans-serif;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
@@ -422,6 +411,13 @@
     #palette .mbody{display:grid;grid-template-columns:1fr 1fr;gap:0 5px}
     .weekcard{min-height:0}
     .nstats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  
+
+  /* планшет: та же раскладка, что на телефоне, но аккуратной колонкой по центру */
+  @media (min-width:761px){
+    .frame{max-width:720px;margin:16px auto;border-radius:24px;padding:12px;gap:12px}
+    .card{padding:18px}
+    #palette{padding:10px}
   }
 </style>
 </head>
@@ -527,6 +523,14 @@
     <div class="pfoot" id="pFoot" hidden><button type="button" class="btn primary" id="pAdd">Добавить</button></div>
   </div>
 </div>
+<div class="modal" id="hiddenModal" hidden>
+  <div class="mbox">
+    <h3>Скрытые блюда</h3>
+    <p class="muted">Блюда, которые сейчас неактуальны. Верни нужное — оно снова появится в списке блюд.</p>
+    <div id="hidList"></div>
+    <div class="mact"><button type="button" class="btn" id="hidAll">Вернуть все</button><span style="flex:1"></span><button type="button" class="btn primary" id="hidClose">Готово</button></div>
+  </div>
+</div>
 <div class="modal" id="scanModal" hidden>
   <div class="mbox scan">
     <div class="shead" style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Штрихкод продукта</h3><button type="button" class="btn small" id="scanClose">Закрыть</button></div>
@@ -561,23 +565,23 @@
       <h4>1. Профиль и норма</h4>
       <p>Нажми на имя слева вверху. Там: имя, для кого считать порции (женщина или мужчина), калории и БЖУ на день — в граммах или процентах. Мужская порция считается примерно в 1,3 раза больше женской. На список покупок это не влияет: он всегда на двоих.</p>
       <h4>2. Блюда</h4>
-      <p>Слева — блюда по категориям. Нажми на плашку категории, чтобы свернуть или раскрыть её. Перетащи заголовок категории, чтобы поменять порядок. ✎ у заголовка — переименовать, внизу — «＋ Новая категория».</p>
+      <p>В «Редактировать блюда» — блюда по категориям. Нажми на плашку категории, чтобы свернуть или раскрыть её; ✎ у заголовка — название и цвет, внизу — «＋ Новая категория». Нажми на блюдо, чтобы открыть его рецепт и состав; ✕ скрывает блюдо (вернуть — «Посмотреть скрытые блюда»).</p>
       <p>У блюда: ✎ — редактировать, ✕ — удалить (два нажатия). Удалённые стандартные блюда можно вернуть кнопкой внизу списка.</p>
       <h4>3. Новое блюдо</h4>
       <p>«＋ Новое блюдо»: категория, название, подпись, сколько порций выходит, состав <b>всего блюда</b>. КБЖУ считаются по составу автоматически (таблица доски + foodstruct.com), их можно поправить вручную. «Равные порции» — если мужчина и женщина едят одинаково, например по стаканчику йогурта.</p>
       <p>В блюдо можно добавить ссылку на рецепт, фото и шаги приготовления. Если вставить ссылку, доска предложит заполнить блюдо автоматически: название, состав и шаги. Это работает на сайтах, где рецепт размечен стандартно (например, menunedeli.ru), — проверь количества после заполнения.</p>
       <h4>4. Планирование</h4>
-      <p>Перетащи блюдо в ячейку дня: завтрак, обед, перекус, ужин. С телефона — нажми на ячейку и выбери блюдо из списка. Калории дня = сумма поставленных блюд (порция того, кто выбран в профиле).</p>
+      <p>Нажми на ячейку дня — завтрак, обед, перекус, ужин — и отметь одно или несколько блюд. Листай дни свайпом; после воскресенья откроется следующая неделя. Калории дня = сумма поставленных блюд (порция того, кто выбран в профиле).</p>
       <p>Если блюдо стоит в неделе несколько раз, доска сама считает повторы остатками, пока не закончатся порции: кастрюля супа на 8 порций — это 4 приёма на двоих. На карточке видно «готовим · 8 порц.» и «остатки · ещё 2 порц.», а продукты в список попадают только для дня, когда готовишь. Круговые стрелки на блюде меняют это вручную: «готовим заново» или «точно остатки»; повторное нажатие возвращает авто.</p>
       <p>Над днями — «Эта неделя / Следующая неделя». В понедельник прошедшая неделя исчезает, следующая становится текущей.</p>
       <h4>5. Закупки</h4>
       <p>Кнопка 🛒 у дня делает его днём закупки — такой день отмечен фиолетовой полосой слева. Каждая закупка покупает продукты на дни после неё до следующей закупки включительно: сам день закупки относится к прошлой закупке.</p>
       <h4>6. Покупки</h4>
-      <p>Список на выбранную закупку собирается сам: весь состав поставленных блюд, округлённый до упаковок, с подписью, для чего продукт. Если с прошлой закупки осталась упаковка, повторно она не покупается. «Постоянные продукты» — то, что докупаешь по мере необходимости, этот список редактируется. «Обычно есть дома» можно скрыть ✕. Если продукта хватит с прошлой закупки, он попадёт в плашку «Хватит остатков» — перед магазином проверь его на полке.</p>
-      <p>«Разовые покупки» — то, что нужно купить только в эту закупку (губки, корм коту). Постоянные продукты не повторяются, если они уже есть в основном списке.</p>
+      <p>Список на выбранную закупку собирается сам: весь состав поставленных блюд, округлённый до упаковок, с подписью, для чего продукт. Если с прошлой закупки осталась упаковка, повторно она не покупается. Продукты разложены по категориям, включая «Специи» и «Бытовую химию». Специи, которые обычно есть дома, можно скрыть ✕. Если продукта хватит с прошлой закупки, он попадёт в плашку «Хватит остатков» — перед магазином проверь его на полке.</p>
+      <p>Внизу списка — «Добавить в список»: впиши продукт, проверь категорию (доска угадывает её сама) и выбери «Разово, в эту закупку» или «Покупать всегда». Такие продукты помечены «разово» или «если закончилось». Постоянный продукт не повторяется, если он уже есть в списке от блюд.</p>
       <p>«Скопировать список» — текст с категориями. В Заметках: вставь, выдели и нажми ⇧⌘L (Mac) или кнопку с галочкой (iPhone).</p>
       <h4>7. Питание</h4>
-      <p>Чёрный блок — средние калории и БЖУ за запланированные дни выбранной недели в сравнении с нормой. Шкала справа — средние калории в день.</p>
+      <p>Чёрный блок — средние калории и БЖУ за запланированные дни выбранной недели в сравнении с нормой. Шкала — средние калории в день.</p>
       <p class="muted">Всё сохраняется в этом браузере: на другом устройстве доска откроется пустой.</p>
     </div>
   </div>
@@ -602,7 +606,7 @@ const BASE_KIND={breakfast:'one',soup:'pot',meat:'main',ready:'main',side:'main'
 const catKind = c=>BASE_KIND[c] || (CATS[c]&&CATS[c].kind) || 'one';
 const SHOP = [
   ['meat','Мясо'],['dairy','Молочка и яйца'],['grain','Крупы, макароны, хлеб'],
-  ['veg','Овощи и зелень'],['fruit','Фрукты'],['other','Прочее'],['pantry','Обычно есть дома']
+  ['veg','Овощи и зелень'],['fruit','Фрукты'],['other','Прочее'],['pantry','Специи'],['chem','Бытовая химия']
 ];
 // Рецепты: завтраки, салаты, перекусы записаны на 2 порции, мясные/готовые/гарниры — на 4, супы — на кастрюлю (8). В список идёт весь состав блюда.
 const DISHES = [
@@ -689,7 +693,6 @@ function rangeLabel(k){
 
 let state = {weeks:{}, staples:['Молоко','Хлеб'], norm:{kcal:1440,p:109,f:54,c:130,mode:'g'}, hiddenPantry:[], catOrder:[], persons:2, names:{f:'',m:''}, catNames:{}, catColors:{}, customCats:[], overrides:{}, sex:'f', norms:null, collapsed:{}, custom:[], removed:[]};
 let curKey, nextKey, activeWeek, activeTrip;
-let selected = null;
 const KEY = 'meal-board-v1';
 let saved = null;
 try{ saved = JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){}
@@ -709,6 +712,7 @@ function initWeeks(){
     if(saved.catNames) state.catNames = saved.catNames;
     if(saved.catColors) state.catColors = saved.catColors;
     if(saved.myFoods) state.myFoods = saved.myFoods;
+    if(saved.itemCats) state.itemCats = saved.itemCats;
     if(saved.leftMigr) state.leftMigr = saved.leftMigr;
     if(Array.isArray(saved.catOrder)) state.catOrder = saved.catOrder;
     if(saved.names) state.names = Object.assign({f:'',m:''}, saved.names);
@@ -764,7 +768,6 @@ function pickTrip(){
 function placeServ(cat,servings){ return servings; }
 // На сколько порций изначально записаны стандартные рецепты
 function baseServ(cat){ const k=catKind(cat); return k==='pot' ? 8 : (k==='main' ? 4 : 2); }
-function defServ(cat){ return baseServ(cat); }
 // Блюдо в формате «состав на всё блюдо + число порций» → формат для плана
 function buildDish(r){
   if(!r.batch) return r;
@@ -861,17 +864,17 @@ function fmtQty(v,u){
 /* ---------- palette ---------- */
 function renderPalette(){
   const el = document.getElementById('palette');
-  let h='<div class="section-title"><span class="desk-only">Блюда</span><span class="mob-only">Редактировать блюда</span></div><div class="section-sub desk-only">Перетащи в нужный день недели</div>';
+  let h='<div class="section-title">Редактировать блюда</div>';
   for(const k of catOrderKeys()){ const c=CATS[k];
     const list=DISHES.filter(x=>x.cat===k && BY[x.id]);
     const col=!!state.collapsed[k];
-    h+=`<div class="mod${col?' col':''}" style="--mc:${c.c};--mb:${c.bg}"><h2 class="mh" data-cat="${k}" draggable="true" title="Перетащи, чтобы поменять порядок"><span class="grip">⋮⋮</span><span class="mt">${esc(c.t)}</span><button class="ib cat-ren" data-cat="${k}" title="Изменить название и цвет">✎</button>${c.customCat?`<button class="ib cat-del" data-cat="${k}" title="Удалить категорию">✕</button>`:''}<small>${list.length}</small><span class="chev">⌄</span></h2>`;
+    h+=`<div class="mod${col?' col':''}" style="--mc:${c.c};--mb:${c.bg}"><h2 class="mh" data-cat="${k}"><span class="mt">${esc(c.t)}</span><button class="ib cat-ren" data-cat="${k}" title="Изменить название и цвет">✎</button>${c.customCat?`<button class="ib cat-del" data-cat="${k}" title="Удалить категорию">✕</button>`:''}<small>${list.length}</small><span class="chev">⌄</span></h2>`;
     if(!col){ h+=`<div class="mbody">`;
       for(const d of list){
         const ing = d.ing.filter(i=>i[1]!=null).map(i=>i[0].toLowerCase()).join(', ');
         const ph=d.src&&d.src.photo, hasRc=d.src&&(d.src.steps||d.src.url);
-        h+=`<div class="dish${selected===d.id?' sel':''}${ph?' hasph':''}" draggable="true" data-id="${d.id}" style="--c:${c.c}">${ph?`<img class="dthumb" src="${esc(ph)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('hasph');this.remove()">`:''}
-          <span class="dish-tools"><button class="ib dish-edit" data-id="${d.id}" title="Редактировать">✎</button><button class="ib dish-del" data-id="${d.id}" title="Удалить блюдо">✕</button></span>
+        h+=`<div class="dish${ph?' hasph':''}" data-id="${d.id}" style="--c:${c.c}">${ph?`<img class="dthumb" src="${esc(ph)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('hasph');this.remove()">`:''}
+          <span class="dish-tools"><button class="ib dish-del" data-id="${d.id}" title="Удалить блюдо">✕</button></span>
           <div class="n">${esc(d.name)}</div>
           <div class="m">~${Math.round(pv(d,'kcal'))} ккал${d.p?' · Б '+Math.round(pv(d,'p')):''}${d.note?' · '+esc(d.note):''}${hasRc?' · <span class="rc">рецепт</span>':''}</div>
           ${ing?`<div class="ing">${esc(ing)}</div>`:''}</div>`;
@@ -882,28 +885,12 @@ function renderPalette(){
     h+=`</div>`;
   }
   h+=`<button class="btn small addcat adddish" id="addDishBtn2">＋ Новое блюдо</button><button class="btn small addcat" id="addCatBtn">＋ Новая категория</button>`;
-  const rem=state.removed.filter(id=>BASE_IDS.includes(id));
-  if(rem.length) h+=`<button class="restore" id="restoreDishes" style="display:block;margin:8px 10px 4px">Вернуть удалённые блюда (${rem.length})</button>`;
+  const rem=state.removed.filter(id=>DISHES.some(d=>d.id===id));
+  if(rem.length) h+=`<button class="restore" id="restoreDishes" style="display:block;margin:8px 10px 4px">Посмотреть скрытые блюда (${rem.length})</button>`;
   el.innerHTML=h;
   document.getElementById('addCatBtn').addEventListener('click',()=>openCatModal());
   document.getElementById('addDishBtn2').addEventListener('click',()=>document.getElementById('addDishBtn').click());
-  // перетаскивание категорий
-  el.querySelectorAll('.mh').forEach(hd=>{
-    hd.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain','cat:'+hd.dataset.cat); e.dataTransfer.effectAllowed='move'; e.stopPropagation(); dragKind='cat'; });
-  });
-  el.querySelectorAll('.mod').forEach(md=>{
-    const k=md.querySelector('.mh').dataset.cat;
-    md.addEventListener('dragover',e=>{ if(dragKind!=='cat') return; e.preventDefault(); const r=md.getBoundingClientRect(); const after=e.clientY>r.top+r.height/2; md.classList.toggle('drop-before',!after); md.classList.toggle('drop-after',after); });
-    md.addEventListener('dragleave',e=>{ if(!md.contains(e.relatedTarget)) md.classList.remove('drop-before','drop-after'); });
-    md.addEventListener('drop',e=>{
-      const v=e.dataTransfer.getData('text/plain'); if(!v.startsWith('cat:')) return; e.preventDefault(); e.stopPropagation();
-      const from=v.slice(4), after=md.classList.contains('drop-after'); md.classList.remove('drop-before','drop-after');
-      if(from===k) return;
-      const order=catOrderKeys().filter(x=>x!==from); let i=order.indexOf(k); if(after) i++; order.splice(i,0,from);
-      state.catOrder=order; save(); renderPalette();
-    });
-  });
-  const rd=document.getElementById('restoreDishes'); if(rd) rd.addEventListener('click',()=>{ state.removed=[]; applyDishes(); save(); renderAll(); toast('Блюда возвращены'); });
+  const rd=document.getElementById('restoreDishes'); if(rd) rd.addEventListener('click',openHidden);
   el.querySelectorAll('.cat-del').forEach(b=>b.addEventListener('click',e=>{
     e.stopPropagation(); const k=b.dataset.cat;
     if(!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent='Удалить?'; setTimeout(()=>{ if(b.isConnected){ b.classList.remove('armed'); b.textContent='✕'; } },3000); return; }
@@ -913,29 +900,35 @@ function renderPalette(){
   el.querySelectorAll('.mod').forEach(md=>md.addEventListener('click',e=>{ if(e.target.closest('.dish,.cat-ren,.cat-del,input')) return; if(e.target.closest('.mbody')) return; const k=md.querySelector('.mh').dataset.cat; state.collapsed[k]=!state.collapsed[k]; save(); renderPalette(); }));
   el.querySelectorAll('.cat-ren').forEach(b=>b.addEventListener('click',e=>{ e.stopPropagation(); openCatModal(null,b.dataset.cat); }));
   el.querySelectorAll('.dish').forEach(card=>{
-    card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain','new:'+card.dataset.id);e.dataTransfer.effectAllowed='copyMove';});
-    card.addEventListener('click',e=>{ if(e.target.closest('.dish-tools')) return; selected = selected===card.dataset.id?null:card.dataset.id; renderPalette(); renderWeek(); });
+    card.addEventListener('click',e=>{ if(e.target.closest('.dish-tools')) return; openDishEditor(card.dataset.id); });
   });
-  el.querySelectorAll('.dish-edit').forEach(b=>b.addEventListener('click',e=>{ e.stopPropagation(); openDishEditor(b.dataset.id); }));
   el.querySelectorAll('.dish-del').forEach(b=>b.addEventListener('click',e=>{
     e.stopPropagation(); const id=b.dataset.id;
     if(!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent='Удалить?'; setTimeout(()=>{ if(b.isConnected){ b.classList.remove('armed'); b.textContent='✕'; } },3000); return; }
-    if(state.custom.some(c=>c.id===id)) state.custom=state.custom.filter(c=>c.id!==id); else if(!state.removed.includes(id)) state.removed.push(id);
-    if(selected===id) selected=null;
-    applyDishes(); save(); renderAll(); toast('Блюдо удалено');
+    if(!state.removed.includes(id)) state.removed.push(id);
+    applyDishes(); save(); renderAll(); toast('Блюдо скрыто — его можно вернуть в «Скрытых блюдах»');
   }));
 }
+// Скрытые блюда: неактуальные сейчас, их можно вернуть по одному
+function openHidden(){
+  const m=document.getElementById('hiddenModal'), list=document.getElementById('hidList');
+  const draw=()=>{
+    const ids=state.removed.filter(id=>DISHES.some(d=>d.id===id));
+    if(!ids.length){ m.hidden=true; return; }
+    const by=Object.fromEntries(DISHES.map(d=>[d.id,d]));
+    list.innerHTML=ids.map(id=>{ const d=by[id], c=CATS[d.cat]||{t:'',c:'#999'}, cust=state.custom.some(x=>x.id===id);
+      return `<div class="hid" style="--c:${c.c}"><div><b>${esc(d.name)}</b><small>${esc(c.t)} · ~${Math.round(pv(d,'kcal'))} ккал</small></div><span class="hid-b"><button type="button" class="btn small primary" data-back="${id}">Вернуть</button>${cust?`<button type="button" class="btn small ghostred" data-kill="${id}">Удалить</button>`:''}</span></div>`; }).join('');
+    list.querySelectorAll('[data-back]').forEach(b=>b.addEventListener('click',()=>{ state.removed=state.removed.filter(x=>x!==b.dataset.back); applyDishes(); save(); renderAll(); draw(); toast('Блюдо вернулось в список'); }));
+    list.querySelectorAll('[data-kill]').forEach(b=>b.addEventListener('click',()=>{
+      if(!b.classList.contains('armed')){ b.classList.add('armed'); b.textContent='Удалить навсегда?'; return; }
+      const id=b.dataset.kill; state.custom=state.custom.filter(x=>x.id!==id); state.removed=state.removed.filter(x=>x!==id); applyDishes(); save(); renderAll(); draw(); toast('Блюдо удалено'); }));
+  };
+  draw(); if(state.removed.some(id=>DISHES.some(d=>d.id===id))) m.hidden=false;
+}
+document.getElementById('hidClose').addEventListener('click',()=>document.getElementById('hiddenModal').hidden=true);
+document.getElementById('hidAll').addEventListener('click',()=>{ state.removed=[]; applyDishes(); save(); renderAll(); document.getElementById('hiddenModal').hidden=true; toast('Все блюда возвращены'); });
+document.getElementById('hiddenModal').addEventListener('click',e=>{ if(e.target.id==='hiddenModal') e.target.hidden=true; });
 const palEl = document.getElementById('palette');
-palEl.addEventListener('dragover',e=>{ if(dragKind==='move'){e.preventDefault();palEl.classList.add('palette-drop');} });
-palEl.addEventListener('dragleave',()=>palEl.classList.remove('palette-drop'));
-palEl.addEventListener('drop',e=>{
-  palEl.classList.remove('palette-drop');
-  const v=e.dataTransfer.getData('text/plain');
-  if(v.startsWith('move:')){e.preventDefault(); const [,d,s,u]=v.split(':'); removeItem(+d,s,u);}
-});
-let dragKind=null;
-document.addEventListener('dragstart',e=>{ dragKind = e.target.closest && e.target.closest('.mh') ? 'cat' : (e.target.closest && e.target.closest('.chip')?'move':'new'); });
-document.addEventListener('dragend',()=>{dragKind=null;});
 
 /* ---------- week ---------- */
 function dayVal(p,key){
@@ -956,13 +949,16 @@ function renderDayChips(){
   el.innerHTML=DAYS.map((d,i)=>`<button type="button" class="dchip${i===curDay?' on':''}${W().shopDays.includes(i)?' has':''}" data-i="${i}" title="${W().shopDays.includes(i)?'День закупки':''}">${d}</button>`).join('');
   el.querySelectorAll('.dchip').forEach(b=>b.addEventListener('click',()=>{ curDay=+b.dataset.i; scrollToDay(true); renderDayChips(); }));
 }
+const weekOff=()=>activeWeek===nextKey?1:0; // на следующей неделе первая карточка — переход назад
+function switchWeek(k,day){ activeWeek=k; pickTrip(); curDay=day; renderAll(); requestAnimationFrame(()=>scrollToDay(false)); }
 function scrollToDay(smooth){
-  const w=document.getElementById('week'); const d=w.children[curDay]; if(!d) return;
+  const w=document.getElementById('week'); const d=w.children[curDay+weekOff()]; if(!d) return;
   if(getComputedStyle(w).flexDirection==='row') w.scrollTo({left:d.offsetLeft-w.offsetLeft,behavior:smooth?'smooth':'auto'});
 }
 function renderWeek(){
   const el = document.getElementById('week');
-  let h='';
+  const rng=k=>rangeLabel(k);
+  let h= activeWeek===nextKey ? `<div class="wkjump" data-k="${curKey}"><span>←</span><b>Эта неделя</b><small>${rng(curKey)}</small></div>` : '';
   W().plan.forEach((p,di)=>{
     const k = dayKcal(p);
     const cls = k==null?'':(k<=normK()*1.1?'ok':'hi');
@@ -970,23 +966,24 @@ function renderWeek(){
     h+=`<div class="day${shopDay?' shopday':''}"><div class="dlabel"><b>${DAYS[di]} <span class="date">${addDays(fromKey(activeWeek),di).getDate()}.${pad(addDays(fromKey(activeWeek),di).getMonth()+1)}</span></b><button class="shoptg${shopDay?' on':''}" data-d="${di}" title="${shopDay?'Убрать закупку в этот день':'Сделать днём закупки'}">${CART_SVG}${shopDay?'закупка':'+'}</button>${k!=null?`<div class="kcal ${cls}" title="Сумма блюд дня на одну порцию. Норма ${normK()} ккал.">≈ ${k.toLocaleString('ru')} ккал</div>`:''}</div>`;
     for(const [s,lab] of SLOTS){
       const items = p[s];
-      h+=`<div class="slot${selected?' can':''}" data-d="${di}" data-s="${s}"><div class="lab">${lab}</div>`;
+      h+=`<div class="slot" data-d="${di}" data-s="${s}"><div class="lab">${lab}</div>`;
       for(const it of items){
         const d = BY[it.id];
-        h+=`<div class="chip${it.left?' left':''}" draggable="true" data-d="${di}" data-s="${s}" data-u="${it.u}" style="--c:${CATS[d.cat].c}">
+        h+=`<div class="chip${it.left?' left':''}" data-d="${di}" data-s="${s}" data-u="${it.u}" style="--c:${CATS[d.cat].c}">
           <span class="t">${esc(d.name)}${it.left?`<span class="lo">остатки${it.rem>0?` · ещё ${it.rem} порц.`:' · последние'}</span>`:(it.sv>Math.max(1,state.persons||2)?`<span class="lo cook">готовим · ${it.sv} порц.${it.rem>0?`, останется ${it.rem}`:''}</span>`:'')}</span>
           <span class="ctools"><button class="ib ci${it.left?' on':''}" data-act="left" title="${it.mode?'Вручную: '+(it.left?'остатки':'готовим')+' — нажми, чтобы вернуть авто':'Авто: '+(it.left?'остатки':'готовим')+' — нажми, чтобы поменять'}"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci" data-act="del" title="Убрать"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div>`;
       }
-      if(!items.length) h+=`<div class="hint">${selected||isTouchUI()?'＋ нажми, чтобы добавить':(s==='s'?'перетащи перекус':'перетащи блюдо')}</div>`;
+      if(!items.length) h+=`<div class="hint">＋ нажми, чтобы добавить</div>`;
       h+=`</div>`;
     }
     h+=`</div>`;
   });
+  if(activeWeek===curKey) h+=`<div class="wkjump" data-k="${nextKey}"><b>Следующая неделя</b><small>${rng(nextKey)}</small><span>→</span></div>`;
   const keepScroll=el.scrollLeft;
   el.innerHTML=h;
   el.scrollLeft=keepScroll;
   renderDayChips();
-  if(!el.dataset.sw){ el.dataset.sw=1; let t; el.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(()=>{ if(getComputedStyle(el).flexDirection!=='row') return; const i=Math.round(el.scrollLeft/(el.clientWidth+8)); if(i!==curDay){ curDay=i; renderDayChips(); } },80); }); requestAnimationFrame(()=>scrollToDay(false)); }
+  if(!el.dataset.sw){ el.dataset.sw=1; let t; el.addEventListener('scroll',()=>{ clearTimeout(t); t=setTimeout(()=>{ if(getComputedStyle(el).flexDirection!=='row') return; const i=Math.round(el.scrollLeft/(el.clientWidth+8))-weekOff(); if(i>6 && activeWeek===curKey){ switchWeek(nextKey,0); return; } if(i<0 && activeWeek===nextKey){ switchWeek(curKey,6); return; } if(i!==curDay && i>=0 && i<=6){ curDay=i; renderDayChips(); } },80); }); requestAnimationFrame(()=>scrollToDay(false)); }
 
   el.querySelectorAll('.shoptg').forEach(b=>b.addEventListener('click',()=>{
     const d=+b.dataset.d, sd=W().shopDays, i=sd.indexOf(d);
@@ -996,25 +993,12 @@ function renderWeek(){
     update();
   }));
   el.querySelectorAll('.slot').forEach(slot=>{
-    slot.addEventListener('dragover',e=>{e.preventDefault();slot.classList.add('over');});
-    slot.addEventListener('dragleave',e=>{ if(!slot.contains(e.relatedTarget)) slot.classList.remove('over'); });
-    slot.addEventListener('drop',e=>{
-      e.preventDefault(); slot.classList.remove('over');
-      const v=e.dataTransfer.getData('text/plain'); const di=+slot.dataset.d, s=slot.dataset.s;
-      if(v.startsWith('new:')) addItem(di,s,v.slice(4));
-      else if(v.startsWith('move:')){
-        const [,fd,fs,u]=v.split(':'); const arr=W().plan[+fd][fs]; const i=arr.findIndex(x=>x.u===u);
-        if(i>-1){ const [it]=arr.splice(i,1); W().plan[di][s].push(it); update(); }
-      }
-    });
     slot.addEventListener('click',e=>{
       if(e.target.closest('button')) return;
-      if(selected){ addItem(+slot.dataset.d, slot.dataset.s, selected); }
-      else if(isTouchUI()) openPicker(+slot.dataset.d, slot.dataset.s);
+      openPicker(+slot.dataset.d, slot.dataset.s);
     });
   });
   el.querySelectorAll('.chip').forEach(ch=>{
-    ch.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain',`move:${ch.dataset.d}:${ch.dataset.s}:${ch.dataset.u}`); e.dataTransfer.effectAllowed='move'; e.stopPropagation(); });
     ch.querySelectorAll('button').forEach(b=>b.addEventListener('click',e=>{
       e.stopPropagation();
       const {d,s,u}=ch.dataset;
@@ -1023,7 +1007,6 @@ function renderWeek(){
     }));
   });
 }
-const isTouchUI=()=>matchMedia('(hover: none), (max-width: 760px)').matches;
 // Повтор блюда = остатки, пока не закончатся порции из кастрюли/противня.
 // it.mode: нет — авто, 'cook' — готовим заново, 'left' — точно остатки.
 function markLeftovers(){
@@ -1096,6 +1079,7 @@ function guessCat(name){
   if(/яблок|банан|груш|апельсин|мандарин|лимон|ягод|клубник|малин|черник|виноград|киви|персик|слив[аы]|абрикос|финик|изюм|ананас|авокадо/.test(n)) return 'fruit';
   if(/лук|морков|картоф|капуст|помидор|томат|огур|перец сладк|болгарск|кабачк|баклажан|чеснок|зелен|укроп|петрушк|кинз|салат|шпинат|свекл|свёкл|гриб|шампиньон|брокколи|тыкв|сельдер|редис|руккол/.test(n)) return 'veg';
   if(/соль|перец|специ|приправ|сахар|уксус|масло|соус|паприк|куркум|лавров|сода|разрыхл|ванил|корица|горчиц|майонез|кетчуп|вода/.test(n)) return 'pantry';
+  if(/губк|порош|средств|мыл|шампун|гель|бумаг|салфет|пакет|фольг|пергамент|плёнк|пленк|таблетк|отбел|кондиционер|чистящ|моющ|освежит|тряпк|перчатк|зубн|дезодор|прокладк|ватн|мешк|капсул|fairy|domestos/.test(n)) return 'chem';
   return 'other';
 }
 function parseIng(str){
@@ -1200,33 +1184,30 @@ function renderShop(){
   const inMain=n=>{ const x=n.toLowerCase().trim(); return items.some(i=>{ const y=i.name.toLowerCase(); return y===x || y.startsWith(x+' ') || y.startsWith(x+','); }); };
   const extras=((W().extras||{})[activeTrip])||[];
   const stShown=state.staples.filter(n=>!inMain(n));
-  const stapleGrp=()=>{ let g=`<div class="grp"><h3 class="cat">Разовые покупки <span class="st-sub">— только в эту закупку</span></h3>`;
-    for(const n of extras){
-      const ck=activeTrip+'|extra|'+n, done=!!W().checked[ck];
-      g+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib ex-del" data-n="${esc(n)}" title="Убрать">✕</button></label>`;
-    }
-    g+=`<form class="st-add" id="exAdd"><input id="exInput" placeholder="Например: губки, корм коту" maxlength="40"><button class="btn" type="submit">+</button></form></div>`;
-    g+=`<div class="grp"><h3 class="cat">Постоянные продукты <span class="st-sub">— если закончились</span></h3>`;
-    for(const n of stShown){
-      const ck=activeTrip+'|staple|'+n, done=!!W().checked[ck];
-      g+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib st-del" data-n="${esc(n)}" title="Убрать из постоянных">✕</button></label>`;
-    }
-    return g+`<form class="st-add" id="stAdd"><input id="stInput" placeholder="Добавить постоянный продукт" maxlength="40"><button class="btn" type="submit">+</button></form></div>`; };
+  const icat=n=>{ const c=(state.itemCats||{})[n.toLowerCase()]; return c&&SHOP.some(x=>x[0]===c)?c:guessCat(n); };
   for(const [c,t] of SHOP){
-    if(c==='pantry') h+=stapleGrp();
     const list=items.filter(i=>i.cat===c).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
-    if(!list.length) continue;
+    const exs=extras.filter(n=>icat(n)===c), sts=stShown.filter(n=>icat(n)===c);
+    if(!list.length && !exs.length && !sts.length) continue;
     h+=`<div class="grp"><h3 class="cat">${t}</h3>`;
     const hidden = c==='pantry' ? list.filter(i=>state.hiddenPantry.includes(i.name)) : [];
     for(const i of list){
       if(c==='pantry' && state.hiddenPantry.includes(i.name)) continue;
       const ck=activeTrip+'|'+i.key, done=!!W().checked[ck];
       const sub = (i.pack && !i.pack.count) ? `нужно ~${fmtQty(i.q,i.u)}${i.have?`, с прошлой закупки есть ~${fmtQty(i.have,i.u)}`:''}` : '';
-      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(i.name)}<em>${esc(i.note?` (${i.note})`:soupNote(i))}</em>${sub?`<i>${sub}</i>`:''}</span><span class="q">${qtyText(i)}</span>${c==='pantry'?`<button class="ib pt-del" data-n="${esc(i.name)}" title="Не показывать в списке">✕</button>`:''}</label>`;
+      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(i.name)}<em>${esc(i.note?` (${i.note})`:soupNote(i))}</em>${sub?`<i>${sub}</i>`:''}</span><span class="q">${qtyText(i)}</span>${c==='pantry'?`<button class="ib pt-del" data-n="${esc(i.name)}" title="Не показывать — это обычно есть дома">✕</button>`:''}</label>`;
     }
+    for(const n of exs){ const ck=activeTrip+'|extra|'+n, done=!!W().checked[ck];
+      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}<em class="tag">разово</em></span><button class="ib ex-del" data-n="${esc(n)}" title="Убрать">✕</button></label>`; }
+    for(const n of sts){ const ck=activeTrip+'|staple|'+n, done=!!W().checked[ck];
+      h+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}<em class="tag">если закончилось</em></span><button class="ib st-del" data-n="${esc(n)}" title="Убрать из постоянных">✕</button></label>`; }
     if(hidden.length) h+=`<button class="restore" id="restorePantry">Вернуть скрытые (${hidden.length}): ${esc(hidden.map(i=>i.name.toLowerCase()).join(', '))}</button>`;
     h+=`</div>`;
   }
+  h+=`<form class="addbox" id="exAdd"><div class="ab-h">Добавить в список</div>
+    <div class="ab-row"><input id="exInput" placeholder="Например: губки, молоко, корм коту" maxlength="40" autocomplete="off"><select id="exCat">${SHOP.map(([k,t])=>`<option value="${k}">${t}</option>`).join('')}</select></div>
+    <div class="ab-row"><button class="btn" type="submit" data-kind="extra">＋ Разово, в эту закупку</button><button class="btn" type="button" id="stAddBtn">＋ Покупать всегда</button></div>
+    ${stShown.length<state.staples.length?`<div class="ab-note">Постоянные продукты, которые уже есть в списке выше, не дублируются.</div>`:''}</form>`;
   h+=`</div>`;
   if(covered.length){
     h+=`<div class="leftover"><div class="lo-h"><b>Хватит остатков</b><span>${prev?`с закупки в ${DAYS_ACC[prev.day]}${prev0&&prev===prev0?' (эта неделя)':''} — `:''}проверь на полке</span></div>`;
@@ -1243,11 +1224,19 @@ function renderShop(){
   const rp=document.getElementById('restorePantry'); if(rp) rp.addEventListener('click',()=>{ state.hiddenPantry=[]; save(); renderShop(); });
   el.querySelectorAll('.st-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); state.staples=state.staples.filter(x=>x!==b.dataset.n); save(); renderShop(); }));
   el.querySelectorAll('.ex-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); const ex=W().extras[activeTrip]; W().extras[activeTrip]=ex.filter(x=>x!==b.dataset.n); delete W().checked[activeTrip+'|extra|'+b.dataset.n]; save(); renderShop(); }));
-  document.getElementById('exAdd').addEventListener('submit',e=>{ e.preventDefault(); const v=document.getElementById('exInput').value.trim(); if(!v) return;
+  const exIn=document.getElementById('exInput'), exCat=document.getElementById('exCat');
+  let catTouched=false;
+  exIn.addEventListener('input',()=>{ if(!catTouched) exCat.value=guessCat(exIn.value.trim()||'—'); });
+  exCat.value='other';
+  exCat.addEventListener('change',()=>{ catTouched=true; });
+  const addItemTo=kind=>{ const v=exIn.value.trim(); if(!v) return;
     if(inMain(v)){ toast('Это уже есть в списке'); return; }
-    W().extras=W().extras||{}; const ex=W().extras[activeTrip]=W().extras[activeTrip]||[]; if(!ex.includes(v)) ex.push(v); save(); renderShop();
-    setTimeout(()=>{ const i=document.getElementById('exInput'); if(i) i.focus(); },0); });
-  document.getElementById('stAdd').addEventListener('submit',e=>{ e.preventDefault(); const v=document.getElementById('stInput').value.trim(); if(v && !state.staples.includes(v)){ state.staples.push(v); save(); } renderShop(); });
+    state.itemCats=state.itemCats||{}; state.itemCats[v.toLowerCase()]=exCat.value;
+    if(kind==='extra'){ W().extras=W().extras||{}; const ex=W().extras[activeTrip]=W().extras[activeTrip]||[]; if(!ex.includes(v)) ex.push(v); }
+    else { if(!state.staples.includes(v)) state.staples.push(v); toast(`«${v}» — в постоянных покупках`); }
+    save(); renderShop(); setTimeout(()=>{ const i=document.getElementById('exInput'); if(i) i.focus(); },0); };
+  document.getElementById('exAdd').addEventListener('submit',e=>{ e.preventDefault(); addItemTo('extra'); });
+  document.getElementById('stAddBtn').addEventListener('click',()=>addItemTo('staple'));
   el.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',()=>{ if(cb.checked) W().checked[cb.dataset.k]=true; else delete W().checked[cb.dataset.k]; save(); renderShop(); }));
   document.getElementById('copyBtn').addEventListener('click',()=>copyList(items,tr,false,covered,extras,stShown));
   document.getElementById('uncheckBtn').addEventListener('click',()=>{ for(const k of Object.keys(W().checked)) if(k.startsWith(activeTrip+'|')) delete W().checked[k]; save(); renderShop(); });
@@ -1266,17 +1255,18 @@ function copyList(items,tr,notes,covered,extras,stShown){
     // Только строки продуктов, без заголовков: в Заметках каждая станет пунктом с галочкой
     const lines=[];
     for(const [c] of SHOP) items.filter(i=>i.cat===c && !W().checked[tr.id+'|'+i.key]).forEach(i=>lines.push(line(i)));
+    (extras||[]).filter(n=>!W().checked[tr.id+'|extra|'+n]).forEach(n=>lines.push(n));
     t=lines.join('\n');
   } else {
     t=`${tr.full} (${tr.range.slice(3)}, неделя ${rangeLabel(activeWeek)})\n`;
     const st=(stShown||state.staples).filter(n=>!W().checked[tr.id+'|staple|'+n]);
     const ex=(extras||[]).filter(n=>!W().checked[tr.id+'|extra|'+n]);
     for(const [c,title] of SHOP){
-      if(c==='pantry' && ex.length) t+=`\nРазовые покупки\n`+ex.map(n=>'— '+n).join('\n')+'\n';
-      if(c==='pantry' && st.length) t+=`\nПостоянные продукты (если закончились)\n`+st.map(n=>'— '+n).join('\n')+'\n';
+      const ic=n=>{ const cc=(state.itemCats||{})[n.toLowerCase()]; return cc&&SHOP.some(x=>x[0]===cc)?cc:guessCat(n); };
       const list=items.filter(i=>i.cat===c && !W().checked[tr.id+'|'+i.key] && !(c==='pantry' && state.hiddenPantry.includes(i.name)));
-      if(!list.length) continue;
-      t+=`\n${title}\n`+list.map(i=>'— '+line(i)).join('\n')+'\n';
+      const more=[...ex.filter(n=>ic(n)===c), ...st.filter(n=>ic(n)===c).map(n=>n+' (если закончилось)')];
+      if(!list.length && !more.length) continue;
+      t+=`\n${title}\n`+[...list.map(i=>'— '+line(i)), ...more.map(n=>'— '+n)].join('\n')+'\n';
     }
     if(covered && covered.length) t+=`\nПроверить дома (хватит остатков)\n`+covered.map(v=>`— ${v.name} — нужно ~${fmtQty(v.q,v.u)}`).join('\n')+'\n';
   }
@@ -1286,8 +1276,6 @@ function copyList(items,tr,notes,covered,extras,stShown){
 }
 function toast(m){ const el=document.getElementById('toast'); el.textContent=m; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),2600); }
 
-document.addEventListener('keydown',e=>{ if(e.key==='Escape' && selected){ selected=null; renderPalette(); renderWeek(); } });
-document.addEventListener('click',e=>{ if(!selected) return; if(e.target.closest('.dish,.slot,.chip,.modal,button,input,select,label')) return; selected=null; renderPalette(); renderWeek(); });
 
 function update(){ markLeftovers(); save(); renderStats(); renderWeek(); renderShop(); }
 function plural(n,a,b,c){ const m=n%10,h=n%100; return (m===1&&h!==11)?a:(m>=2&&m<=4&&(h<12||h>14))?b:c; }
@@ -1597,8 +1585,8 @@ let openDishEditor, openNewDish;
     dIng.innerHTML=''; (rec?rec.batch:[]).forEach(([n,q,u,c,fw]=[])=>row({n,q,u,c,fw}));
     dUrl.value=rec&&rec.url||''; setPhoto(rec&&rec.photo||''); dSteps.value=rec&&rec.steps||''; showSteps(!!(rec&&rec.steps)); hideFill(); syncUrlOpen();
     const isCustom=editId&&editId.startsWith('c'), isOver=editId&&state.overrides[editId];
-    dDelete.hidden=!(isCustom||isOver);
-    dDelete.textContent=isCustom?'Удалить блюдо':'Вернуть исходный рецепт';
+    dDelete.hidden=!isCustom;
+    dDelete.textContent='Удалить блюдо';
     setMode('tot');
     auto=!rec;
     if(rec){ const {tot,missing}=calcBatch(readRows()); if(!missing.length && tot.kcal>0 && Math.abs(tot.kcal-rec.tot.kcal)<0.5) auto=true; }
@@ -1665,7 +1653,6 @@ let openDishEditor, openNewDish;
   dDelete.addEventListener('click',()=>{
     if(!editId) return;
     if(editId.startsWith('c')) state.custom=state.custom.filter(c=>c.id!==editId); else delete state.overrides[editId];
-    if(selected===editId) selected=null;
     applyDishes(); save(); renderAll(); m.hidden=true; toast(editId.startsWith('c')?'Блюдо удалено':'Рецепт восстановлен');
   });
   dishCancel.addEventListener('click',()=>m.hidden=true);
