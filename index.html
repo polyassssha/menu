@@ -101,7 +101,8 @@
   .fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
   .ofield{display:flex;flex-direction:column;gap:5px;text-align:left}
   .ofield>span{font-size:11.5px;color:var(--muted)}
-  .ofield select,.ofield input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 11px;font:400 13.5px Inter,sans-serif;background:#fff;color:var(--ink)}
+  .ofield select,.ofield input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 11px;font:400 13.5px Inter,sans-serif;background-color:#fff;color:var(--ink)}
+  .ofield select{padding-right:28px}
   .otoggle{position:relative;flex:none;width:48px;height:28px;border-radius:15px;background:var(--line);border:0;cursor:pointer;transition:background .18s}
   .otoggle::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.2);transition:transform .18s}
   .otoggle.on{background:var(--accent)}
@@ -134,6 +135,8 @@
   [hidden]{display:none!important}
   *{box-sizing:border-box}
   input,select,textarea{color:var(--ink);-webkit-text-fill-color:var(--ink)}
+  select{-webkit-appearance:none;appearance:none;background-repeat:no-repeat;background-position:right 10px center;background-size:10px 6px;
+         background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%237d8189' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
   input::placeholder{color:var(--faint);-webkit-text-fill-color:var(--faint)}
   body{margin:0;background:var(--outer);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:13px;line-height:1.4;-webkit-font-smoothing:antialiased}
   /* единый шаг сетки: 8 px на телефоне, 12 px на планшете — им задаются все промежутки между блоками */
@@ -290,6 +293,11 @@
   .item input[type=checkbox]:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
   .item .q{margin-left:auto;color:var(--muted);white-space:nowrap;padding-left:8px;font-size:11.5px}
   .item.done span{text-decoration:line-through;color:var(--faint)}
+  .item.own .nm{cursor:text;border-radius:5px;padding:0 3px;margin-left:-3px;transition:background .12s}
+  .item.own .nm:hover{background:var(--soft)}
+  .item.own .nm.editing{flex:1;min-width:0;padding:0;margin:0;background:none}
+  .item.own .nm input{width:100%;border:0;border-bottom:1px solid var(--accent);background:transparent;font:400 12.5px Inter,sans-serif;color:var(--ink);outline:none;padding:0 0 1px}
+  .item.done .nm input{text-decoration:none;color:var(--ink)}
   .item em{font-style:normal;color:var(--accent);font-size:11px}
   .item i{display:block;font-style:normal;color:var(--faint);font-size:10.5px;padding-top:1px}
   .item .st-del{margin-left:auto;padding:0 4px}
@@ -345,17 +353,18 @@
   .mclose{flex:none;width:30px;height:30px;padding:0;border:0;border-radius:50%;background:var(--soft);color:var(--muted);font:500 13px/1 Inter,sans-serif;display:grid;place-items:center;cursor:pointer;transition:background .15s,color .15s;-webkit-tap-highlight-color:transparent}
   .mclose:hover,.mclose:active{background:var(--line);color:var(--ink)}
   .mbox p{margin:0;font-size:12px}
-  .fld{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft)}
-  .fld span{font-size:11.5px;color:var(--muted);flex:1}
-  .fld input{width:70px;border:0;background:transparent;font:500 16px Inter,sans-serif;text-align:right;outline:none;color:var(--ink)}
+  .fld{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:2px 8px;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft)}
+  .fld>span{grid-column:1/-1;font-size:11.5px;color:var(--muted)}
+  .fld input,.fld textarea{width:100%;min-width:0;border:0;background:transparent;font:500 16px Inter,sans-serif;text-align:left;outline:none;color:var(--ink)}
+  .fld textarea{resize:none;overflow:hidden;line-height:1.35;padding:0;display:block}
   .fld em{font-style:normal;color:var(--muted);font-size:12px}
-  .fld input.plain{width:70%;flex:none;text-align:right;font:400 13.5px Inter,sans-serif}
-  .fld.big input{width:110px;font-size:24px;font-weight:400}
+  .fld input.plain,.fld textarea.plain{width:100%;text-align:left;font:400 13.5px Inter,sans-serif}
+  .fld.big input{width:100%;font-size:24px;font-weight:400}
   .fld:focus-within{border-color:var(--accent);background:#fff}
   .fgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
   .fgrid3 .fld{flex-wrap:wrap;gap:2px 4px}
   .fgrid3 .fld span{flex-basis:100%}
-  .fgrid3 .fld input{width:0;flex:1;text-align:left}
+  .fgrid3 .fld input{width:100%;text-align:left}
   .mrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 2px;font-size:12px}
   .seg2{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:2px}
   .seg2 button{border:0;background:transparent;border-radius:8px;padding:5px 12px;font:500 12px Inter,sans-serif;color:var(--muted);cursor:pointer}
@@ -386,8 +395,9 @@
 
   .ingrow{display:grid;grid-template-columns:minmax(0,2.2fr) 70px 70px minmax(0,1.6fr) 28px;gap:5px}
   #dIng{display:flex;flex-direction:column;gap:5px}
-  .ingrow input,.ingrow select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font:400 12.5px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
-  .ingrow input:focus,.ingrow select:focus{border-color:var(--accent);background:#fff}
+  .ingrow input,.ingrow select{min-width:0;border:1px solid var(--line);border-radius:9px;padding:8px 9px;}
+  .ingrow select{padding-right:26px;font:400 12.5px Inter,sans-serif;background-color:var(--soft);color:var(--ink);outline:none}
+  .ingrow input:focus,.ingrow select:focus{border-color:var(--accent);background-color:#fff}
   .btn.ghostred{color:var(--warn);border-color:transparent;padding-left:4px}
   .btn.ghostred:hover{border-color:var(--warn)}
   .btn.small{padding:6px 12px;font-size:12px}
@@ -449,7 +459,7 @@
   .famrow em{font-style:normal;font-size:11px;color:var(--note)}
   .pjoinrow{display:flex;gap:6px}
   .pjoinrow[hidden]{display:none}
-  .pjoinrow input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
+  .pjoinrow input,.pjoinrow textarea{flex:1;min-width:0;resize:none;overflow:hidden;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:400 14px Inter,sans-serif;background:var(--soft);color:var(--ink);outline:none}
   .pjoinrow input:focus{border-color:var(--accent);background:#fff}
   .gate{position:fixed;inset:0;z-index:200;background:var(--frame);display:flex;align-items:center;justify-content:center;padding:24px 20px;overflow-y:auto;overscroll-behavior:contain}
   .gate[hidden]{display:none}
@@ -628,7 +638,7 @@
 
     <div class="psec">
       <div class="ptitle">О тебе</div>
-      <label class="fld"><span>Имя</span><input type="text" id="nName" class="plain" maxlength="30" autocomplete="off" placeholder="Например, Поля"></label>
+      <label class="fld"><span>Имя</span><textarea id="nName" class="plain grow" rows="1" maxlength="30" autocomplete="off" placeholder="Например, Поля"></textarea></label>
       <div class="mrow"><span class="muted">Порции считать для</span><div class="seg2" id="nSex"><button type="button" data-s="f">Женщины</button><button type="button" data-s="m">Мужчины</button></div></div>
       <div class="pnote" id="nSexHint"></div>
     </div>
@@ -667,7 +677,7 @@
       <button type="button" class="btn pbig" id="inviteBtn">Добавить в семью</button>
       <button type="button" class="glink pjoin" id="haveInvite">У меня есть приглашение</button>
       <button type="button" class="glink pjoin pleave" id="leaveFam" hidden>Выйти из семьи</button>
-      <div class="pjoinrow" id="joinRow" hidden><input type="text" id="joinInput" class="plain" placeholder="Вставь ссылку-приглашение" autocomplete="off" autocapitalize="none" spellcheck="false"><button type="button" class="btn primary" id="joinGo">Вступить</button></div>
+      <div class="pjoinrow" id="joinRow" hidden><textarea id="joinInput" class="plain grow" rows="1" placeholder="Вставь ссылку-приглашение" autocomplete="off" autocapitalize="none" spellcheck="false"></textarea><button type="button" class="btn primary" id="joinGo">Вступить</button></div>
     </div>
 
     <div class="pbottom">
@@ -685,11 +695,11 @@
       <div class="catpick" id="dCat"></div>
     </div>
     <div class="mgroup tight">
-    <label class="fld"><span>Название</span><input type="text" id="dName" class="plain" maxlength="50" required autocomplete="off" placeholder="Например, «Плов с курицей»"></label>
-    <label class="fld"><span>Ссылка на рецепт</span><input type="url" id="dUrl" class="plain" inputmode="url" autocomplete="off" placeholder="Вставь ссылку"></label>
+    <label class="fld"><span>Название</span><textarea id="dName" class="plain grow" rows="1" maxlength="50" required autocomplete="off" placeholder="Например, «Плов с курицей»"></textarea></label>
+    <label class="fld"><span>Ссылка на рецепт</span><textarea id="dUrl" class="plain grow" rows="1" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Вставь ссылку"></textarea></label>
     <div class="autofill" id="dFill" hidden><span id="dFillTxt">Заполнить блюдо по этой ссылке автоматически?</span><span class="af-btns"><button type="button" class="btn small primary" id="dFillYes">Заполнить</button><button type="button" class="btn small" id="dFillNo">Не надо</button></span></div>
     <div class="photo-row"><a class="urlopen" id="dUrlOpen" target="_blank" rel="noopener" hidden>Открыть рецепт ↗</a></div>
-    <label class="fld"><span>Подпись</span><input type="text" id="dNote" class="plain" maxlength="50" autocomplete="off" placeholder="Например, «150 г»"></label>
+    <label class="fld"><span>Подпись</span><textarea id="dNote" class="plain grow" rows="1" maxlength="50" autocomplete="off" placeholder="Например, «150 г»"></textarea></label>
     <label class="fld"><span>Порций из этого состава</span><input type="number" id="dServ" min="1" max="40" required><em>порц.</em></label>
     </div>
     <div class="mgroup">
@@ -720,7 +730,7 @@
   <form class="mbox" id="catForm">
     <div class="mgroup"><div class="mhead"><h3 id="cTitle">Новая категория</h3><button type="button" class="mclose inl" data-close="catCancel" aria-label="Закрыть">✕</button></div>
     <p class="muted" id="cSub">Категория появится слева, в неё можно вносить блюда через «＋ Новое блюдо».</p></div>
-    <label class="fld"><span>Название</span><input type="text" id="cName" class="plain" maxlength="30" required autocomplete="off" placeholder="Например, «Рыба»"></label>
+    <label class="fld"><span>Название</span><textarea id="cName" class="plain grow" rows="1" maxlength="30" required autocomplete="off" placeholder="Например, «Рыба»"></textarea></label>
     <div class="mgroup"><div class="mlabel">Цвет</div>
     <div class="swatches" id="cColors"></div></div>
     <div id="cKinds" class="mgroup"><div class="mlabel">Как блюда этой категории ставятся в план</div>
@@ -1717,7 +1727,7 @@ function renderShop(){
   const own=(title,kind,names,delCls,delTitle,note)=>{
     let s=`<div class="grp own"><h3 class="cat">${title}</h3>`;
     for(const n of names){ const ck=activeTrip+'|'+kind+'|'+n, done=!!W().checked[ck];
-      s+=`<label class="item${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span>${esc(n)}</span><button class="ib ${delCls}" data-n="${esc(n)}" title="${delTitle}">✕</button></label>`; }
+      s+=`<label class="item own${done?' done':''}"><input type="checkbox" data-k="${esc(ck)}"${done?' checked':''}><span class="nm" data-kind="${kind}" data-n="${esc(n)}" title="Нажми, чтобы изменить">${esc(n)}</span><button class="ib ${delCls}" data-n="${esc(n)}" title="${delTitle}">✕</button></label>`; }
     s+=`<div class="addrow" data-kind="${kind}" role="button" tabindex="0">Добавить…</div>`;
     if(note) s+=`<div class="ab-note">${note}</div>`;
     return s+`</div>`;
@@ -1744,6 +1754,43 @@ function renderShop(){
     if(kind==='extra'){ W().extras=W().extras||{}; const ex=W().extras[activeTrip]=W().extras[activeTrip]||[]; if(!ex.includes(v)) ex.push(v); }
     else { if(!state.staples.includes(v)) state.staples.push(v); }
     save(); return true; };
+  // своя покупка: по нажатию на название его можно переписать
+  const renameOwn=(kind,old,v)=>{
+    if(v!==old && inMain(v)){ toast('Это уже есть в списке'); return false; }
+    const list = kind==='staple' ? state.staples : ((W().extras||{})[activeTrip]||[]);
+    const i=list.indexOf(old); if(i<0) return false;
+    if(list.includes(v) && v!==old) list.splice(i,1); else list[i]=v;   // если такое уже есть — просто склеиваем
+    const ok=activeTrip+'|'+kind+'|'+old, nk=activeTrip+'|'+kind+'|'+v;
+    if(W().checked[ok]){ W().checked[nk]=true; delete W().checked[ok]; }
+    save(); return true;
+  };
+  const dropOwn=(kind,n)=>{
+    if(kind==='staple') state.staples=state.staples.filter(x=>x!==n);
+    else { const ex=(W().extras||{})[activeTrip]||[]; W().extras[activeTrip]=ex.filter(x=>x!==n); }
+    delete W().checked[activeTrip+'|'+kind+'|'+n];
+    save();
+  };
+  el.querySelectorAll('.item.own .nm').forEach(sp=>{
+    sp.addEventListener('click',e=>{
+      e.preventDefault(); e.stopPropagation();          // не отмечаем галочку, а правим текст
+      if(sp.querySelector('input')) return;
+      const kind=sp.dataset.kind, old=sp.dataset.n;
+      sp.textContent=''; sp.classList.add('editing');
+      const inp=document.createElement('input');
+      inp.type='text'; inp.maxLength=40; inp.autocomplete='off'; inp.value=old;
+      sp.appendChild(inp); inp.focus(); inp.select();
+      let done=false;
+      const close=keep=>{ if(done) return; done=true;
+        const v=inp.value.trim();
+        if(keep && v && v!==old) renameOwn(kind,old,v);
+        else if(keep && !v) dropOwn(kind,old);
+        renderShop(); };
+      inp.addEventListener('click',ev=>ev.stopPropagation());
+      inp.addEventListener('keydown',ev=>{ ev.stopPropagation();
+        if(ev.key==='Enter'){ ev.preventDefault(); close(true); } else if(ev.key==='Escape'){ close(false); } });
+      inp.addEventListener('blur',()=>close(true));
+    });
+  });
   // свободная строка: по нажатию превращается в поле ввода
   el.querySelectorAll('.addrow').forEach(r=>{
     const kind=r.dataset.kind;
@@ -2211,6 +2258,7 @@ function openPicker(di,s){
     const sync=()=>{
       const open=els.some(e=>!e.hidden);
       document.body.classList.toggle('lock',open);
+      if(open) requestAnimationFrame(growAll);
       if(!open) scrollTo(0,lockY);
     };
     let lockY=0;
@@ -2423,6 +2471,18 @@ const REM = (function(){
   setInterval(()=>{ if(!document.hidden) REM.check(); },60000);
   addEventListener('visibilitychange',()=>{ if(!document.hidden) REM.check(); });
 })();
+// Поля с классом grow растут в высоту, пока весь текст не поместится
+function growField(el){ if(!el) return; el.style.height='auto'; el.style.height=(el.scrollHeight||el.clientHeight)+'px'; }
+function growAll(){ document.querySelectorAll('textarea.grow').forEach(growField); }
+document.addEventListener('input',e=>{ if(e.target.classList && e.target.classList.contains('grow')) growField(e.target); });
+document.addEventListener('keydown',e=>{
+  const t=e.target;
+  if(!(t.classList && t.classList.contains('grow')) || e.key!=='Enter' || e.shiftKey) return;
+  e.preventDefault();                       // перенос строки не нужен: Enter — это «готово»
+  const f=t.form;
+  if(f && f.requestSubmit) f.requestSubmit(); else t.blur();
+});
+addEventListener('resize',growAll);
 // Сколько человек ест — общая настройка доски
 
 function renderPersons(){
