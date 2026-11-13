@@ -27,7 +27,7 @@
   .idots i{width:6px;height:6px;border-radius:3px;background:#d3d6dc;transition:width .2s,background .2s;cursor:pointer}
   .idots i.on{width:18px;background:var(--accent)}
   /* ── Пошаговое обучение ── */
-  .onb{position:fixed;inset:0;z-index:210;background:linear-gradient(180deg,#f5f3fe 0%,#edeffa 60%,#eceef1 100%);display:flex;flex-direction:column;
+  .onb{position:fixed;inset:0;z-index:190;background:linear-gradient(180deg,#f5f3fe 0%,#edeffa 60%,#eceef1 100%);display:flex;flex-direction:column;
        padding:calc(10px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));animation:fade .2s ease}
   .onb-top{display:flex;align-items:center;gap:12px;flex:none}
   .onb-back,.onb-skip{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;
@@ -2574,7 +2574,13 @@ let openIntro=null;
   $('mailBtn').href=mail; $('hMail').href=mail;
   // поддержать проект — вставь сюда ссылку на Boosty, кнопка появится сама
   if(SUPPORT_URL) document.querySelectorAll('#supportTop,#onbSupport').forEach(a=>{ a.href=SUPPORT_URL; a.hidden=false; });
-  MB.whenIn(()=>openIntro());   // показываем при каждом входе в аккаунт
+  // показываем при каждом входе в аккаунт — но только когда экран входа уже закрыт
+  MB.whenIn(()=>{
+    const g=$('authGate');
+    if(!g || g.hidden){ openIntro(); return; }
+    const mo=new MutationObserver(()=>{ if(g.hidden){ mo.disconnect(); openIntro(); } });
+    mo.observe(g,{attributes:true,attributeFilter:['hidden']});
+  });
 })();
 
 // Первое открытие в браузере: подсказка, как добавить доску на экран «Домой» / рабочий стол
