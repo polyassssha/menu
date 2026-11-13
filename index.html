@@ -1206,7 +1206,13 @@ const MB = window.MB = {
   // то, что показывается только после входа (обучение, подсказка про экран «Домой»)
   _in:false, _q:[],
   whenIn(f){ if(this._in) f(); else this._q.push(f); },
-  loggedIn(){ if(this._in) return; this._in=true; const q=this._q; this._q=[]; q.forEach(f=>{ try{ f(); }catch(e){} }); },
+  loggedIn(fresh){
+    if(fresh) this._fresh=true;
+    if(this._fresh && this._fl){ const f=this._fl; this._fl=null; try{ f(); }catch(e){} }   // вход прямо сейчас — показываем обучение
+    if(this._in) return; this._in=true;
+    const q=this._q; this._q=[]; q.forEach(f=>{ try{ f(); }catch(e){} });
+  },
+  onFreshLogin(f){ if(this._fresh){ try{ f(); }catch(e){} } else this._fl=f; },
   touch(){ save(); },
   myName:()=>((state.names&&state.names[state.sex])||'').trim(),   // сохранить как правку: новая отметка времени и отправка в облако
   wipeLocal(){
@@ -2574,8 +2580,8 @@ let openIntro=null;
   $('mailBtn').href=mail; $('hMail').href=mail;
   // поддержать проект — вставь сюда ссылку на Boosty, кнопка появится сама
   if(SUPPORT_URL) document.querySelectorAll('#supportTop,#onbSupport').forEach(a=>{ a.href=SUPPORT_URL; a.hidden=false; });
-  // показываем при каждом входе в аккаунт — но только когда экран входа уже закрыт
-  MB.whenIn(()=>{
+  // показываем при входе в аккаунт — но не при обычном запуске с уже сохранённым входом
+  MB.onFreshLogin(()=>{
     const g=$('authGate');
     if(!g || g.hidden){ openIntro(); return; }
     const mo=new MutationObserver(()=>{ if(g.hidden){ mo.disconnect(); openIntro(); } });
@@ -2674,6 +2680,9 @@ const showErr=m=>{ gErr.textContent=m||''; };
 const openGate=()=>{ gate.hidden=false; gLoad.hidden=true; gForms.hidden=false; };
 const closeGate=()=>{ gate.hidden=true; };
 const wasSigned=()=>{ try{ return !!localStorage.getItem(AUTH_FLAG); }catch(e){ return false; } };
+const SIGNIN_FLAG='meal-board-signing-in';
+const markSigningIn=()=>{ try{ sessionStorage.setItem(SIGNIN_FLAG,'1'); }catch(e){} };
+const takeSigningIn=()=>{ try{ const v=!!sessionStorage.getItem(SIGNIN_FLAG); sessionStorage.removeItem(SIGNIN_FLAG); return v; }catch(e){ return false; } };
 
 // политика конфиденциальности открывается и с экрана входа, и из настроек
 const privacy=$('privacyModal');
@@ -2914,7 +2923,7 @@ if(fb){
     try{ await fn(); }catch(e){ showErr(human(e)); } finally{ lock(false); }
   }
 
-  gForm.addEventListener('submit',e=>{ e.preventDefault(); withBusy(async()=>{
+  gForm.addEventListener('submit',e=>{ e.preventDefault(); markSigningIn(); withBusy(async()=>{
     const em=gEmail.value.trim(), pw=gPass.value;
     if(!em){ showErr('Впиши почту'); gEmail.focus(); return; }
     if(!pw){ showErr('Впиши пароль'); gPass.focus(); return; }
@@ -2928,6 +2937,7 @@ if(fb){
   // Google: всплывающее окно. Переадресацию Safari ломает (данные входа остаются
   // на домене firebaseapp.com), поэтому она — только запасной путь.
   $('gGoogle').addEventListener('click',()=>{
+    markSigningIn();
     const prov=new GoogleAuthProvider();
     prov.setCustomParameters({ prompt:'select_account' });
     withBusy(async()=>{
@@ -3027,7 +3037,7 @@ if(fb){
     clearTimeout(slow);
     if(u){
       try{ localStorage.setItem(AUTH_FLAG,'1'); }catch(e){}
-      closeGate(); MB.loggedIn();
+      closeGate(); MB.loggedIn(takeSigningIn());
       const who=$('accWho');
       if(who) who.textContent=u.email||'Аккаунт Google';
       tryConnect();
