@@ -292,6 +292,10 @@
 
   /* shop */
   .shop .shead{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+  .tripset{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;border:1px solid var(--line);background:#fff;color:var(--muted);
+           border-radius:9px;padding:6px 10px;font:400 var(--t-sm) Inter,sans-serif;cursor:pointer;transition:border-color .15s,color .15s}
+  .tripset:hover{border-color:var(--accent);color:var(--accent)}
+  .tripset svg{width:13px;height:13px;flex:none}
   .shop{display:flex;flex-direction:column;gap:14px}
   .tabs{display:flex;gap:6px;flex-wrap:wrap}
   .tab{flex:1;min-width:80px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 10px;font:500 var(--t-base) Inter,sans-serif;cursor:pointer;color:var(--ink);text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:1px}
@@ -425,7 +429,8 @@
   .eqrow input{-webkit-appearance:none;appearance:none;flex:none;width:17px;height:17px;margin:1px 0 0;border-radius:5px;background:#eceef1;border:1px solid #dfe2e7;display:grid;place-items:center;cursor:pointer}
   .eqrow input:checked{background:var(--accent);border-color:var(--accent)}
   .eqrow input:checked::after{content:"";width:5px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
-  .mact{display:flex;justify-content:flex-end;gap:8px}
+  .mact{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+  .mact .btn{white-space:nowrap}
   .mact.stack{flex-direction:column}
   .pt-del,.ex-del,.st-del{margin-left:auto;padding:0 4px}
   .isup{display:inline-flex;text-decoration:none;color:var(--accent);border-color:var(--accent)}
@@ -655,7 +660,7 @@
 
     <div class="psec">
       <div class="ptitle">О тебе</div>
-      <label class="fld"><span>Имя</span><textarea id="nName" class="plain grow" rows="1" maxlength="30" autocomplete="off" placeholder="Например, Поля"></textarea></label>
+      <label class="fld"><span>Имя</span><textarea id="nName" class="plain grow" rows="1" maxlength="30" autocomplete="off" autocapitalize="sentences" placeholder="Например, Поля"></textarea></label>
       <div class="mrow"><span class="muted">Порции считать для</span><div class="seg2" id="nSex"><button type="button" data-s="f">Женщины</button><button type="button" data-s="m">Мужчины</button></div></div>
       <div class="pnote" id="nSexHint"></div>
     </div>
@@ -680,7 +685,6 @@
       <div class="orow"><span>Спланировать неделю</span><button type="button" class="otoggle" id="rPlan" aria-label="Напоминание о планировании"></button></div>
       <div class="fgrid2" id="rPlanWhen" hidden><label class="ofield"><span>День недели</span><select id="rPlanDay"><option value="0">Понедельник</option><option value="1">Вторник</option><option value="2">Среда</option><option value="3">Четверг</option><option value="4">Пятница</option><option value="5">Суббота</option><option value="6">Воскресенье</option></select></label><label class="ofield"><span>Время</span><select id="rPlanTime"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label></div>
       <div class="orow"><span>Сходить за продуктами</span><button type="button" class="otoggle" id="rShop" aria-label="Напоминание о закупке"></button></div>
-      <label class="ofield" id="rShopWhen" hidden><span>Время в день закупки</span><select id="rShopTime"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
       <button type="button" class="btn" id="rIcs">Добавить напоминание в календарь</button>
       <div class="pnote" id="rHint"></div>
     </div>
@@ -712,11 +716,11 @@
       <div class="catpick" id="dCat"></div>
     </div>
     <div class="mgroup tight">
-    <label class="fld"><span>Название</span><textarea id="dName" class="plain grow" rows="1" maxlength="50" required autocomplete="off" placeholder="Например, «Плов с курицей»"></textarea></label>
-    <label class="fld"><span>Ссылка на рецепт</span><textarea id="dUrl" class="plain grow" rows="1" inputmode="url" autocomplete="off" spellcheck="false" placeholder="Вставь ссылку"></textarea></label>
+    <label class="fld"><span>Название</span><textarea id="dName" class="plain grow" rows="1" maxlength="50" required autocomplete="off" autocapitalize="sentences" placeholder="Например, «Плов с курицей»"></textarea></label>
+    <label class="fld"><span>Ссылка на рецепт</span><textarea id="dUrl" class="plain grow" rows="1" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Вставь ссылку"></textarea></label>
     <div class="autofill" id="dFill" hidden><span id="dFillTxt">Заполнить блюдо по этой ссылке автоматически?</span><span class="af-btns"><button type="button" class="btn small primary" id="dFillYes">Заполнить</button><button type="button" class="btn small" id="dFillNo">Не надо</button></span></div>
     <div class="photo-row"><a class="urlopen" id="dUrlOpen" target="_blank" rel="noopener" hidden>Открыть рецепт ↗</a></div>
-    <label class="fld"><span>Подпись</span><textarea id="dNote" class="plain grow" rows="1" maxlength="50" autocomplete="off" placeholder="Например, «150 г»"></textarea></label>
+    <label class="fld"><span>Подпись</span><textarea id="dNote" class="plain grow" rows="1" maxlength="50" autocomplete="off" autocapitalize="sentences" placeholder="Например, «150 г»"></textarea></label>
     <label class="fld"><span>Порций из этого состава</span><input type="number" id="dServ" min="1" max="40" required><em>порц.</em></label>
     </div>
     <div class="mgroup">
@@ -743,11 +747,25 @@
     <div class="mact"><button type="button" class="btn ghostred" id="dDelete" hidden></button><span class="spacer"></span><button type="button" class="btn" id="dishCancel">Отмена</button><button type="submit" class="btn primary" id="dSave">Добавить блюдо</button></div>
   </form>
 </div>
+<div class="modal" id="tripModal" hidden>
+  <div class="mbox">
+    <div class="mhead"><h3 id="tripTitle">Закупка</h3><button type="button" class="mclose inl" data-close="tripCancel" aria-label="Закрыть">✕</button></div>
+    <div class="mgroup"><div class="fgrid2">
+      <label class="ofield"><span>День недели</span><select id="tripDay"><option value="0">Понедельник</option><option value="1">Вторник</option><option value="2">Среда</option><option value="3">Четверг</option><option value="4">Пятница</option><option value="5">Суббота</option><option value="6">Воскресенье</option></select></label>
+      <label class="ofield"><span>Во сколько идём</span><select id="tripTime"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label>
+    </div></div>
+    <label class="eqrow"><input type="checkbox" id="tripSelf"><span>Продукты на сам день закупки<small id="tripSelfNote"></small></span></label>
+    <div class="nsum" id="tripCover"></div>
+    <label class="eqrow"><input type="checkbox" id="tripAll"><span>Так же для остальных закупок<small>Применить время и охват ко всем закупкам этой недели и к новым</small></span></label>
+    <div class="mact"><button type="button" class="btn danger" id="tripDel">Убрать</button><span class="spacer"></span><button type="button" class="btn" id="tripCancel">Отмена</button><button type="button" class="btn primary" id="tripSave">Сохранить</button></div>
+  </div>
+</div>
+
 <div class="modal" id="catModal" hidden>
   <form class="mbox" id="catForm">
     <div class="mgroup"><div class="mhead"><h3 id="cTitle">Новая категория</h3><button type="button" class="mclose inl" data-close="catCancel" aria-label="Закрыть">✕</button></div>
     <p class="muted" id="cSub">Категория появится слева, в неё можно вносить блюда через «＋ Новое блюдо».</p></div>
-    <label class="fld"><span>Название</span><textarea id="cName" class="plain grow" rows="1" maxlength="30" required autocomplete="off" placeholder="Например, «Рыба»"></textarea></label>
+    <label class="fld"><span>Название</span><textarea id="cName" class="plain grow" rows="1" maxlength="30" required autocomplete="off" autocapitalize="sentences" placeholder="Например, «Рыба»"></textarea></label>
     <div class="mgroup"><div class="mlabel">Цвет</div>
     <div class="swatches" id="cColors"></div></div>
     <div id="cKinds" class="mgroup"><div class="mlabel">Как блюда этой категории ставятся в план</div>
@@ -792,7 +810,7 @@
   <div class="onb-scroll">
     <div class="onb-step" data-i="0" data-note="Доска меню — это план еды на неделю: что готовите на завтрак, обед и ужин, сколько это калорий и что купить."><h2>Планируй меню на неделю</h2><div class="onb-ui"><div class="week"><div class="day"><div class="dlabel"><b>Ср <span class="date">11.11</span></b><button class="shoptg"><svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>+</button><div class="kcal ok">≈ 1 480 ккал</div></div><div class="slot"><div class="lab">Завтрак</div><div class="chip" style="--c:var(--breakfast)"><span class="t">Яичница с сосиской</span><span class="ctools"><button class="ib ci"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div></div><div class="slot"><div class="lab">Обед</div><div class="chip" style="--c:var(--ready)"><span class="t">Паста болоньезе<span class="lo cook">готовим · 4 порц., останется 2</span></span><span class="ctools"><button class="ib ci"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div></div><div class="slot"><div class="lab">Перекус</div><div class="hint">＋ нажми, чтобы добавить</div></div><div class="slot"><div class="lab">Ужин</div><div class="chip" style="--c:var(--meat)"><span class="t">Котлеты<span class="lo cook">готовим · 4 порц., останется 2</span></span><span class="ctools"><button class="ib ci"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div><div class="chip" style="--c:var(--side)"><span class="t">Гречка</span><span class="ctools"><button class="ib ci"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div></div></div></div></div></div><div class="onb-step" data-i="1" data-note="Блюда ты заводишь сама: состав, ссылка на рецепт, шаги. Калории и БЖУ посчитаются по составу — вручную ничего считать не нужно." hidden><h2>Собирай свои блюда</h2><div class="onb-ui"><div class="card" style="display:flex;flex-direction:column;gap:12px"><div class="section-title">Редактировать блюда</div><div class="mod" style="--mc:var(--breakfast);--mb:var(--breakfast-bg)"><h2 class="mh"><span class="mt">Завтраки</span></h2><div class="mbody"><div class="dish"><div class="n">Яичница с сосиской</div><div class="m">~450 ккал · Б 22</div></div><div class="dish"><div class="n">Овсянка с бананом</div><div class="m">~380 ккал · Б 14</div></div></div></div><div class="mod" style="--mc:var(--meat);--mb:var(--meat-bg)"><h2 class="mh"><span class="mt">Мясные блюда</span></h2><div class="mbody"><div class="dish"><div class="n">Котлеты</div><div class="m">~350 ккал · Б 25</div></div><div class="dish"><div class="n">Запечённая курица</div><div class="m">~270 ккал · Б 35</div></div></div></div><button class="btn small addcat adddish">＋ Новое блюдо</button></div></div></div><div class="onb-step" data-i="2" data-note="Отметь дни закупок — и продукты сложатся сами: с упаковками, остатками с прошлой закупки и твоими регулярными покупками." hidden><h2>Список покупок соберётся сам</h2><div class="onb-ui"><div class="card shop" style="display:flex;flex-direction:column;gap:12px"><div class="shead"><span class="section-title">Покупки</span><span class="muted">на 2 персоны</span></div><div class="tabs"><button class="tab on"><span class="tl"><svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>Пн</span><small>на 3 дня</small></button><button class="tab"><span class="tl"><svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>Чт</span><small>на 4 дня</small></button></div><div class="cols"><div class="grp"><h3 class="cat">Мясо и рыба</h3><label class="item done"><input type="checkbox" checked disabled><span>Куриное филе</span><span class="q">600 г · 1 упак.</span></label><label class="item"><input type="checkbox" disabled><span>Фарш говяжий<i>нужно ~500 г, с прошлой закупки есть ~200 г</i></span><span class="q">300 г</span></label></div><div class="grp"><h3 class="cat">Овощи и фрукты</h3><label class="item"><input type="checkbox" disabled><span>Помидоры</span><span class="q">4 шт</span></label></div><div class="grp own"><h3 class="cat">Регулярные покупки</h3><label class="item"><input type="checkbox" disabled><span>Молоко</span></label><div class="addrow">Добавить…</div></div></div></div></div></div><div class="onb-step" data-i="3" data-note="Поставь одно блюдо в несколько дней — доска поймёт, что это одна кастрюля, и посчитает, на сколько порций её хватит." hidden><h2>Готовишь раз — ешь дважды</h2><div class="onb-ui"><div class="week"><div class="day"><div class="dlabel"><b>Вт <span class="date">10.11</span></b></div><div class="slot"><div class="lab">Ужин</div><div class="chip" style="--c:var(--ready)"><span class="t">Паста болоньезе<span class="lo cook">готовим · 4 порц., останется 2</span></span></div></div></div><div class="day"><div class="dlabel"><b>Ср <span class="date">11.11</span></b></div><div class="slot"><div class="lab">Обед</div><div class="chip left" style="--c:var(--ready)"><span class="t">Паста болоньезе<span class="lo">остатки · последние</span></span></div></div></div></div></div></div><div class="onb-step" data-i="4" hidden><h2>Сколько человек ест?</h2><p class="onb-sub">Доска посчитает порции и количество продуктов в списке покупок. Это можно изменить в любой момент.</p><div class="onb-card ocenter"><div class="ocount"><button type="button" id="onbPMinus" aria-label="Меньше">−</button><b id="onbPVal">2</b><button type="button" id="onbPPlus" aria-label="Больше">+</button></div><div class="ohint" id="onbPHint"></div></div></div>
     <div class="onb-step" data-i="5" hidden><h2>Для кого считать порции?</h2><p class="onb-sub">Порция и норма калорий у всех разные. Это только твои настройки — у близких в семье будут свои.</p><div class="onb-card"><div class="orow"><span>Порции считать для</span><div class="seg2" id="onbSex"><button type="button" data-s="f">Женщины</button><button type="button" data-s="m">Мужчины</button></div></div><label class="ofield"><span>Норма калорий в день</span><input type="number" id="onbK" min="1000" max="5000" step="10" inputmode="numeric"></label><div class="ohint" id="onbKHint"></div></div></div>
-    <div class="onb-step" data-i="6" data-note="Напоминание можно добавить в календарь телефона — тогда оно придёт, даже если доска закрыта." hidden><h2>Напомнить про планирование или покупки?</h2><p class="onb-sub">Чтобы неделя не начиналась с пустой доски и похода в магазин наугад.</p><div class="onb-card"><div class="orow"><span>Напомнить спланировать неделю</span><button type="button" class="otoggle" id="onbRPlan" aria-label="Напоминание о планировании"></button></div><div class="fgrid2" id="onbPlanWhen" hidden><label class="ofield"><span>День недели</span><select id="onbPlanDay"><option value="0">Понедельник</option><option value="1">Вторник</option><option value="2">Среда</option><option value="3">Четверг</option><option value="4">Пятница</option><option value="5">Суббота</option><option value="6">Воскресенье</option></select></label><label class="ofield"><span>Время</span><select id="onbPlanTime"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label></div><div class="orow" style="border-top:1px solid var(--line);padding-top:12px"><span>Напомнить про закупку</span><button type="button" class="otoggle" id="onbRShop" aria-label="Напоминание о закупке"></button></div><label class="ofield" id="onbShopWhen" hidden><span>Время в день закупки</span><select id="onbShopTime"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label><button type="button" class="btn" id="onbIcs" hidden>Добавить напоминание в календарь</button><div class="ohint" id="onbRHint"></div></div></div>
+    <div class="onb-step" data-i="6" data-note="Напоминание можно добавить в календарь телефона — тогда оно придёт, даже если доска закрыта." hidden><h2>Напомнить про планирование или покупки?</h2><p class="onb-sub">Чтобы неделя не начиналась с пустой доски и похода в магазин наугад.</p><div class="onb-card"><div class="orow"><span>Напомнить спланировать неделю</span><button type="button" class="otoggle" id="onbRPlan" aria-label="Напоминание о планировании"></button></div><div class="fgrid2" id="onbPlanWhen" hidden><label class="ofield"><span>День недели</span><select id="onbPlanDay"><option value="0">Понедельник</option><option value="1">Вторник</option><option value="2">Среда</option><option value="3">Четверг</option><option value="4">Пятница</option><option value="5">Суббота</option><option value="6">Воскресенье</option></select></label><label class="ofield"><span>Время</span><select id="onbPlanTime"><option value="06:00">06:00</option><option value="07:00">07:00</option><option value="08:00">08:00</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="13:00">13:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option><option value="19:00">19:00</option><option value="20:00">20:00</option><option value="21:00">21:00</option><option value="22:00">22:00</option></select></label></div><div class="orow" style="border-top:1px solid var(--line);padding-top:12px"><span>Напомнить про закупку</span><button type="button" class="otoggle" id="onbRShop" aria-label="Напоминание о закупке"></button></div><button type="button" class="btn" id="onbIcs" hidden>Добавить напоминание в календарь</button><div class="ohint" id="onbRHint"></div></div></div>
     <div class="onb-step" data-i="7" hidden><h2>И последнее — от меня</h2><div class="onb-art" style="align-items:center;gap:16px"><div class="oheart"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.8-4.7-8.9-10A4.8 4.8 0 0 1 12 7.3a4.8 4.8 0 0 1 8.9 3.2c-1.1 5.3-8.9 10-8.9 10z"/></svg></div><p class="onb-sub" style="max-width:320px">Доску я делаю сама — без рекламы, подписок и платных функций. Если она экономит тебе время у плиты и в магазине, буду очень рада поддержке на Boosty: даже символический донат помогает делать её лучше 💜</p><a class="btn isup" id="onbSupport" target="_blank" rel="noopener" hidden>Поддержать проект</a></div></div>
   </div>
   <div class="onb-foot"><p class="onb-note" id="onbNote"></p><button type="button" class="btn primary onb-next" id="onbNext">Далее</button></div>
@@ -834,7 +852,9 @@
       <p>Над днями — «Эта неделя / Следующая неделя». В понедельник прошедшая неделя исчезает, следующая становится текущей.</p>
       </section>
       <section class="tsec"><h4>5. Закупки</h4>
-      <p>Кнопка 🛒 у дня делает его днём закупки — такой день отмечен фиолетовой рамкой, а в полоске «Пн … Вс» — точкой под днём. Каждая закупка покупает продукты на дни после неё до следующей закупки включительно: сам день закупки относится к прошлой закупке.</p>
+      <p>Кнопка 🛒 у дня делает его днём закупки — такой день отмечен фиолетовой рамкой, а в полоске «Пн … Вс» — точкой под днём. Закупок в неделе может быть несколько, они показаны вкладками в «Покупках».</p>
+      <p>Под вкладками — строка с днём и временем закупки: нажми её, чтобы перенести закупку на другой день, поставить время и выбрать, собирать ли продукты на сам день закупки. Если ходишь в магазин утром и успеваешь приготовить в тот же день — включи «Продукты на сам день закупки». Если ходишь вечером — оставь выключенным, и этот день будет доедаться из прошлой закупки. Окно показывает, какие дни кормит закупка, ещё до сохранения.</p>
+      <p>Время закупки использует и напоминание: если оно включено, доска напомнит про магазин в тот час, который указан у закупки.</p>
       </section>
       <section class="tsec"><h4>6. Покупки</h4>
       <p>Список на выбранную закупку собирается сам: весь состав поставленных блюд, округлённый до упаковок, с подписью, для чего продукт. Если с прошлой закупки осталась упаковка, повторно она не покупается. Продукты разложены по категориям, включая «Специи» и «Бытовую химию». Специи, которые уже есть дома, можно убрать ✕ — только из этой закупки, в следующую они вернутся. Если продукта хватит с прошлой закупки, он попадёт в плашку «Хватит остатков» — перед магазином проверь его на полке.</p>
@@ -957,6 +977,7 @@ const normK = ()=>state.norm.kcal;
 const MANK = 1.3; // мужчины 19–30 лет в среднем едят ~в 1,3 раза больше женщин
 const WF = 2/(1+MANK); // доля женской порции от средней
 const SEXF = ()=>state.sex==='m'?MANK:1;
+const capFirst = t=>{ const s=String(t||'').trim(); return s ? s[0].toLocaleUpperCase('ru')+s.slice(1) : s; };
 const clampDay = d=>Number.isInteger(d)&&d>=0&&d<=6 ? d : 6;
 const clampTime = (t,def)=>/^([01]\d|2[0-3]):[0-5]\d$/.test(t) ? t : def;
 
@@ -970,7 +991,7 @@ const keyOf = d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`
 const fromKey = k=>{ const [y,m,d]=k.split('-').map(Number); return new Date(y,m-1,d); };
 const addDays = (d,n)=>{ const x=new Date(d); x.setDate(x.getDate()+n); return x; };
 function mondayOf(d){ const x=new Date(d.getFullYear(),d.getMonth(),d.getDate()); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x; }
-const emptyWeek = ()=>({plan: DAYS.map(()=>({b:[],l:[],s:[],d:[]})), checked:{}, shopDays:[0,3], extras:{}, hid:{}});
+const emptyWeek = ()=>({plan: DAYS.map(()=>({b:[],l:[],s:[],d:[]})), checked:{}, shopDays:[0,3], shopMeta:{}, extras:{}, hid:{}});
 const DAYS_ACC=['понедельник','вторник','среду','четверг','пятницу','субботу','воскресенье'];
 function rangeLabel(k){
   const a=fromKey(k), b=addDays(a,6);
@@ -980,7 +1001,7 @@ function rangeLabel(k){
 // Личное у каждого аккаунта (не уходит в общую доску семьи): для кого порции, имя, норма,
 // какие категории свёрнуты. Всё остальное — план, покупки, блюда — общее.
 const PERSONAL = ['sex','norm','norms','names','collapsed','remind'];
-const freshState = ()=>({weeks:{}, staples:['Молоко','Хлеб'], norm:{kcal:1440,p:109,f:54,c:130,mode:'g'}, catOrder:[], persons:2, remind:{plan:{on:false,day:6,time:'12:00'},shop:{on:false,time:'09:00'}}, names:{f:'',m:''}, catNames:{}, catColors:{}, customCats:[], overrides:{}, sex:'f', norms:null, collapsed:{}, custom:[], removed:[]});
+const freshState = ()=>({weeks:{}, staples:['Молоко','Хлеб'], norm:{kcal:1440,p:109,f:54,c:130,mode:'g'}, catOrder:[], persons:2, shopDefault:{time:'10:00',self:false}, remind:{plan:{on:false,day:6,time:'12:00'},shop:{on:false,time:'09:00'}}, names:{f:'',m:''}, catNames:{}, catColors:{}, customCats:[], overrides:{}, sex:'f', norms:null, collapsed:{}, custom:[], removed:[]});
 let state = freshState();
 let curKey, nextKey, activeWeek, activeTrip;
 const KEY = 'meal-board-v1';
@@ -996,6 +1017,7 @@ function initWeeks(){
     if(Array.isArray(saved.staples)) state.staples = saved.staples;
     if(saved.norm && saved.norm.kcal) state.norm = Object.assign(state.norm, saved.norm);
     if(saved.norms) state.norms = saved.norms;
+    if(saved.shopDefault) state.shopDefault = {time:clampTime(saved.shopDefault.time,'10:00'), self:!!saved.shopDefault.self};
     if(saved.sex==='m'||saved.sex==='f') state.sex = saved.sex;
     if(saved.remind) state.remind = {
       plan:{ on:!!(saved.remind.plan||{}).on, day:clampDay((saved.remind.plan||{}).day), time:clampTime((saved.remind.plan||{}).time,'12:00') },
@@ -1025,7 +1047,7 @@ function initWeeks(){
   for(const k of Object.keys(state.weeks)) if(k<curKey) delete state.weeks[k]; // прошедшие недели исчезают
   if(!state.weeks[curKey]) state.weeks[curKey]=emptyWeek();
   if(!state.weeks[nextKey]) state.weeks[nextKey]=emptyWeek();
-  for(const w of Object.values(state.weeks)) if(!Array.isArray(w.shopDays)) w.shopDays=[0,3];
+  for(const w of Object.values(state.weeks)){ if(!Array.isArray(w.shopDays)) w.shopDays=[0,3]; if(!w.shopMeta||typeof w.shopMeta!=='object') w.shopMeta={}; }
   // Открываем ближайшую закупку: сегодня или позже на этой неделе, иначе — на следующей
   const wd=(today.getDay()+6)%7;
   activeWeek = curKey; // открываем текущую неделю и сегодняшний день
@@ -1036,6 +1058,19 @@ const W = ()=>state.weeks[activeWeek];
 // Каждая закупка покрывает дни ПОСЛЕ своего дня и до следующей закупки включительно:
 // сам день закупки относится к прошлому периоду. Последняя закупка недели захватывает
 // начало следующей недели — до её первого дня закупки включительно.
+// Настройки закупки: во сколько идём и попадают ли продукты на сам день закупки
+function tripMeta(wk,day){
+  const w=state.weeks[wk], m=(w&&w.shopMeta&&w.shopMeta[day])||{}, def=state.shopDefault||{time:'10:00',self:false};
+  return {time: clampTime(m.time, def.time||'10:00'), self: m.self==null ? !!def.self : !!m.self};
+}
+const DAYS_GEN=['понедельника','вторника','среды','четверга','пятницы','субботы','воскресенья'];
+const DAYS_NOM=['понедельник','вторник','среда','четверг','пятница','суббота','воскресенье'];
+const tripStart = (wk,day)=> day + (tripMeta(wk,day).self ? 0 : 1);   // с какого дня закупка кормит
+function setTripMeta(wk,day,patch){
+  const w=state.weeks[wk]; if(!w) return;
+  w.shopMeta=w.shopMeta||{};
+  w.shopMeta[day]=Object.assign({}, w.shopMeta[day], patch);
+}
 function getTrips(wk){
   const w=state.weeks[wk]; const sd=[...w.shopDays].sort((a,b)=>a-b);
   const nk=keyOf(addDays(fromKey(wk),7)), nw=state.weeks[nk];
@@ -1043,15 +1078,16 @@ function getTrips(wk){
   const lbl=([k,x])=>DAYS[x]+(k===wk?'':' след.');
   return sd.map((d,i)=>{
     const last=i===sd.length-1;
-    const refs=[];
-    if(!last){ for(let x=d+1;x<=sd[i+1];x++) refs.push([wk,x]); }
+    const refs=[], from=tripStart(wk,d);
+    if(!last){ for(let x=from;x<tripStart(wk,sd[i+1]);x++) refs.push([wk,x]); }
     else {
-      for(let x=d+1;x<=6;x++) refs.push([wk,x]);
-      if(nw){ const upto = nFirst==null ? 6 : nFirst; for(let x=0;x<=upto;x++) refs.push([nk,x]); }
+      for(let x=from;x<=6;x++) refs.push([wk,x]);
+      if(nw){ const upto = nFirst==null ? 6 : tripStart(nk,nFirst)-1; for(let x=0;x<=upto;x++) refs.push([nk,x]); }
     }
     const range = !refs.length ? 'нет дней' : refs.length===1 ? `на ${lbl(refs[0])}` : `на ${lbl(refs[0])}–${lbl(refs[refs.length-1])}`;
     const nd=refs.length, cnt = nd ? `на ${nd} ${plural(nd,'день','дня','дней')}` : 'нет дней';
-    return {id:'d'+d, day:d, refs, t:DAYS[d], range, cnt, full:`Закупка в ${DAYS_ACC[d]}`};
+    const mt=tripMeta(wk,d);
+    return {id:'d'+d, day:d, refs, t:DAYS[d], range, cnt, time:mt.time, self:mt.self, full:`Закупка в ${DAYS_ACC[d]}, ${mt.time}`};
   });
 }
 function pickTrip(){
@@ -1728,6 +1764,7 @@ function renderShop(){
   const tr=trips.find(t=>t.id===activeTrip);
   const {items,covered,filled,days,prev}=all[activeTrip];
   h+=`<div class="tabs">${trips.map(t=>`<button class="tab${t.id===activeTrip?' on':''}" data-t="${t.id}"><span class="tl"><svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>${t.t}</span><small title="${t.range.replace('на ','')}">${t.cnt}</small></button>`).join('')}</div>`;
+  if(tr) h+=`<button type="button" class="tripset" id="tripSet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>${DAYS_NOM[tr.day]}, ${tr.time} · ${tr.self?'продукты с этого дня':'продукты со следующего дня'}</button>`;
   h+=`<div class="cols">`;
   const inMain=n=>{ const x=n.toLowerCase().trim(); return items.some(i=>{ const y=i.name.toLowerCase(); return y===x || y.startsWith(x+' ') || y.startsWith(x+','); }); };
   const extras=((W().extras||{})[activeTrip])||[];
@@ -1768,11 +1805,13 @@ function renderShop(){
       <div class="shop-actions"><button class="btn" id="copyBtn">Скопировать список</button><button class="btn" id="uncheckBtn">Снять отметки</button></div>`;
   el.innerHTML=h;
   bindTabs(el);
+  const setBtn=el.querySelector('#tripSet');
+  if(setBtn && tr) setBtn.addEventListener('click',()=>openTrip(tr.day));
   el.querySelectorAll('.pt-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation();
     W().hid=W().hid||{}; const a=W().hid[activeTrip]=W().hid[activeTrip]||[]; if(!a.includes(b.dataset.n)) a.push(b.dataset.n); save(); renderShop(); }));
   el.querySelectorAll('.st-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); state.staples=state.staples.filter(x=>x!==b.dataset.n); save(); renderShop(); }));
   el.querySelectorAll('.ex-del').forEach(b=>b.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); const ex=W().extras[activeTrip]; W().extras[activeTrip]=ex.filter(x=>x!==b.dataset.n); delete W().checked[activeTrip+'|extra|'+b.dataset.n]; save(); renderShop(); }));
-  const addItemTo=(kind,v)=>{ v=(v||'').trim(); if(!v) return false;
+  const addItemTo=(kind,v)=>{ v=capFirst(v); if(!v) return false;
     if(inMain(v)){ toast('Это уже есть в списке'); return false; }
     if(kind==='extra'){ W().extras=W().extras||{}; const ex=W().extras[activeTrip]=W().extras[activeTrip]||[]; if(!ex.includes(v)) ex.push(v); }
     else { if(!state.staples.includes(v)) state.staples.push(v); }
@@ -1800,12 +1839,12 @@ function renderShop(){
       const kind=sp.dataset.kind, old=sp.dataset.n;
       sp.textContent=''; sp.classList.add('editing');
       const inp=document.createElement('input');
-      inp.type='text'; inp.maxLength=40; inp.autocomplete='off'; inp.value=old;
+      inp.type='text'; inp.maxLength=40; inp.autocomplete='off'; inp.autocapitalize='sentences'; inp.value=old;
       sp.appendChild(inp); inp.focus(); inp.select();
       let done=false;
       const close=keep=>{ if(done) return; done=true;
-        const v=inp.value.trim();
-        if(keep && v && v!==old) renameOwn(kind,old,v);
+        const v=capFirst(inp.value);
+        if(keep && v && v!==old) renameOwn(kind,old,capFirst(v));
         else if(keep && !v) dropOwn(kind,old);
         renderShop(); };
       inp.addEventListener('click',ev=>ev.stopPropagation());
@@ -1821,18 +1860,20 @@ function renderShop(){
       if(r.classList.contains('edit')) return;
       r.classList.add('edit'); r.textContent='';
       const inp=document.createElement('input');
-      inp.type='text'; inp.maxLength=40; inp.autocomplete='off';
+      inp.type='text'; inp.maxLength=40; inp.autocomplete='off'; inp.autocapitalize='sentences';
       inp.placeholder = kind==='staple' ? 'Например: молоко, кофе' : 'Например: губки, корм коту';
       r.appendChild(inp); inp.focus();
       let done=false;
       const close=add=>{ if(done) return; done=true;
         const v=inp.value; if(add && addItemTo(kind,v)){ renderShop(); setTimeout(()=>{ const n=document.querySelector(`.addrow[data-kind="${kind}"]`); if(n) n.click(); },0); return; }
         r.classList.remove('edit'); r.textContent='Добавить…'; };
-      inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); close(true); } else if(e.key==='Escape'){ close(false); } });
+      inp.addEventListener('keydown',e=>{ e.stopPropagation();   // пробел и прочие клавиши — полю, а не строке-кнопке
+        if(e.key==='Enter'){ e.preventDefault(); close(true); } else if(e.key==='Escape'){ close(false); } });
       inp.addEventListener('blur',()=>close(true));
     };
     r.addEventListener('click',open);
-    r.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
+    r.addEventListener('keydown',e=>{ if(e.target!==r) return;   // когда поле уже открыто, клавиши его
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } });
   });
   el.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.addEventListener('change',()=>{ if(cb.checked) W().checked[cb.dataset.k]=true; else delete W().checked[cb.dataset.k]; save(); renderShop(); }));
   document.getElementById('copyBtn').addEventListener('click',()=>copyList(items,tr,covered,extras,stShown));
@@ -1986,7 +2027,7 @@ function renderNorm(){
     if(!(d.kcal>=1000)) return;
     if(!summary()){ toast('БЖУ должны в сумме давать 100% калорий'); return; }
     state.norms[sex]={kcal:d.kcal,p:grams('p'),f:grams('f'),c:grams('c'),mode:d.mode};
-    state.sex=sex; state.norm=state.norms[sex]; state.names[sex]=nName.value.trim();
+    state.sex=sex; state.norm=state.norms[sex]; state.names[sex]=capFirst(nName.value);
     m.hidden=true; save(); renderAll(); toast('Норма сохранена');
   });
 })();
@@ -2054,7 +2095,7 @@ let openCatModal;
   m.addEventListener('click',e=>{ if(e.target===m) m.hidden=true; });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') m.hidden=true; });
   catForm.addEventListener('submit',e=>{
-    e.preventDefault(); const t=cName.value.trim();
+    e.preventDefault(); const t=capFirst(cName.value);
     const kind=m.querySelector('input[name=cKind]:checked').value;
     if(editK){
       const cc=state.customCats.find(x=>x.k===editK);
@@ -2089,7 +2130,7 @@ let openDishEditor, openNewDish;
     dPortion.textContent = dEqual.checked ? `1 порция: ${v(dK)} ккал · Б ${v(dP)} · Ж ${v(dF)} · У ${v(dC)} — женщине и мужчине одинаково` : `1 порция: женщине ≈ ${Math.round(v(dK)*WF)} ккал · Б ${Math.round(v(dP)*WF)}, мужчине ≈ ${Math.round(v(dK)*WF*MANK)} ккал · Б ${Math.round(v(dP)*WF*MANK)} (в среднем ${v(dK)} ккал). На карточке и в днях — порция для выбранного в профиле.`;
     if(v(dK)>2500) dPortion.textContent='⚠︎ Порция больше 2500 ккал — проверь количество и единицы (г / шт) в составе. '+dPortion.textContent;
   }
-  function readRows(){ return [...m.querySelectorAll('.ingrow')].map(r=>[r.querySelector('.iN').value.trim(),r.querySelector('.iQ').value,r.querySelector('.iU').value,rowNut(r)]); }
+  function readRows(){ return [...m.querySelectorAll('.ingrow')].map(r=>[capFirst(r.querySelector('.iN').value),r.querySelector('.iQ').value,r.querySelector('.iU').value,rowNut(r)]); }
   // КБЖУ на 100 г, введённые вручную или со штрихкода
   function rowNut(r){ if(r.dataset.own!=='1') return null; const v=c=>+r.querySelector(c).value||0; return {k:v('.nK'),p:v('.nP'),f:v('.nF'),c:v('.nC'),pc:null}; }
   function rowLine(r){
@@ -2130,7 +2171,7 @@ let openDishEditor, openNewDish;
   function row(v={}){
     const d=document.createElement('div'); d.className='ingrow';
     if(v.fw) d.dataset.fw=v.fw;
-    d.innerHTML=`<input class="iN" list="prodList" placeholder="Продукт" value="${esc(v.n||'')}"><input class="iQ" type="number" min="0" step="any" placeholder="${v.c==='pantry'?'—':'Кол-во'}" value="${v.q??''}"><select class="iU">${UNITS.map(u=>`<option${u===(v.u||'г')?' selected':''}>${u}</option>`).join('')}</select><select class="iC">${SHOP_OPTS}</select><button type="button" class="ib" title="Убрать">✕</button>`;
+    d.innerHTML=`<input class="iN" list="prodList" autocapitalize="sentences" placeholder="Продукт" value="${esc(v.n||'')}"><input class="iQ" type="number" min="0" step="any" placeholder="${v.c==='pantry'?'—':'Кол-во'}" value="${v.q??''}"><select class="iU">${UNITS.map(u=>`<option${u===(v.u||'г')?' selected':''}>${u}</option>`).join('')}</select><select class="iC">${SHOP_OPTS}</select><button type="button" class="ib" title="Убрать">✕</button>`;
     d.querySelector('.iC').value=v.c||'veg';
     const nb=document.createElement('div'); nb.className='inut';
     nb.innerHTML=`<span class="nv"></span><button type="button" class="nbtn" data-a="ed">КБЖУ</button><button type="button" class="nbtn" data-a="scan" title="Сканировать штрихкод">${SCAN_ICON}</button><span class="ned" hidden><em>на 100 г</em><input class="nK" type="number" min="0" step="any" placeholder="ккал"><input class="nP" type="number" min="0" step="any" placeholder="Б"><input class="nF" type="number" min="0" step="any" placeholder="Ж"><input class="nC" type="number" min="0" step="any" placeholder="У"></span>`;
@@ -2227,14 +2268,14 @@ let openDishEditor, openNewDish;
   document.addEventListener('keydown',e=>{ if(e.key==='Escape' && document.getElementById('catModal').hidden) m.hidden=true; });
   dishForm.addEventListener('submit',e=>{
     e.preventDefault();
-    const name=dName.value.trim(); if(!name) return;
+    const name=capFirst(dName.value); if(!name) return;
     if(!cat||!CATS[cat]){ dCat.classList.add('need'); dCat.scrollIntoView({block:'center',behavior:'smooth'}); toast('Выбери категорию блюда'); return; }
     const sv=Math.max(1,Math.round(+dServ.value)||1);
     const batch=[];
     state.myFoods=state.myFoods||{};
     m.querySelectorAll('.ingrow').forEach(r=>{ const nn=r.querySelector('.iN').value.trim(), own=rowNut(r); if(nn&&own) state.myFoods[nn.toLowerCase().replace(/ё/g,'е')]=Object.assign({},state.myFoods[nn.toLowerCase().replace(/ё/g,'е')]||{},{k:own.k,p:own.p,f:own.f,c:own.c}); });
     m.querySelectorAll('.ingrow').forEach(r=>{
-      const n=r.querySelector('.iN').value.trim(); if(!n) return;
+      const n=capFirst(r.querySelector('.iN').value); if(!n) return;
       const c=r.querySelector('.iC').value, qv=r.querySelector('.iQ').value, fw=r.dataset.fw;
       const q = qv==='' ? null : +qv;
       const it = q==null?[n,null,'',c]:[n,q,r.querySelector('.iU').value,c];
@@ -2382,8 +2423,9 @@ const REM = (function(){
     for(const f of sets){
       f.plan.classList.toggle('on',r.plan.on); f.planWhen.hidden=!r.plan.on;
       f.planDay.value=String(r.plan.day); f.planTime.value=r.plan.time;
-      f.shop.classList.toggle('on',r.shop.on); f.shopWhen.hidden=!r.shop.on;
-      f.shopTime.value=r.shop.time;
+      f.shop.classList.toggle('on',r.shop.on);
+      if(f.shopWhen) f.shopWhen.hidden=!r.shop.on;
+      if(f.shopTime) f.shopTime.value=r.shop.time;
       if(f.hint) f.hint.textContent=hint();
       if(f.ics) f.ics.hidden=!(r.plan.on||r.shop.on);
     }
@@ -2392,9 +2434,10 @@ const REM = (function(){
     const r=R();
     if(!r.plan.on && !r.shop.on) return 'Пока выключены. Доска напомнит, когда пора собрать меню на следующую неделю или сходить за продуктами.';
     const can = 'Notification' in window;
-    if(can && Notification.permission==='granted') return 'Уведомление придёт, когда доска открыта. Чтобы напоминание приходило всегда, добавь его в календарь телефона.';
-    if(can && Notification.permission==='denied') return 'Уведомления запрещены в настройках браузера — подсказка появится при открытии доски. Чтобы напоминание приходило всегда, добавь его в календарь.';
-    return 'Доска напомнит при открытии. Нажми «Добавить напоминание в календарь», чтобы оно приходило, даже когда доска закрыта.';
+    const sh = r.shop.on ? ' Про закупку напомним в то время, которое указано у самой закупки — его можно менять в списке покупок.' : '';
+    if(can && Notification.permission==='granted') return 'Уведомление придёт, когда доска открыта. Чтобы напоминание приходило всегда, добавь его в календарь телефона.'+sh;
+    if(can && Notification.permission==='denied') return 'Уведомления запрещены в настройках браузера — подсказка появится при открытии доски. Чтобы напоминание приходило всегда, добавь его в календарь.'+sh;
+    return 'Доска напомнит при открытии. Нажми «Добавить напоминание в календарь», чтобы оно приходило, даже когда доска закрыта.'+sh;
   }
   async function ask(){
     if(!('Notification' in window) || Notification.permission!=='default') return;
@@ -2406,7 +2449,7 @@ const REM = (function(){
     f.shop.addEventListener('click',()=>{ const r=R(); r.shop.on=!r.shop.on; touch(); if(r.shop.on) ask().then(fill); });
     f.planDay.addEventListener('change',()=>{ R().plan.day=clampDay(Number(f.planDay.value)); touch(); });
     f.planTime.addEventListener('change',()=>{ R().plan.time=clampTime(f.planTime.value,'12:00'); touch(); });
-    f.shopTime.addEventListener('change',()=>{ R().shop.time=clampTime(f.shopTime.value,'09:00'); touch(); });
+    if(f.shopTime) f.shopTime.addEventListener('change',()=>{ R().shop.time=clampTime(f.shopTime.value,'09:00'); touch(); });
   }
   const touch=()=>{ fill(); save(); };
   // ближайшее срабатывание «спланировать неделю» до текущего момента
@@ -2421,9 +2464,9 @@ const REM = (function(){
   function dueShop(now){
     const r=R(); if(!r.shop.on) return null;
     const di=(now.getDay()+6)%7;
-    const trips=getTrips(curKey);
-    if(!trips.some(t=>t.day===di)) return null;
-    const [h,mi]=r.shop.time.split(':').map(Number);
+    const trip=getTrips(curKey).find(t=>t.day===di);
+    if(!trip) return null;
+    const [h,mi]=trip.time.split(':').map(Number);   // время берём у самой закупки
     const d=new Date(now); d.setHours(h,mi,0,0);
     return d<=now ? d : null;
   }
@@ -2466,13 +2509,12 @@ const REM = (function(){
       add('Спланировать меню на неделю','Доска меню: собери блюда на следующую неделю',d,['MO','TU','WE','TH','FR','SA','SU'][r.plan.day]);
     }
     if(r.shop.on){
-      const trips=getTrips(curKey).map(t=>t.day);
-      if(trips.length){
-        const [h,mi]=r.shop.time.split(':').map(Number);
+      for(const t of getTrips(curKey)){        // у каждой закупки свой день и своё время
+        const [h,mi]=t.time.split(':').map(Number);
         const d=new Date(now); d.setHours(h,mi,0,0);
-        let shift=trips[0]-((d.getDay()+6)%7); if(shift<0 || (shift===0 && d<=now)) shift+=7;
+        let shift=t.day-((d.getDay()+6)%7); if(shift<0 || (shift===0 && d<=now)) shift+=7;
         d.setDate(d.getDate()+shift);
-        add('Закупка продуктов','Доска меню: список покупок на неделю',d,trips.map(x=>['MO','TU','WE','TH','FR','SA','SU'][x]).join(','));
+        add('Закупка продуктов','Доска меню: список покупок на неделю',d,['MO','TU','WE','TH','FR','SA','SU'][t.day]);
       }
     }
     if(!ev.length){ say('Сначала включи хотя бы одно напоминание',true); return; }
@@ -2487,7 +2529,7 @@ const REM = (function(){
 // Напоминания в профиле
 (function(){
   REM.bind({plan:$('rPlan'), planWhen:$('rPlanWhen'), planDay:$('rPlanDay'), planTime:$('rPlanTime'),
-            shop:$('rShop'), shopWhen:$('rShopWhen'), shopTime:$('rShopTime'), hint:$('rHint')});
+            shop:$('rShop'), hint:$('rHint')});
   $('rIcs').addEventListener('click',()=>REM.ics());
   // проверяем при запуске и пока доска открыта
   MB.whenIn(()=>{ REM.fill(); setTimeout(()=>REM.check(),1500); });
@@ -2506,6 +2548,69 @@ document.addEventListener('keydown',e=>{
   if(f && f.requestSubmit) f.requestSubmit(); else t.blur();
 });
 addEventListener('resize',growAll);
+// Настройка закупки: день, время и считать ли продукты на сам день закупки
+let openTrip=null;
+(function(){
+  const m=$('tripModal'), dSel=$('tripDay'), tSel=$('tripTime'), self=$('tripSelf'), all=$('tripAll');
+  let day=null;
+  const close=()=>{ m.hidden=true; };
+  function preview(){
+    const d=+dSel.value, from=self.checked?d:(d+1)%7;
+    const sd=[...W().shopDays].filter(x=>x!==day); sd.push(d); sd.sort((a,b)=>a-b);
+    const next=sd.find(x=>x>d);
+    $('tripSelfNote').textContent = self.checked
+      ? `Успеваем приготовить в тот же день: еда на ${DAYS_ACC[d]} попадёт в эту закупку`
+      : `На ${DAYS_ACC[d]} доедаем из прошлой закупки — эта кормит со следующего дня`;
+    const sc = DAYS_GEN[from]==='вторника' ? 'со' : 'с';   // «со вторника», но «с понедельника»
+    $('tripCover').textContent = `Продукты собираются ${sc} ${DAYS_GEN[from]}${next!=null?` по ${DAYS_ACC[(next+6)%7]}`:' и до следующей закупки'}`;
+  }
+  dSel.addEventListener('change',preview); self.addEventListener('change',preview);
+  openTrip=d=>{
+    day=d; const mt=tripMeta(activeWeek,d);
+    dSel.value=String(d); tSel.value=mt.time; self.checked=mt.self; all.checked=false;
+    $('tripTitle').textContent='Закупка в '+DAYS_ACC[d];
+    $('tripDel').hidden = W().shopDays.length<2;   // последнюю закупку недели убирать некуда
+    preview(); m.hidden=false;
+  };
+  $('tripCancel').addEventListener('click',close);
+  $('tripDel').addEventListener('click',()=>{
+    const sd=W().shopDays, i=sd.indexOf(day);
+    if(i>-1) sd.splice(i,1);
+    delete (W().shopMeta||{})[day];
+    dropTripData('d'+day);
+    if(!getTrips(activeWeek).some(t=>t.id===activeTrip)) pickTrip();
+    close(); update(); toast('Закупка убрана');
+  });
+  $('tripSave').addEventListener('click',()=>{
+    const nd=+dSel.value, time=clampTime(tSel.value,'10:00'), sf=self.checked;
+    const sd=W().shopDays;
+    if(nd!==day){
+      if(sd.includes(nd)){ toast('В этот день уже есть закупка',true); return; }
+      sd[sd.indexOf(day)]=nd; sd.sort((a,b)=>a-b);
+      moveTripData('d'+day,'d'+nd);
+      const meta=(W().shopMeta||{})[day]; delete W().shopMeta[day];
+      if(meta) W().shopMeta[nd]=meta;
+      if(activeTrip==='d'+day) activeTrip='d'+nd;
+    }
+    setTripMeta(activeWeek,nd,{time,self:sf});
+    if(all.checked){
+      state.shopDefault={time,self:sf};
+      for(const d of W().shopDays) setTripMeta(activeWeek,d,{time,self:sf});
+    }
+    close(); update();
+  });
+})();
+// Перенос отметок и своих покупок, когда у закупки меняется день
+function moveTripData(from,to){
+  const w=W();
+  for(const k of Object.keys(w.checked)) if(k.startsWith(from+'|')){ w.checked[to+k.slice(from.length)]=w.checked[k]; delete w.checked[k]; }
+  for(const box of ['extras','hid']){ const o=w[box]; if(o && o[from]!=null){ o[to]=o[from]; delete o[from]; } }
+}
+function dropTripData(id){
+  const w=W();
+  for(const k of Object.keys(w.checked)) if(k.startsWith(id+'|')) delete w.checked[k];
+  for(const box of ['extras','hid']) if(w[box]) delete w[box][id];
+}
 // Сколько человек ест — общая настройка доски
 
 function renderPersons(){
@@ -2567,7 +2672,7 @@ let openIntro=null;
 
   // шаг «напоминания»
   REM.bind({plan:$('onbRPlan'), planWhen:$('onbPlanWhen'), planDay:$('onbPlanDay'), planTime:$('onbPlanTime'),
-            shop:$('onbRShop'), shopWhen:$('onbShopWhen'), shopTime:$('onbShopTime'), hint:$('onbRHint'), ics:$('onbIcs')});
+            shop:$('onbRShop'), hint:$('onbRHint'), ics:$('onbIcs')});
   $('onbIcs').addEventListener('click',()=>REM.ics());
 
   // шаг «норма и порции»
