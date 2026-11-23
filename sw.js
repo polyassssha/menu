@@ -1,5 +1,5 @@
 // Доска меню — офлайн-режим. При обновлении файлов поменяй номер версии.
-const VERSION = 'menu-v3';
+const VERSION = 'menu-v4';
 const SHELL = ['./', './index.html', './refs.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

@@ -2927,8 +2927,12 @@ let openRations=null, ratRender=null;
     hintEl().textContent = target
       ? 'Выбери рацион, а в нём — блюдо для этого приёма пищи.'
       : 'Готовые дни, которые можно разбирать по блюдам: бери целиком или только то, что нравится.';
+    if(!RAT.length){
+      body().innerHTML=`<div class="pempty"><b>\u0420\u0430\u0446\u0438\u043e\u043d\u044b \u043d\u0435 \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u043b\u0438\u0441\u044c</b><span>\u041e\u0431\u043d\u043e\u0432\u0438 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0443. \u0415\u0441\u043b\u0438 \u043d\u0435 \u043f\u043e\u043c\u043e\u0433\u043b\u043e \u2014 \u0440\u044f\u0434\u043e\u043c \u0441 index.html \u043d\u0430 \u0441\u0430\u0439\u0442\u0435 \u043b\u0435\u0436\u0438\u0442 \u0441\u0442\u0430\u0440\u044b\u0439 refs.js.</span></div>`;
+      return;
+    }
     body().innerHTML='<div class="rlist">'+RAT.map(r=>`<div class="rcard" data-r="${r.id}">
-      <h4>${esc(r.t)}${r.num?` <span class="rnum">\u2116${r.num}</span>`:''}</h4>
+      <h4>${esc(r.t)}</h4>
       <div class="rkbju"><span>День: ${kb(r.tot)}</span><span>Без перекуса: ${kb(r.noSnack)}</span></div>
       <div class="rmeals">${r.meals.map(x=>`${SLOT_T[x.slot]}: ${esc(x.dish.name)}`).join('<br>')}</div>
     </div>`).join('')+'</div>';
@@ -2937,7 +2941,7 @@ let openRations=null, ratRender=null;
   function ratView(id){
     const r=RAT.find(x=>x.id===id); if(!r) return;
     cur=r; setBack(false);
-    setTitle(r.num ? `${r.t} №${r.num}` : r.t);
+    setTitle(r.t);
     hintEl().textContent=r.note||'';
     const meals=r.meals.map(x=>{
       const d=x.dish, has=ratAddedId(d), c=(CATS[d.cat]||{}).c||'var(--accent)';
