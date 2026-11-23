@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>Доска меню</title>
 <meta name="theme-color" content="#eceef1">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -151,7 +151,7 @@
   input::placeholder,textarea::placeholder{color:var(--hint);-webkit-text-fill-color:var(--hint)}
   body{margin:0;background:var(--outer);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:var(--t-base);line-height:1.4;-webkit-font-smoothing:antialiased}
   /* единый шаг сетки: 8 px на телефоне, 12 px на планшете — им задаются все промежутки между блоками */
-  .frame{--gap:8px;overflow-x:clip;background:var(--frame);padding:var(--gap);display:flex;flex-direction:column;gap:var(--gap)}
+  .frame{--gap:8px;overflow-x:clip;background:var(--frame);padding:calc(var(--gap) + env(safe-area-inset-top)) max(var(--gap),env(safe-area-inset-left)) var(--gap) max(var(--gap),env(safe-area-inset-right));display:flex;flex-direction:column;gap:var(--gap)}
   .card{background:var(--card);border-radius:16px;padding:14px}
   .card.dark{background:var(--dark);color:#fff}
   /* Иерархия текста
@@ -193,13 +193,13 @@
   .page[hidden]{display:none!important}
   .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;display:grid;grid-template-columns:repeat(5,1fr);
           background:rgba(255,255,255,.92);backdrop-filter:saturate(180%) blur(12px);border-top:1px solid var(--line);
-          padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+          padding:6px 4px calc(6px + max(env(safe-area-inset-bottom),6px))}
   .tabb{display:flex;flex-direction:column;align-items:center;gap:3px;border:0;background:none;cursor:pointer;
         padding:5px 2px;color:var(--note);font:400 10.5px Inter,sans-serif;transition:color .15s}
   .tabb svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
   .tabb.on{color:var(--accent)}
   .tabb.on svg{stroke-width:2}
-  body{padding-bottom:calc(58px + env(safe-area-inset-bottom))}
+  body{padding-bottom:calc(64px + max(env(safe-area-inset-bottom),6px))}
   /* row 1 */
   .row1,.layout{display:flex;flex-direction:column;gap:var(--gap)}
   .row1>*,.layout>*,.day>*{min-width:0}
@@ -290,6 +290,7 @@
   .day{flex:0 0 100%;scroll-snap-align:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;align-content:start;background:var(--card);border-radius:16px;padding:8px;border:1px solid transparent}
   .day.shopday{border-color:#d6cdf6;box-shadow:inset 2px 0 0 var(--accent);padding-left:10px}
 
+  .rcard h4 .rnum{color:var(--faint);font-weight:400;font-size:var(--t-xs)}
   .psearch{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:9px 12px;margin-bottom:10px}
   .psearch svg{flex:none;width:15px;height:15px;fill:none;stroke:var(--faint);stroke-width:1.8;stroke-linecap:round}
   .psearch input{flex:1;min-width:0;border:0;background:transparent;font:400 16px Inter,sans-serif;color:var(--ink);outline:none;padding:0;-webkit-appearance:none}
@@ -674,7 +675,7 @@
   .tsec h4{margin:0;font-size:var(--t-md);font-weight:600}
   .tsec p{margin:0}
   .hintbar .btn{background:transparent}
-  .toast{position:fixed;left:50%;bottom:calc(72px + env(safe-area-inset-bottom));transform:translate(-50%,10px);background:var(--dark);color:#fff;padding:10px 18px;border-radius:12px;font-weight:500;opacity:0;transition:opacity .22s ease,transform .22s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+  .toast{position:fixed;left:50%;bottom:calc(78px + max(env(safe-area-inset-bottom),6px));transform:translate(-50%,10px);background:var(--dark);color:#fff;padding:10px 18px;border-radius:12px;font-weight:500;opacity:0;transition:opacity .22s ease,transform .22s cubic-bezier(.2,.8,.2,1);pointer-events:none}
   .toast.show{opacity:1;transform:translate(-50%,0)}
 
   /* полоса дней и карточка дня */
@@ -2927,7 +2928,7 @@ let openRations=null, ratRender=null;
       ? 'Выбери рацион, а в нём — блюдо для этого приёма пищи.'
       : 'Готовые дни, которые можно разбирать по блюдам: бери целиком или только то, что нравится.';
     body().innerHTML='<div class="rlist">'+RAT.map(r=>`<div class="rcard" data-r="${r.id}">
-      <h4>${esc(r.t)}</h4>
+      <h4>${esc(r.t)}${r.num?` <span class="rnum">\u2116${r.num}</span>`:''}</h4>
       <div class="rkbju"><span>День: ${kb(r.tot)}</span><span>Без перекуса: ${kb(r.noSnack)}</span></div>
       <div class="rmeals">${r.meals.map(x=>`${SLOT_T[x.slot]}: ${esc(x.dish.name)}`).join('<br>')}</div>
     </div>`).join('')+'</div>';
@@ -2936,7 +2937,7 @@ let openRations=null, ratRender=null;
   function ratView(id){
     const r=RAT.find(x=>x.id===id); if(!r) return;
     cur=r; setBack(false);
-    setTitle(r.t);
+    setTitle(r.num ? `${r.t} №${r.num}` : r.t);
     hintEl().textContent=r.note||'';
     const meals=r.meals.map(x=>{
       const d=x.dish, has=ratAddedId(d), c=(CATS[d.cat]||{}).c||'var(--accent)';
