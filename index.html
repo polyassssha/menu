@@ -333,8 +333,6 @@
   .slot.drop{outline:2px dashed var(--accent);outline-offset:-2px;background:#f5f2ff}
   .dchip.drop{background:#ece6ff;color:var(--accent)}
   .chip .lo{display:block;font-weight:400;font-size:var(--t-xs);color:var(--note);padding-top:1px}
-  .slot.lefts{border-style:dashed}
-  .slot.lefts .lab{color:var(--ready)}
   .chip .lo.cook{color:color-mix(in srgb,var(--c) 70%,#555)}
   .ib{border:0;background:transparent;cursor:pointer;font-size:var(--t-sm);padding:2px 5px;border-radius:6px;color:var(--faint)}
   .ib:hover{background:var(--soft);color:var(--ink)}
@@ -667,7 +665,7 @@
   .dish .m .rc{color:var(--accent)}
   .pdish small{display:block;color:var(--note);font-weight:400;font-size:var(--t-xs)}
   .pleft{grid-column:1;display:block;font-style:normal;font-weight:500;font-size:var(--t-xs);color:var(--accent)}
-  .pdish.has{border-color:color-mix(in srgb,var(--mc) 55%,#fff)}
+  .pdish.has{border-color:color-mix(in srgb,var(--mc) 55%,#fff);border-style:dashed;background:color-mix(in srgb,var(--mc) 6%,#fff)}
   .htext,.ptext{display:flex;flex-direction:column;gap:14px}
   .help .htext{font-size:var(--t-base);line-height:1.5}
   .help .htext>.btn{align-self:flex-start}
@@ -1637,27 +1635,16 @@ function renderWeek(){
     const cls = k==null?'':(k<=normK()*1.1?'ok':'hi');
     const shopDay = W().shopDays.includes(di);
     h+=`<div class="day${shopDay?' shopday':''}"><div class="dlabel"><b>${DAYS[di]} <span class="date">${addDays(fromKey(activeWeek),di).getDate()}.${pad(addDays(fromKey(activeWeek),di).getMonth()+1)}</span></b><button class="shoptg${shopDay?' on':''}" data-d="${di}" title="${shopDay?'Убрать закупку в этот день':'Сделать днём закупки'}"><svg class="cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.2 10.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L20.5 8H6.2"/><circle cx="9.5" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>${shopDay?'закупка':'+'}</button>${k!=null?`<div class="kcal ${cls}" title="Сумма блюд дня на одну порцию. Норма ${normK()} ккал.">≈ ${k.toLocaleString('ru')} ккал</div>`:''}</div>`;
-    const lefts=[];                      // остатки собираем в отдельную группу внизу дня
     for(const [s,lab] of SLOTS){
-      const items = p[s].filter(it=>{ if(it.left){ lefts.push([s,lab,it]); return false; } return true; });
+      const items = p[s];
       h+=`<div class="slot" data-d="${di}" data-s="${s}"><div class="lab">${lab}</div>`;
       for(const it of items){
         const d = BY[it.id];
         h+=`<div class="chip${it.left?' left':''}" data-d="${di}" data-s="${s}" data-u="${it.u}" style="--c:${CATS[d.cat].c}">
           <span class="t">${esc(d.name)}${it.left?`<span class="lo">остатки${it.rem>0?` · ещё ${it.rem} порц.`:' · последние'}</span>`:(it.sv>Math.max(1,state.persons||2)?`<span class="lo cook">готовим · ${it.sv} порц.${it.rem>0?`, останется ${it.rem}`:''}</span>`:'')}</span>
-          <span class="ctools"><button class="ib ci${it.left?' on':''}" data-act="left" title="${it.mode?'Вручную: '+(it.left?'остатки':'готовим')+' — нажми, чтобы вернуть авто':'Авто: '+(it.left?'остатки':'готовим')+' — нажми, чтобы поменять'}"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci" data-act="del" title="Убрать"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div>`;
+          <span class="ctools"><button class="ib ci${it.left?' on':''}" data-act="left" title="${it.mode?'Вручную: '+(it.left?'остатки':'готовим')+' — нажми, чтобы вернуть авто':'Авто: '+(it.left?'остатки':'готовим')+' — нажми, чтобы поменять'}"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci" data-act="del" title="${it.left?'Съедено — убрать':'Убрать'}"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div>`;
       }
       if(!items.length) h+=`<div class="hint">＋ нажми, чтобы добавить</div>`;
-      h+=`</div>`;
-    }
-    if(lefts.length){
-      h+=`<div class="slot lefts"><div class="lab">Остатки</div>`;
-      for(const [s,lab,it] of lefts){
-        const d=BY[it.id];
-        h+=`<div class="chip left" data-d="${di}" data-s="${s}" data-u="${it.u}" style="--c:${CATS[d.cat].c}">
-          <span class="t">${esc(d.name)}<span class="lo">${lab.toLowerCase()} · ${it.rem>0?`ещё ${it.rem} порц.`:'последние'}</span></span>
-          <span class="ctools"><button class="ib ci on" data-act="left" title="Вернуть в «готовим»"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.5A5 5 0 0 0 3.6 4.4"/><path d="M3.2 2v2.6h2.6"/><path d="M3 9.5a5 5 0 0 0 9.4 2.1"/><path d="M12.8 14v-2.6h-2.6"/></svg></button><button class="ib ci" data-act="del" title="Съедено — убрать"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div>`;
-      }
       h+=`</div>`;
     }
     h+=`</div>`;
@@ -2591,7 +2578,7 @@ function openPicker(di,s,keepQ){
   document.getElementById('pTitle').textContent=`${DAYS[di]} · ${lab}`;
   const left=remainsAt(activeWeek,di,s);
   const q=palNorm(pickQ);
-  const btn=d=>`<button type="button" class="pdish${left[d.id]?' has':''}${pickSel.includes(d.id)?' sel':''}" data-id="${d.id}">${esc(d.name)}<small>~${Math.round(pv(d,'kcal'))} ккал</small>${left[d.id]?`<i class="pleft">осталось ${left[d.id]} ${plural(left[d.id],'порция','порции','порций')}</i>`:''}</button>`;
+  const btn=d=>`<button type="button" class="pdish${left[d.id]?' has':''}${pickSel.includes(d.id)?' sel':''}" data-id="${d.id}">${esc(d.name)}<small>~${Math.round(pv(d,'kcal'))} ккал</small>${left[d.id]?`<i class="pleft">остатки · ${left[d.id]} ${plural(left[d.id],'порция','порции','порций')}</i>`:''}</button>`;
   const group=(title,list,mc)=>list.length?`<div class="pcat" style="--mc:${mc}"><h5>${esc(title)}</h5><div class="pgrid">${list.map(btn).join('')}</div></div>`:'';
   const avail=DISHES.filter(d=>BY[d.id]);
   let body='';
